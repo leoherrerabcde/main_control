@@ -171,6 +171,34 @@ void CSocket::disconnect()
 
 int CSocket::enableKeepAlive(const int sock)
 {
+    int yes = 1;
+
+    if(setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, &yes, sizeof(int)) == -1) {
+        //cerr << errno << "  " << strerror(errno) << endl;
+        return -1;
+    }
+
+    int idle = 1;
+
+    if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &idle, sizeof(int)) == -1) {
+        //cerr << errno << "  " << strerror(errno) << endl;
+        return -1;
+    }
+
+    int interval = 1;
+
+    if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(int)) == -1) {
+        //cerr << errno << "  " << strerror(errno) << endl;
+        return -1;
+    }
+
+    int maxpkt = 10;
+
+    if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &maxpkt, sizeof(int)) == -1) {
+        //cerr << errno << "  " << strerror(errno) << endl;
+        return -1;
+    }
+
     return 0;
 }
 

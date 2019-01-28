@@ -9,8 +9,8 @@ class IDVehicleList : public IDList
         IDVehicleList();
         virtual ~IDVehicleList();
 
-        bool isValidID(std::string& strIDVehicle);
-        void init();
+        virtual bool isValidID(std::string& strIDVehicle);
+        virtual void init();
 
     protected:
 

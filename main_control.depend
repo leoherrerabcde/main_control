@@ -7,10 +7,14 @@
 	"rfidboquilla.h"
 	"rfiduser.h"
 
+1548129722 h"
+
 1548128430 c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\lucesestado.h
 
 1548171365 c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\commgsm.h
 	"device.h"
+
+1548693884 
 
 1548171424 c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\electrovalvctrl.h
 	"device.h"
@@ -23,14 +27,22 @@
 1548129739 source:c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\commgsm.cpp
 	"commgsm.h"
 
+1548129739 "
+
 1548129699 source:c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\electrovalvctrl.cpp
 	"electrovalvctrl.h"
+
+1548129699 lvctrl.h"
 
 1548129708 source:c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\lucesestado.cpp
 	"lucesestado.h"
 
+1548129708 do.h"
+
 1548129715 source:c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\rfidboquilla.cpp
 	"rfidboquilla.h"
+
+1548129715 lla.h"
 
 1548129722 source:c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\rfiduser.cpp
 	"rfiduser.h"
@@ -38,8 +50,103 @@
 1548131424 source:c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\mainstate.cpp
 	"mainstate.h"
 
+1548131424 .h"
+
 1548131268 c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\mainstate.h
 
 1548693884 c:\users\lherr_000\documents\proyectos\fuelcontrol\source\camion_surtidor\raspberri_pi\main_control\device.h
 	<string>
+
+1548705625 source:/home/pi/Documents/source/main_control/commgsm.cpp
+	"commgsm.h"
+
+1548705625 /home/pi/Documents/source/main_control/commgsm.h
+	"device.h"
+
+1548705625 /home/pi/Documents/source/main_control/device.h
+	<string>
+
+1548705625 source:/home/pi/Documents/source/main_control/device.cpp
+	"device.h"
+
+1548705625 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
+	"electrovalvctrl.h"
+
+1548705625 /home/pi/Documents/source/main_control/electrovalvctrl.h
+	"device.h"
+
+1548709514 source:/home/pi/Documents/source/main_control/IDList.cpp
+	"IDList.h"
+
+1548705791 /home/pi/Documents/source/main_control/IDList.h
+	<map>
+	<unordered_map>
+
+1548705912 source:/home/pi/Documents/source/main_control/IDUserList.cpp
+	"IDUserList.h"
+
+1548705940 /home/pi/Documents/source/main_control/IDUserList.h
+	"IDList.h"
+
+1548705899 source:/home/pi/Documents/source/main_control/IDVehicleList.cpp
+	"IDVehicleList.h"
+
+1548705848 /home/pi/Documents/source/main_control/IDVehicleList.h
+	"IDList.h"
+
+1548705625 source:/home/pi/Documents/source/main_control/lucesestado.cpp
+	"lucesestado.h"
+
+1548705625 /home/pi/Documents/source/main_control/lucesestado.h
+	"device.h"
+	"mainstate.h"
+
+1548706438 /home/pi/Documents/source/main_control/mainstate.h
+
+1548705625 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+	"rfidboquilla.h"
+
+1548705625 /home/pi/Documents/source/main_control/rfidboquilla.h
+	"device.h"
+	"IDVehicleList.h"
+
+1548705625 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+	"rfiduser.h"
+
+1548705625 /home/pi/Documents/source/main_control/rfiduser.h
+	"device.h"
+
+1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
+	"mainstate.h"
+
+1548706728 source:/home/pi/Documents/source/main_control/main.cpp
+	<iostream>
+	"lucesestado.h"
+	"commgsm.h"
+	"electrovalvctrl.h"
+	"rfidboquilla.h"
+	"rfiduser.h"
+	"mainstate.h"
+	"IDVehicleList.h"
+
+1548709381 source:/home/pi/Documents/source/main_control/CSocket.cpp
+	"CSocket.h"
+	<vector>
+
+1548709332 /home/pi/Documents/source/main_control/CSocket.h
+	<iostream>
+	<future>
+	<functional>
+	<errno.h>
+	<string.h>
+	<strings.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<netdb.h>
+	<unistd.h>
+	<sys/signal.h>
 

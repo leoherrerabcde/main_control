@@ -9,6 +9,9 @@ class IDUserList : public IDList
         IDUserList();
         virtual ~IDUserList();
 
+        virtual void init();
+        virtual bool isValidID(std::string& strIDVehicle);
+
     protected:
 
     private:

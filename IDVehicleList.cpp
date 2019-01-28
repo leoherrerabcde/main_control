@@ -12,10 +12,10 @@ IDVehicleList::~IDVehicleList()
 
 bool IDVehicleList::isValidID(std::string& strIDVehicle)
 {
-
+    return false;
 }
 
-int IDVehicleList::init()
+void IDVehicleList::init()
 {
 
 }

@@ -9,3 +9,9 @@ IDList::~IDList()
 {
     //dtor
 }
+
+void IDList::init()
+{
+
+}
+

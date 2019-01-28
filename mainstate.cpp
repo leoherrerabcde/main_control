@@ -12,10 +12,10 @@ MainState::~MainState()
 
 int MainState::getLastIDTransaction()
 {
-
+    return 0;
 }
 
 MainState::State MainState::getLastState()
 {
-
+    return m_LastState;
 }

@@ -19,6 +19,11 @@ public:
     State getLastState();
     int getLastIDTransaction();
 
+
+private:
+
+    State m_LastState;
+
 };
 
 #endif // MAINSTATE_H

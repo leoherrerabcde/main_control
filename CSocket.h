@@ -19,16 +19,17 @@
 #include <unistd.h>
 #include <sys/signal.h>
 
-using namespace std;
 
-typedef enum SocketError
+enum SocketError
 {
     NoError = 0,
     OpeningSocket,
-    BindingSocket
-}
+    BindingSocket,
+    AcceptError,
+    SetSockOptError
+};
 
-typedef enum SocketState
+enum SocketState
 {
     sckClosed =0,
     sckOpened,
@@ -42,24 +43,27 @@ typedef enum SocketState
     sckDisconnected,
     sckClosing,
     sckError
-}
+};
 
 class CSocket
 {
     public:
-        CSocket(const string& hostName, const unsigned int port) : ;
+        CSocket(const std::string& hostName, const unsigned int port);
         CSocket(const int sock);
         CSocket();
         virtual ~CSocket();
 
         void init();
         bool isError();
-        void setError();
-        bool isConnected() {return m_bConnected;};
-        SocketState getSocketState() {return m_sckState};
+        void setError(const SocketError sockErrCode);
+        void setError(const SocketError sockErrCode, const std::string& strErrMsg);
+
+        bool isConnected() {return m_bConnected;}
+        SocketState getSocketState() {return m_sckState;}
 
         void setLocalPort(const int port);
         void setRemotePort(const int port);
+
         int getLocalPort() const;
         int getRemotePort() const;
 
@@ -68,11 +72,11 @@ class CSocket
         std::string getRemoteHost() const;
 
         void listen();
-        int connect();
-        int disconnect();
+        void connect();
+        void disconnect();
 
-        int send(const string& msg);
-        string& receive();
+        int send(const std::string& msg);
+        std::string& receive();
 
 
     protected:
@@ -92,6 +96,7 @@ class CSocket
         socklen_t clilen;
         char buffer[256];
         struct sockaddr_in serv_addr, cli_addr;
+        struct hostent* server;
         SocketError m_sckError;
         SocketState m_sckState;
 };

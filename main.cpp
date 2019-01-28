@@ -34,7 +34,20 @@ int main(int argc, char* argv[])
     {
         if (stateRbpi == MainState::waitForInitTransaction)
         {
-            if (rfidBoquilla.isRFIDReceived() > 0)
+            DeviceResult processResult = rfidBoquilla.processDataReceived();
+            if (processResult == DeviceResult::DeviceIdle)
+            {
+            }
+            else if (processResult == DeviceResult::IncompletedReceive)
+            {
+            }
+            else if (processResult == DeviceResult::NonAuthorizeID)
+            {
+            }
+            else if (processResult == DeviceResult::AuthorizeID)
+            {
+            }
+            /*if (rfidBoquilla.isRFIDReceived() > 0)
             {
                 std::string rfidReceived;
                 rfidBoquilla.get_data(rfidReceived);
@@ -50,7 +63,7 @@ int main(int argc, char* argv[])
                 {
 
                 }
-            }
+            }*/
         }
     }
 

@@ -19,7 +19,7 @@ class IDList
         IDList();
         virtual ~IDList();
 
-        void init();
+        virtual void init();
 
         int readList();
         int writeList();

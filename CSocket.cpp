@@ -1,4 +1,5 @@
 #include "CSocket.h"
+#include "SCCLog.h"
 
 #include <vector>
 
@@ -7,6 +8,21 @@ static std::vector<std::string> stErrorDescriptList = {
     "Error binding socket",
     "Error on Accept"
     };
+
+static std::vector<std::string> stStateDescriptList = {
+    "sckClosed",
+    "sckOpened",
+    "sckListening",
+    "sckConnectionPending",
+    "sckResolvingHost",
+    "sckHostResolved",
+    "sckConnecting",
+    "sckConnected",
+    "sckDisconnecting",
+    "sckDisconnected",
+    "sckClosing",
+    "sckError"
+};
 
 CSocket::CSocket(const std::string& hostName, const unsigned int port)
 : m_pListeningThread(NULL),
@@ -42,6 +58,11 @@ CSocket::~CSocket()
 {
     //dtor
     disconnect();
+}
+
+std::string CSocket::getStateDescript()
+{
+    return stStateDescriptList[m_sckState];
 }
 
 void CSocket::setLocalPort(const int port)
@@ -127,12 +148,21 @@ void CSocket::init()
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
         if (sockfd < 0)
         {
-            m_sckState = sckError;
-            m_sckError = OpeningSocket;
-            throw("ERROR opening socket");
+            setState(sckError);
+            throwError(OpeningSocket);
+            /*m_sckError = OpeningSocket;
+            throw("ERROR opening socket");*/
         }
-        m_sckState = sckOpened;
+        setState(sckOpened);
     }
+}
+
+void CSocket::setState(const SocketState newState, const std::string& msg)
+{
+    m_sckState = newState;
+    SCCLog::print(getStateDescript());
+    if (msg != "")
+        SCCLog::print(msg);
 }
 
 void CSocket::addSocket(int newSocket)
@@ -165,7 +195,10 @@ void CSocket::listen()
 
     ::listen(sockfd, 5);
 
-    m_sckState = sckListening;
+    std::string msg("Listening by port ");
+    msg += std::to_string(portno);
+
+    setState(sckListening, msg);
 
     clilen = sizeof(cli_addr);
 
@@ -201,8 +234,6 @@ bool CSocket::listening()
 
 void CSocket::connect()
 {
-    /*if (m_sckState == sckClosed)
-        init();*/
     bzero(&serv_addr, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     server = gethostbyname(m_strRemoteHost.data());
@@ -225,7 +256,7 @@ void CSocket::disconnect()
     {
         close(sockfd);
         m_bConnected = false;
-        m_sckState = sckClosed;
+        setState(sckClosed);
         if (m_pListeningThread != NULL)
         {
             m_pListeningThread->join();

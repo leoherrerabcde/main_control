@@ -1,4 +1,5 @@
 #include "IDUserList.h"
+#include "SCCLog.h"
 
 IDUserList::IDUserList()
 {
@@ -10,8 +11,11 @@ IDUserList::~IDUserList()
     //dtor
 }
 
-bool IDUserList::isValidID(std::string& strIDVehicle)
+bool IDUserList::isValidID(std::string& strID)
 {
+    SCCLog::print("Reading User ID List...");
+
+    SCCLog::print("User ID List ready to use.");
     return false;
 }
 

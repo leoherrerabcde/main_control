@@ -1,4 +1,5 @@
 #include "SCCLog.h"
+#include <iostream>
 
 SCCLog::SCCLog()
 {
@@ -9,3 +10,9 @@ SCCLog::~SCCLog()
 {
     //dtor
 }
+
+void SCCLog::print(const std::string& msg)
+{
+    std::cout << msg << std::endl;
+}
+

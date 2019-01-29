@@ -75,7 +75,7 @@ class CSocket
         std::string getLocalHost() const;
         std::string getRemoteHost() const;
 
-        void setState(SocketState newState){m_sckState = newState;}
+        void setState(SocketState newState, const std::string& msg = "");
         SocketState getState() const {return m_sckState;}
 
         int getSocketHdl() const {return sockfd;};
@@ -103,6 +103,8 @@ class CSocket
     private:
 
         int enableKeepAlive(const int sock);
+        std::string getStateDescript();
+
         std::thread* m_pListeningThread;
 
         bool m_bConnected;

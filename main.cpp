@@ -12,11 +12,12 @@ using namespace std;
 #include "IDVehicleList.h"
 #include "MainCtrlSettings.h"
 #include "CSocket.h"
+#include "SCCLog.h"
+#include "SCCAlive.h"
 
 
 int main(int argc, char* argv[])
 {
-    //cout << "Hello world!" << endl;
     RFIDBoquilla rfidBoquilla;
     RFIDUser rfidUser;
     ElectroValvCtrl electroValv;
@@ -26,6 +27,7 @@ int main(int argc, char* argv[])
     MainCtrlSettings mainSettings;
 
     CSocket socketServer;
+    std::vector<CSocket*> socketClientList;
     socketServer.setLocalPort(mainSettings.serverPort);
     socketServer.listen();
 
@@ -38,6 +40,10 @@ int main(int argc, char* argv[])
     MainState::State stateRbpi;
 
     stateRbpi = mainState.getLastState();
+
+    SCCAlive keepAlive;
+    keepAlive.start(mainSettings.noResponseTimeMilli);
+    int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
 
     for(;;)
     {
@@ -78,9 +84,17 @@ int main(int argc, char* argv[])
                 }
             }*/
         }
+        if (socketServer.getState() == sckHostResolved)
+        {
+            socketClientList.push_back(socketServer.getSocket());
+            socketServer.listen();
+        }
         if (bSleep == true)
             usleep(50);
+        keepAlive.update();
     }
+
+    keepAlive.stopTimer(mainTmr);
 
     return 0;
 }

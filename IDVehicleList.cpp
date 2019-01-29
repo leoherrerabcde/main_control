@@ -1,4 +1,5 @@
 #include "IDVehicleList.h"
+#include "SCCLog.h"
 
 IDVehicleList::IDVehicleList()
 {
@@ -12,6 +13,10 @@ IDVehicleList::~IDVehicleList()
 
 bool IDVehicleList::isValidID(std::string& strIDVehicle)
 {
+    SCCLog::print("Loading Vehicle ID List...");
+
+    SCCLog::print("Vehicle ID List ready to use.");
+
     return false;
 }
 

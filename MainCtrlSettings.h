@@ -9,6 +9,8 @@ class MainCtrlSettings
         virtual ~MainCtrlSettings();
 
         int serverPort;
+        int noResponseTimeMilli;
+        int mainTimerInterval;
 
     protected:
 

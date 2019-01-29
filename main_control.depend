@@ -1,1 +1,130 @@
 # depslib dependency file v1.0
+1548705625 source:/home/pi/Documents/source/main_control/commgsm.cpp
+	"commgsm.h"
+
+1548705625 /home/pi/Documents/source/main_control/commgsm.h
+	"device.h"
+
+1548705625 /home/pi/Documents/source/main_control/device.h
+	<string>
+
+1548792022 source:/home/pi/Documents/source/main_control/CSocket.cpp
+	"CSocket.h"
+	"SCCLog.h"
+	<vector>
+
+1548801149 /home/pi/Documents/source/main_control/CSocket.h
+	<iostream>
+	<future>
+	<functional>
+	<queue>
+	<thread>
+	<pthread.h>
+	<errno.h>
+	<string.h>
+	<strings.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<netdb.h>
+	<unistd.h>
+	<sys/signal.h>
+
+1548705625 source:/home/pi/Documents/source/main_control/device.cpp
+	"device.h"
+
+1548792039 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
+	"electrovalvctrl.h"
+	"SCCLog.h"
+
+1548705625 /home/pi/Documents/source/main_control/electrovalvctrl.h
+	"device.h"
+
+1548709514 source:/home/pi/Documents/source/main_control/IDList.cpp
+	"IDList.h"
+
+1548705791 /home/pi/Documents/source/main_control/IDList.h
+	<map>
+	<unordered_map>
+
+1548792060 source:/home/pi/Documents/source/main_control/IDUserList.cpp
+	"IDUserList.h"
+	"SCCLog.h"
+
+1548705940 /home/pi/Documents/source/main_control/IDUserList.h
+	"IDList.h"
+
+1548792070 source:/home/pi/Documents/source/main_control/IDVehicleList.cpp
+	"IDVehicleList.h"
+	"SCCLog.h"
+
+1548705848 /home/pi/Documents/source/main_control/IDVehicleList.h
+	"IDList.h"
+
+1548792052 source:/home/pi/Documents/source/main_control/lucesestado.cpp
+	"lucesestado.h"
+	"SCCLog.h"
+
+1548705625 /home/pi/Documents/source/main_control/lucesestado.h
+	"device.h"
+	"mainstate.h"
+
+1548706438 /home/pi/Documents/source/main_control/mainstate.h
+
+1548800083 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+	"MainCtrlSettings.h"
+
+1548800104 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+
+1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
+	"mainstate.h"
+
+1548792129 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+	"rfidboquilla.h"
+	"SCCLog.h"
+
+1548773977 /home/pi/Documents/source/main_control/rfidboquilla.h
+	"device.h"
+	"IDVehicleList.h"
+
+1548792119 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+	"rfiduser.h"
+	"SCCLog.h"
+
+1548773991 /home/pi/Documents/source/main_control/rfiduser.h
+	"device.h"
+
+1548800301 source:/home/pi/Documents/source/main_control/main.cpp
+	<iostream>
+	<unistd.h>
+	"lucesestado.h"
+	"commgsm.h"
+	"electrovalvctrl.h"
+	"rfidboquilla.h"
+	"rfiduser.h"
+	"mainstate.h"
+	"IDVehicleList.h"
+	"MainCtrlSettings.h"
+	"CSocket.h"
+	"SCCLog.h"
+	"SCCAlive.h"
+
+1548792103 /home/pi/Documents/source/main_control/SCCLog.h
+	<string>
+
+1548792212 source:/home/pi/Documents/source/main_control/SCCLog.cpp
+	"SCCLog.h"
+	<iostream>
+
+1548799820 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+	"SCCAlive.h"
+	"SCCLog.h"
+
+1548799461 /home/pi/Documents/source/main_control/SCCAlive.h
+	<chrono>
+	<thread>
+	<vector>
+

@@ -47,6 +47,8 @@
 		<Unit filename="IDVehicleList.h" />
 		<Unit filename="MainCtrlSettings.cpp" />
 		<Unit filename="MainCtrlSettings.h" />
+		<Unit filename="SCCLog.cpp" />
+		<Unit filename="SCCLog.h" />
 		<Unit filename="commgsm.cpp" />
 		<Unit filename="commgsm.h" />
 		<Unit filename="device.cpp" />

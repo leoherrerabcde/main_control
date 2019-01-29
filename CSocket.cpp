@@ -9,19 +9,31 @@ static std::vector<std::string> stErrorDescriptList = {
     };
 
 CSocket::CSocket(const std::string& hostName, const unsigned int port)
-: m_bConnected(false), m_iRemotePort(port) , m_strRemoteHost(hostName) , m_sckError(NoError) , m_sckState(sckClosed)
+: m_pListeningThread(NULL),
+    m_bConnected(false),
+    m_iRemotePort(port) ,
+    m_strRemoteHost(hostName) ,
+    m_sckError(NoError) ,
+    m_sckState(sckClosed)
 {
     //ctor
 }
 
 CSocket::CSocket(const int sock)
-: m_bConnected(false), sockfd(sock) , m_sckError(NoError) , m_sckState(sckClosed)
+: m_pListeningThread(NULL),
+    m_bConnected(true),
+    sockfd(sock) ,
+    m_sckError(NoError) ,
+    m_sckState(sckConnected)
 {
     //ctor
 }
 
 CSocket::CSocket()
-: m_bConnected(false), m_sckError(NoError) , m_sckState(sckClosed)
+: m_pListeningThread(NULL),
+    m_bConnected(false),
+    m_sckError(NoError) ,
+    m_sckState(sckClosed)
 {
     //ctor
 }
@@ -29,6 +41,7 @@ CSocket::CSocket()
 CSocket::~CSocket()
 {
     //dtor
+    disconnect();
 }
 
 void CSocket::setLocalPort(const int port)
@@ -66,25 +79,46 @@ std::string CSocket::getRemoteHost() const
     return m_strRemoteHost;
 }
 
-void CSocket::throwError(const SocketError& socketErr)
+void CSocket::throwError(const SocketError& sockErrCode)
 {
-    throw(stErrorDescriptList[socketErr]);
+    m_sckError = sockErrCode;
+    throw(stErrorDescriptList[sockErrCode]);
 }
 
-void CSocket::setError(const SocketError sockErrCode)
+void CSocket::throwError(const int sockErrCode)
+{
+    if (m_sckError != sockErrCode)
+    {
+        m_sckError = sockErrCode;
+        throw(strerror(sockErrCode));
+    }
+}
+
+void CSocket::throwError(const SocketError& sockErrCode, const std::string& strErrorMsg)
+{
+    m_sckError = sockErrCode;
+    throw(strErrorMsg);
+}
+
+/*void CSocket::setError(const SocketError sockErrCode)
 {
     if (m_sckError != sockErrCode)
     {
         m_sckError = sockErrCode;
         throwError(sockErrCode);
     }
-}
+}*/
 
-void CSocket::setError(const SocketError sockErrCode, const std::string& strErrMsg)
+/*void CSocket::setError(const SocketError sockErrCode, const std::string& strErrMsg)
 {
     stErrorDescriptList[sockErrCode] = strErrMsg;
     setError(sockErrCode);
-}
+}*/
+
+/*int CSocket::getSocket() const
+{
+    return sockfd;
+}*/
 
 void CSocket::init()
 {
@@ -101,13 +135,22 @@ void CSocket::init()
     }
 }
 
+void CSocket::addSocket(int newSocket)
+{
+    CSocket* sckClient = new CSocket(newSocket);
+    m_SockConnectedList.push(sckClient);
+}
+
 void CSocket::listen()
 {
+    if (m_sckState != sckClosed)
+        disconnect();
+
     init();
 
     int yes = 1;
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1)
-        setError(SocketError::SetSockOptError, strerror(errno));
+        throwError(SocketError::SetSockOptError, strerror(errno));
 
     enableKeepAlive(sockfd);
 
@@ -118,7 +161,7 @@ void CSocket::listen()
 
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
           //perror("ERROR on binding");
-          setError(SocketError::BindingSocket);
+          throwError(SocketError::BindingSocket);
 
     ::listen(sockfd, 5);
 
@@ -126,10 +169,16 @@ void CSocket::listen()
 
     clilen = sizeof(cli_addr);
 
+    //CSocket* self = this;
+    m_pListeningThread = new std::thread(&CSocket::listening, this);
+}
+
+bool CSocket::listening()
+{
     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
     if (newsockfd < 0)
       //error("ERROR on accept");
-      setError(SocketError::AcceptError);
+      throwError(SocketError::AcceptError);
     bzero(buffer,256);
     //int n = read(newsockfd,buffer,255);
     /*if (n < 0) error("ERROR reading from socket");
@@ -137,6 +186,17 @@ void CSocket::listen()
     n = write(newsockfd,"I got your message",18);
     if (n < 0) error("ERROR writing to socket");*/
     //return 0;
+    if (newsockfd == -1)
+    {
+        throwError(errno);
+        return false;
+    }
+    else
+    {
+        addSocket(newsockfd);
+        setState(SocketState::sckHostResolved);
+    }
+    return true;
 }
 
 void CSocket::connect()
@@ -166,6 +226,11 @@ void CSocket::disconnect()
         close(sockfd);
         m_bConnected = false;
         m_sckState = sckClosed;
+        if (m_pListeningThread != NULL)
+        {
+            m_pListeningThread->join();
+            delete m_pListeningThread;
+        }
     }
 }
 
@@ -175,6 +240,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, &yes, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
+        throwError(errno);
         return -1;
     }
 
@@ -182,6 +248,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &idle, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
+        throwError(errno);
         return -1;
     }
 
@@ -189,6 +256,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
+        throwError(errno);
         return -1;
     }
 
@@ -196,6 +264,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &maxpkt, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
+        throwError(errno);
         return -1;
     }
 

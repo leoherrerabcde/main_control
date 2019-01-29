@@ -15,6 +15,8 @@ public:
 
     IDVehicleList idVehicleList;
 
+    virtual DeviceResult processDataReceived();
+
 };
 
 #endif // RFIDBOQUILLA_H

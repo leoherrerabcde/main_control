@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -9,6 +10,9 @@ using namespace std;
 #include "rfiduser.h"
 #include "mainstate.h"
 #include "IDVehicleList.h"
+#include "MainCtrlSettings.h"
+#include "CSocket.h"
+
 
 int main(int argc, char* argv[])
 {
@@ -19,6 +23,11 @@ int main(int argc, char* argv[])
     commGSM modCommGSM;
     LucesEstado lucesDeEstado;
     MainState mainState;
+    MainCtrlSettings mainSettings;
+
+    CSocket socketServer;
+    socketServer.setLocalPort(mainSettings.serverPort);
+    socketServer.listen();
 
     rfidBoquilla.init();
     rfidUser.init();
@@ -32,6 +41,7 @@ int main(int argc, char* argv[])
 
     for(;;)
     {
+        bool bSleep = true;
         if (stateRbpi == MainState::waitForInitTransaction)
         {
             DeviceResult processResult = rfidBoquilla.processDataReceived();
@@ -40,12 +50,15 @@ int main(int argc, char* argv[])
             }
             else if (processResult == DeviceResult::IncompletedReceive)
             {
+                bSleep = false;
             }
             else if (processResult == DeviceResult::NonAuthorizeID)
             {
+                bSleep = false;
             }
             else if (processResult == DeviceResult::AuthorizeID)
             {
+                bSleep = false;
             }
             /*if (rfidBoquilla.isRFIDReceived() > 0)
             {
@@ -65,6 +78,8 @@ int main(int argc, char* argv[])
                 }
             }*/
         }
+        if (bSleep == true)
+            usleep(50);
     }
 
     return 0;

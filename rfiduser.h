@@ -10,6 +10,7 @@ public:
     ~RFIDUser();
 
     virtual int init();
+    virtual DeviceResult processDataReceived();
 };
 
 #endif // RFIDUSER_H

@@ -19,6 +19,11 @@ int RFIDBoquilla::init()
 
 bool RFIDBoquilla::isRFIDReceived()
 {
+    return false;
+}
 
+DeviceResult RFIDBoquilla::processDataReceived()
+{
+    return DeviceResult::DeviceIdle;
 }
 

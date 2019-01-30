@@ -80,6 +80,7 @@ class CSocket
 
         void setBufferSize(const size_t iBufferSize);
         std::string getIDClient() { return m_strID;}
+        void setIDClient(const std::string& name = "") {m_strID = name;}
 
         void setState(SocketState newState, const std::string& msg = "");
         SocketState getState() const {return m_sckState;}

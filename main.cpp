@@ -97,11 +97,20 @@ int main(int argc, char* argv[])
 
         for (auto itSck :socketClientList)
         {
-            auto it = deviceList.find(itSck->getIDClient());
-            if (it != deviceList.end())
+            if (itSck->getIDClient() == "")
             {
-                Device* pDevice = it->second;
-                pDevice->processDataReceived(itSck->getData());
+                Device pDvc;
+                if (pDvc.processDataReceived(itSck->getData()))
+                    itSck->setIDClient(pDvc.name());
+            }
+            else
+            {
+                auto it = deviceList.find(itSck->getIDClient());
+                if (it != deviceList.end())
+                {
+                    Device* pDevice = it->second;
+                    pDevice->processDataReceived(itSck->getData());
+                }
             }
         }
 

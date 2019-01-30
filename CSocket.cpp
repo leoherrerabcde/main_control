@@ -9,7 +9,9 @@ static std::vector<std::string> stErrorDescriptList = {
     "Error binding socket",
     "Error on Accept",
     "SetSockOptError",
-    "Exceed Tries to Send Data"
+    "Exceed Tries to Send Data",
+    "Read Time Out",
+    "Error during reading process."
     };
 
 static std::vector<std::string> stStateDescriptList = {
@@ -27,30 +29,36 @@ static std::vector<std::string> stStateDescriptList = {
     "sckError"
 };
 
-CSocket::CSocket(const std::string& hostName, const unsigned int port)
+CSocket::CSocket(const std::string& hostName, const unsigned int port, const size_t bufferSize)
 : m_pListeningThread(NULL),
     m_bConnected(false),
     m_iRemotePort(port) ,
     m_strRemoteHost(hostName) ,
+    m_iBufferSize(bufferSize),
     m_sckError(NoError) ,
     m_sckState(sckClosed)
 {
     //ctor
+    m_pRcvBuffer = new char[m_iBufferSize];
 }
 
-CSocket::CSocket(const int sock)
+CSocket::CSocket(const int sock, const size_t bufferSize)
 : m_pListeningThread(NULL),
     m_bConnected(true),
     sockfd(sock) ,
+    m_iBufferSize(bufferSize),
     m_sckError(NoError) ,
     m_sckState(sckConnected)
 {
     //ctor
+    if (m_iBufferSize)
+        m_pRcvBuffer = new char[m_iBufferSize];
 }
 
 CSocket::CSocket()
 : m_pListeningThread(NULL),
     m_bConnected(false),
+    m_iBufferSize(0),
     m_sckError(NoError) ,
     m_sckState(sckClosed)
 {
@@ -61,6 +69,16 @@ CSocket::~CSocket()
 {
     //dtor
     disconnect();
+    clearBuffer();
+}
+
+void CSocket::clearBuffer()
+{
+    if (m_iBufferSize)
+    {
+        delete [] m_pRcvBuffer;
+        m_iBufferSize = 0;
+    }
 }
 
 std::string CSocket::getStateDescript()
@@ -124,25 +142,12 @@ void CSocket::throwError(const SocketError& sockErrCode, const std::string& strE
     throw(strErrorMsg);
 }
 
-/*void CSocket::setError(const SocketError sockErrCode)
+void CSocket::setBufferSize(const size_t iBufferSize)
 {
-    if (m_sckError != sockErrCode)
-    {
-        m_sckError = sockErrCode;
-        throwError(sockErrCode);
-    }
-}*/
-
-/*void CSocket::setError(const SocketError sockErrCode, const std::string& strErrMsg)
-{
-    stErrorDescriptList[sockErrCode] = strErrMsg;
-    setError(sockErrCode);
-}*/
-
-/*int CSocket::getSocket() const
-{
-    return sockfd;
-}*/
+    clearBuffer();
+    m_iBufferSize = iBufferSize;
+    m_pRcvBuffer = new char[m_iBufferSize];
+}
 
 void CSocket::init()
 {
@@ -217,13 +222,7 @@ bool CSocket::listening()
     if (newsockfd < 0)
       //error("ERROR on accept");
       throwError(SocketError::AcceptError);
-    bzero(buffer,256);
-    //int n = read(newsockfd,buffer,255);
-    /*if (n < 0) error("ERROR reading from socket");
-    printf("Here is the message: %s\n",buffer);
-    n = write(newsockfd,"I got your message",18);
-    if (n < 0) error("ERROR writing to socket");*/
-    //return 0;
+
     if (newsockfd == -1)
     {
         throwError(errno);
@@ -379,5 +378,70 @@ bool CSocket::sendData(std::string msg)
 
 std::string CSocket::getData()
 {
-    return "";
+    if (m_bConnected != true || m_sckState != sckConnected)
+        return "";
+
+    struct timeval tv;
+    tv.tv_sec = 10;
+    tv.tv_usec = 0;
+    fd_set readfds;
+    FD_ZERO(&readfds);
+    FD_SET(sockfd, &readfds);
+
+    std::string resp = "";
+    int n = 0;
+
+    do
+    {
+        FD_ZERO(&readfds);
+        FD_SET(sockfd, &readfds);
+        int rv = select(sockfd + 1, &readfds, NULL, NULL, &tv);
+
+        if(rv <= -1)
+            //cerr << errno << "  " << strerror(errno) << endl;
+            throwError(errno);
+        else if(rv == 0)
+        {
+            throwError(SocketError::ReadTimeOut);
+            break;
+        }
+        else if(rv > 0 && FD_ISSET(sockfd, &readfds))
+        {
+            n = ::read(sockfd, m_pRcvBuffer, m_iBufferSize - 1);
+
+            if(n > 0)
+            {
+                /*n = tn;
+                m_pRcvBuffer[n] = '\0';
+                string tResp(m_pRcvBuffer, n);
+                resp += tResp;*/
+                m_pRcvBuffer[n] = '\0';
+                resp += m_pRcvBuffer;
+            }
+            else if(n == -1)
+            {
+                if(errno == 11)
+                { //get the good part of the received stuff also if the connection closed during receive -> happens sometimes with short messages
+                    std::string tResp(m_pRcvBuffer);
+
+                    if(tResp.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890") == std::string::npos) //but only allow valid chars
+                        resp += tResp;
+                }
+                else
+                    //cerr << errno << "  " << strerror(errno) << endl;
+                    throwError(errno);
+
+                break;
+            }
+            else
+                break;
+        }
+        else
+            //cerr << "ERROR: rv: " << rv << endl;
+            throwError(SocketError::ReadError);
+
+    }
+    while(n >= (int)(m_iBufferSize - 1));
+
+    return resp;
 }

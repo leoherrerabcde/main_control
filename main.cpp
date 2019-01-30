@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <unordered_map>
 
 using namespace std;
 
@@ -18,9 +19,13 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+    std::unordered_map<std::string,Device*> deviceList;
+
     RFIDBoquilla rfidBoquilla;
     RFIDUser rfidUser;
     ElectroValvCtrl electroValv;
+    Device guiApp;
+
     commGSM modCommGSM;
     LucesEstado lucesDeEstado;
     MainState mainState;
@@ -36,6 +41,21 @@ int main(int argc, char* argv[])
     electroValv.init();
     modCommGSM.init();
     lucesDeEstado.init();
+
+    Device* pDvc;
+
+    pDvc = &rfidBoquilla;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+
+    pDvc = &rfidUser;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+
+    pDvc = &electroValv;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+
+    pDvc = &guiApp;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+
 
     MainState::State stateRbpi;
 
@@ -66,29 +86,25 @@ int main(int argc, char* argv[])
             {
                 bSleep = false;
             }
-            /*if (rfidBoquilla.isRFIDReceived() > 0)
-            {
-                std::string rfidReceived;
-                rfidBoquilla.get_data(rfidReceived);
-                if (idVehicleList.isValidID(rfidBoquilla))
-                {
-                    stateRbpi |= MainState::RFIDBoquilla;
-                    lucesDeEstado.updateState();
-                }
-            }
-            else
-            {
-                if (rfidUser.num_bytes_received() > 0)
-                {
-
-                }
-            }*/
         }
         if (socketServer.getState() == sckHostResolved)
         {
-            socketClientList.push_back(socketServer.getSocket());
+            CSocket* newClient = socketServer.getSocket();
+            newClient->setBufferSize(mainSettings.sckBufferSize);
+            socketClientList.push_back(newClient);
             socketServer.listen();
         }
+
+        for (auto itSck :socketClientList)
+        {
+            auto it = deviceList.find(itSck->getIDClient());
+            if (it != deviceList.end())
+            {
+                Device* pDevice = it->second;
+                pDevice->processDataReceived(itSck->getData());
+            }
+        }
+
         if (bSleep == true)
             usleep(50);
         keepAlive.update();

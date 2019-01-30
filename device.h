@@ -14,7 +14,7 @@ enum DeviceResult
 class Device
 {
 public:
-    Device();
+    Device(const std::string& deviceName = "");
     virtual ~Device() {};
 
     virtual int init() { return 0;};
@@ -25,7 +25,15 @@ public:
     virtual int get_data(unsigned char** data) {return 0;};
     virtual int num_bytes_received() {return 0;};
 
-    virtual DeviceResult processDataReceived() {return DeviceResult::AuthorizeID;};
+    virtual bool processDataReceived(const std::string& msg = "") {m_strBuffer += msg; return false;}
+
+    virtual void setDeviceName() {m_DeviceName = "";}
+    virtual std::string name() {return m_DeviceName;}
+
+protected:
+
+    std::string m_DeviceName;
+    std::string m_strBuffer;
 };
 
 #endif // DEVICE_H

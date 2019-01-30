@@ -30,7 +30,9 @@ enum SocketError
     BindingSocket,
     AcceptError,
     SetSockOptError,
-    MaxSendDataTries
+    MaxSendDataTries,
+    ReadTimeOut,
+    ReadError
 };
 
 enum SocketState
@@ -52,8 +54,8 @@ enum SocketState
 class CSocket
 {
     public:
-        CSocket(const std::string& hostName, const unsigned int port);
-        CSocket(const int sock);
+        CSocket(const std::string& hostName, const unsigned int port, const size_t iBufferSize = 0);
+        CSocket(const int sock, const size_t iBufferSize = 0);
         CSocket();
         virtual ~CSocket();
 
@@ -75,6 +77,9 @@ class CSocket
         void setRemoteHost(const std::string& hostName);
         std::string getLocalHost() const;
         std::string getRemoteHost() const;
+
+        void setBufferSize(const size_t iBufferSize);
+        std::string getIDClient() { return m_strID;}
 
         void setState(SocketState newState, const std::string& msg = "");
         SocketState getState() const {return m_sckState;}
@@ -112,6 +117,7 @@ class CSocket
 
         int enableKeepAlive(const int sock);
         std::string getStateDescript();
+        void clearBuffer();
 
         std::thread* m_pListeningThread;
 
@@ -122,7 +128,8 @@ class CSocket
         int m_iRemotePort;
         std::string m_strRemoteHost;
         socklen_t clilen;
-        char buffer[256];
+        char* m_pRcvBuffer;
+        size_t m_iBufferSize;
         struct sockaddr_in serv_addr, cli_addr;
         struct hostent* server;
         int m_sckError;

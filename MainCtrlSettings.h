@@ -1,6 +1,7 @@
 #ifndef MAINCTRLSETTINGS_H
 #define MAINCTRLSETTINGS_H
 
+#include <stdio.h>
 
 class MainCtrlSettings
 {
@@ -11,6 +12,7 @@ class MainCtrlSettings
         int serverPort;
         int noResponseTimeMilli;
         int mainTimerInterval;
+        size_t sckBufferSize;
 
     protected:
 

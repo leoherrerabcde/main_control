@@ -1,6 +1,7 @@
 #include "device.h"
 
-Device::Device()
+Device::Device(const std::string& deviceName)
+    : m_DeviceName(deviceName)
 {
 
 }

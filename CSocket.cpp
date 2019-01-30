@@ -4,9 +4,12 @@
 #include <vector>
 
 static std::vector<std::string> stErrorDescriptList = {
+    "No Error",
     "Error opening socket",
     "Error binding socket",
-    "Error on Accept"
+    "Error on Accept",
+    "SetSockOptError",
+    "Exceed Tries to Send Data"
     };
 
 static std::vector<std::string> stStateDescriptList = {
@@ -168,6 +171,8 @@ void CSocket::setState(const SocketState newState, const std::string& msg)
 void CSocket::addSocket(int newSocket)
 {
     CSocket* sckClient = new CSocket(newSocket);
+    sckClient->setState(sckConnected);
+    sckClient->setConnected();
     m_SockConnectedList.push(sckClient);
 }
 
@@ -245,9 +250,32 @@ void CSocket::connect()
 
     init();
 
+    setState(sckConnectionPending);
+
     enableKeepAlive(sockfd);
 
+    m_pListeningThread = new std::thread(&CSocket::connecting, this);
+}
 
+bool CSocket::connecting()
+{
+    if (m_sckState == sckConnectionPending)
+    {
+        setState(sckConnecting);
+        for(size_t i = 0; i < 3; i++)
+        { //try to connect 3 times
+            if(::connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
+                //cerr << "Error on connecting: " << errno << "  " << strerror(errno) << endl;
+                throwError(errno);
+            else
+            {
+                setConnected();
+                setState(sckConnected);
+                break;
+            }
+        }
+    }
+    return true;
 }
 
 void CSocket::disconnect()
@@ -302,3 +330,54 @@ int CSocket::enableKeepAlive(const int sock)
     return 0;
 }
 
+bool CSocket::sendData(std::string msg)
+{
+    if (m_bConnected != true || m_sckState != sckConnected)
+        return false;
+
+    struct timeval tv;
+    tv.tv_sec = 10;
+    tv.tv_usec = 0;
+    fd_set writefds;
+    FD_ZERO(&writefds);
+    FD_SET(sockfd, &writefds);
+
+    int sentBytes = 0;
+    m_iMaxSendDataTries = 5;
+    int tries = 0;
+
+    for(size_t i = 0; i < msg.length(); i += sentBytes)
+    {
+        FD_ZERO(&writefds);
+        FD_SET(sockfd, &writefds);
+        int rv = select(sockfd + 1, NULL, &writefds, NULL, &tv);
+
+        if(rv == -1)
+            //cerr << errno << "  " << strerror(errno) << endl;
+            throwError(errno);
+        else if(rv == 0)
+        {
+            sentBytes = 0;
+            if (++tries > m_iMaxSendDataTries)
+                throwError(SocketError::MaxSendDataTries);
+        }
+        else if(rv > 0 && FD_ISSET(sockfd, &writefds))
+        {
+            sentBytes = ::write(sockfd, msg.substr(i, msg.length() - i).c_str(), msg.length() - i);
+
+            if(sentBytes == -1)
+            {
+                //cerr << "Error sending IDs: " << errno << "  " << strerror(errno) << endl;
+                throwError(errno);
+                return false;
+            }
+            tries = 0;
+        }
+    }
+    return true;
+}
+
+std::string CSocket::getData()
+{
+    return "";
+}

@@ -29,7 +29,8 @@ enum SocketError
     OpeningSocket,
     BindingSocket,
     AcceptError,
-    SetSockOptError
+    SetSockOptError,
+    MaxSendDataTries
 };
 
 enum SocketState
@@ -78,6 +79,7 @@ class CSocket
         void setState(SocketState newState, const std::string& msg = "");
         SocketState getState() const {return m_sckState;}
 
+        void setConnected() { m_bConnected = true; }
         int getSocketHdl() const {return sockfd;};
         struct sockaddr_in* getCliAddrPtr() {return &cli_addr;}
         int getCliAddrLen()const {return clilen;}
@@ -88,10 +90,16 @@ class CSocket
 
         void listen();
         void connect();
+        void connect(std::string remoteHost, int remotePort);
         void disconnect();
-        bool listening();
 
-        int send(const std::string& msg);
+        bool sendData(std::string msg);
+        std::string getData();
+
+        bool listening();
+        bool connecting();
+
+        int send(std::string msg);
         std::string& receive();
 
     protected:
@@ -121,6 +129,7 @@ class CSocket
         SocketState m_sckState;
         std::string m_strID;
         std::queue<CSocket*> m_SockConnectedList;
+        int m_iMaxSendDataTries;
 };
 
 #endif // CSOCKET_H

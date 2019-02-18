@@ -20,7 +20,7 @@ public:
     Device(const std::string& deviceName = "");
     virtual ~Device() {};
 
-    virtual int init(const MainCtrlSettings& settings) { return 0;};
+    virtual int init(MainCtrlSettings& settings) { return 0;};
     virtual bool is_data_received() {return false;};
     virtual void send_data(std::string& data, int len = 0) {};
     virtual void send_data(unsigned char* data, int len = 0) {};
@@ -33,9 +33,11 @@ public:
     virtual void setDeviceName() {m_DeviceName = "";}
     virtual std::string name() {return m_DeviceName;}
 
+    virtual bool getValueMessage(const std::string& msg, const std::string& valueName, std::string& value);
+
 protected:
 
-    virtual int launchService(const std::string& servicePathName, const std::string& args;)
+    virtual int launchService(const std::string& servicePathName, const std::string& args);
     virtual void pushData(const std::string& msg) {m_strBuffer += msg;}
     virtual std::string popFrontMessage();
     virtual bool isBufferEmpty();
@@ -44,6 +46,8 @@ protected:
     std::string m_strBuffer;
 
     int         m_pidService;
+    bool        m_bServiceConnected;
+    bool        m_bDeviceMatched;
 };
 
 #endif // DEVICE_H

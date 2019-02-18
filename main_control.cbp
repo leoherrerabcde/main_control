@@ -37,6 +37,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../commPort/SCCArgumentParser.cpp" />
+		<Unit filename="../commPort/SCCArgumentParser.h" />
 		<Unit filename="CSocket.cpp" />
 		<Unit filename="CSocket.h" />
 		<Unit filename="IDList.cpp" />
@@ -49,6 +51,7 @@
 		<Unit filename="MainCtrlSettings.h" />
 		<Unit filename="SCCAlive.cpp" />
 		<Unit filename="SCCAlive.h" />
+		<Unit filename="SCCDeviceNames.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
 		<Unit filename="commgsm.cpp" />

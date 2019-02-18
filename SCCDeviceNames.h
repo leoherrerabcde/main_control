@@ -8,4 +8,7 @@
 #define DEVICE_SERVER           "Servidor"
 #define DEVICE_GUI              "GUI"
 
+#define DEVICE_NAME             "DeviceName"
+#define SERVICE_PID             "ServicePID"
+
 #endif // SCCDEVICENAMES_H_INCLUDED

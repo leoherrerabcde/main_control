@@ -6,10 +6,10 @@
 class commGSM : public Device
 {
 public:
-    commGSM();
+    commGSM(const std::string& deviceName = "");
     ~commGSM();
 
-    virtual int init(const MainCtrlSettings& settings);
+    virtual int init(MainCtrlSettings& settings);
 };
 
 #endif // COMMGSM_H

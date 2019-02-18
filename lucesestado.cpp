@@ -1,7 +1,7 @@
 #include "lucesestado.h"
 #include "SCCLog.h"
 
-LucesEstado::LucesEstado()
+LucesEstado::LucesEstado(const std::string& deviceName)
 {
 
 }
@@ -11,7 +11,7 @@ LucesEstado::~LucesEstado()
 
 }
 
-int LucesEstado::init(const MainCtrlSettings& settings)
+int LucesEstado::init(MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating State Indicators...");
 

@@ -1,6 +1,6 @@
 #include "commgsm.h"
 
-commGSM::commGSM()
+commGSM::commGSM(const std::string& deviceName)
 {
 
 }
@@ -10,7 +10,7 @@ commGSM::~commGSM()
 
 }
 
-int commGSM::init(const MainCtrlSettings& settings)
+int commGSM::init(MainCtrlSettings& settings)
 {
     return 0;
 }

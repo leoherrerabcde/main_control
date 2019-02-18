@@ -1,7 +1,9 @@
 #include "rfidboquilla.h"
 #include "SCCLog.h"
 
-RFIDBoquilla::RFIDBoquilla()
+#include <sstream>
+
+RFIDBoquilla::RFIDBoquilla(const std::string& deviceName)
 {
 
 }
@@ -11,7 +13,7 @@ RFIDBoquilla::~RFIDBoquilla()
 
 }
 
-int RFIDBoquilla::init(const MainCtrlSettings& settings)
+int RFIDBoquilla::init(MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating RFID Nozzle Receiver...");
     idVehicleList.init();
@@ -42,7 +44,8 @@ int RFIDBoquilla::init(const MainCtrlSettings& settings)
     int ret = launchService(strService, strArgs);
 
     SCCLog::print("RFID Nozlle ready to use.");
-    return 0;
+
+    return ret;
 }
 
 bool RFIDBoquilla::isRFIDReceived()
@@ -55,8 +58,30 @@ bool RFIDBoquilla::isRFIDReceived()
     return DeviceResult::DeviceIdle;
 }*/
 
-bool processDataReceived(const std::string& msg = "")
+bool RFIDBoquilla::processDataReceived(const std::string& msg)
 {
-    addMessage(msg);
+    pushData(msg);
+
+    while (!isBufferEmpty())
+    {
+        std::string data;
+        data = popFrontMessage();
+        if (!m_bDeviceMatched)
+        {
+            std::string strValue;
+            bool res = getValueMessage(data, DEVICE_NAME, strValue);
+            if (res && name() == strValue)
+            {
+                m_bDeviceMatched = true;
+                res =  getValueMessage(data, SERVICE_PID, strValue);
+                if (res)
+                    m_pidService = std::atoi(strValue.c_str());
+            }
+        }
+        else
+        {
+        }
+    }
+    return true;
 }
 

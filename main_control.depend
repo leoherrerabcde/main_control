@@ -1,19 +1,20 @@
 # depslib dependency file v1.0
-1548705625 source:/home/pi/Documents/source/main_control/commgsm.cpp
+1550511673 source:/home/pi/Documents/source/main_control/commgsm.cpp
 	"commgsm.h"
 
-1548705625 /home/pi/Documents/source/main_control/commgsm.h
+1550511542 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1548857500 /home/pi/Documents/source/main_control/device.h
+1550510676 /home/pi/Documents/source/main_control/device.h
 	<string>
+	"MainCtrlSettings.h"
 
-1548855119 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1550438003 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
 
-1548860503 /home/pi/Documents/source/main_control/CSocket.h
+1550437260 /home/pi/Documents/source/main_control/CSocket.h
 	<iostream>
 	<future>
 	<functional>
@@ -36,14 +37,16 @@
 1548792103 /home/pi/Documents/source/main_control/SCCLog.h
 	<string>
 
-1548855747 source:/home/pi/Documents/source/main_control/device.cpp
+1550510743 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
+	<stdlib.h>
+	<sstream>
 
-1548792039 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
+1550511640 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
 	"electrovalvctrl.h"
 	"SCCLog.h"
 
-1548705625 /home/pi/Documents/source/main_control/electrovalvctrl.h
+1550511520 /home/pi/Documents/source/main_control/electrovalvctrl.h
 	"device.h"
 
 1548709514 source:/home/pi/Documents/source/main_control/IDList.cpp
@@ -67,11 +70,11 @@
 1548705848 /home/pi/Documents/source/main_control/IDVehicleList.h
 	"IDList.h"
 
-1548792052 source:/home/pi/Documents/source/main_control/lucesestado.cpp
+1550511663 source:/home/pi/Documents/source/main_control/lucesestado.cpp
 	"lucesestado.h"
 	"SCCLog.h"
 
-1548705625 /home/pi/Documents/source/main_control/lucesestado.h
+1550511512 /home/pi/Documents/source/main_control/lucesestado.h
 	"device.h"
 	"mainstate.h"
 
@@ -93,32 +96,36 @@
 	"SCCLog.h"
 	"SCCAlive.h"
 
-1548773977 /home/pi/Documents/source/main_control/rfidboquilla.h
+1550511504 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
 	"IDVehicleList.h"
 
-1548773991 /home/pi/Documents/source/main_control/rfiduser.h
+1550511500 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 
-1548852169 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1550488614 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
+	<unordered_map>
+	"SCCDeviceNames.h"
+	"../commPort/SCCArgumentParser.h"
 
 1548799461 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
 	<thread>
 	<vector>
 
-1548851223 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1550508742 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1548792129 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1550511655 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
+	<sstream>
 
-1548792119 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1550511649 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 
@@ -129,4 +136,12 @@
 1548792212 source:/home/pi/Documents/source/main_control/SCCLog.cpp
 	"SCCLog.h"
 	<iostream>
+
+1550311439 source:/home/pi/Documents/source/commPort/SCCArgumentParser.cpp
+	"SCCArgumentParser.h"
+
+1550508543 /home/pi/Documents/source/commPort/SCCArgumentParser.h
+	<unordered_map>
+
+1550510439 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 

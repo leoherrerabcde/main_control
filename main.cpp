@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
         bool bSleep = true;
         if (stateRbpi == MainState::waitForInitTransaction)
         {
-            DeviceResult processResult = rfidBoquilla.processDataReceived();
+            DeviceResult processResult = DeviceResult::IncompletedReceive;
             if (processResult == DeviceResult::DeviceIdle)
             {
             }

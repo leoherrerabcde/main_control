@@ -6,10 +6,10 @@
 class ElectroValvCtrl : public Device
 {
 public:
-    ElectroValvCtrl();
+    ElectroValvCtrl(const std::string& deviceName = "");
     ~ElectroValvCtrl();
 
-    virtual int init();
+    virtual int init(MainCtrlSettings& settings);
 };
 
 #endif // ELECTROVALVCTRL_H

@@ -6,10 +6,10 @@
 class RFIDUser : public Device
 {
 public:
-    RFIDUser();
+    RFIDUser(const std::string& deviceName = "");
     ~RFIDUser();
 
-    virtual int init(const MainCtrlSettings& settings);
+    virtual int init(MainCtrlSettings& settings);
     virtual DeviceResult processDataReceived();
 };
 

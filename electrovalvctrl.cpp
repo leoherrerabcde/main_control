@@ -1,7 +1,7 @@
 #include "electrovalvctrl.h"
 #include "SCCLog.h"
 
-ElectroValvCtrl::ElectroValvCtrl()
+ElectroValvCtrl::ElectroValvCtrl(const std::string& deviceName)
 {
 
 }
@@ -11,7 +11,7 @@ ElectroValvCtrl::~ElectroValvCtrl()
 
 }
 
-int ElectroValvCtrl::init(const MainCtrlSettings& settings)
+int ElectroValvCtrl::init(MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating Electro Valve...");
 

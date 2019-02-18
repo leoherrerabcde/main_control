@@ -1,7 +1,7 @@
 #include "rfiduser.h"
 #include "SCCLog.h"
 
-RFIDUser::RFIDUser()
+RFIDUser::RFIDUser(const std::string& deviceName)
 {
 
 }
@@ -11,7 +11,7 @@ RFIDUser::~RFIDUser()
 
 }
 
-int RFIDUser::init(const MainCtrlSettings& settings)
+int RFIDUser::init(MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating RFID User...");
 

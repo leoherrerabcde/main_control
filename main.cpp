@@ -15,19 +15,20 @@ using namespace std;
 #include "CSocket.h"
 #include "SCCLog.h"
 #include "SCCAlive.h"
-
+#include "SCCDeviceNames.h"
 
 int main(int argc, char* argv[])
 {
     std::unordered_map<std::string,Device*> deviceList;
 
-    RFIDBoquilla rfidBoquilla;
-    RFIDUser rfidUser;
-    ElectroValvCtrl electroValv;
-    Device guiApp;
+    RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA);
+    RFIDUser rfidUser(DEVICE_RFID_BOMBERO);
+    ElectroValvCtrl electroValv(DEVICE_ELECTRO_VALVE);
+    Device guiApp(DEVICE_GUI);
 
-    commGSM modCommGSM;
-    LucesEstado lucesDeEstado;
+    commGSM modCommGSM(DEVICE_SERVER);
+    LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS);
+
     MainState mainState;
     MainCtrlSettings mainSettings;
 
@@ -36,11 +37,11 @@ int main(int argc, char* argv[])
     socketServer.setLocalPort(mainSettings.serverPort);
     socketServer.listen();
 
-    rfidBoquilla.init();
-    rfidUser.init();
-    electroValv.init();
-    modCommGSM.init();
-    lucesDeEstado.init();
+    rfidBoquilla.init(mainSettings);
+    rfidUser.init(mainSettings);
+    electroValv.init(mainSettings);
+    modCommGSM.init(mainSettings);
+    lucesDeEstado.init(mainSettings);
 
     Device* pDvc;
 

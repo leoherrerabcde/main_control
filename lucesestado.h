@@ -10,7 +10,7 @@ public:
     LucesEstado();
     ~LucesEstado();
 
-    virtual int init();
+    virtual int init(const MainCtrlSettings& settings);
     void updateState(const MainState::State newState);
 };
 

@@ -9,7 +9,7 @@ public:
     RFIDUser();
     ~RFIDUser();
 
-    virtual int init();
+    virtual int init(const MainCtrlSettings& settings);
     virtual DeviceResult processDataReceived();
 };
 

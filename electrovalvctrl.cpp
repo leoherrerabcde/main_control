@@ -11,7 +11,7 @@ ElectroValvCtrl::~ElectroValvCtrl()
 
 }
 
-int ElectroValvCtrl::init()
+int ElectroValvCtrl::init(const MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating Electro Valve...");
 

@@ -11,7 +11,7 @@ LucesEstado::~LucesEstado()
 
 }
 
-int LucesEstado::init()
+int LucesEstado::init(const MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating State Indicators...");
 

@@ -11,7 +11,7 @@ RFIDUser::~RFIDUser()
 
 }
 
-int RFIDUser::init()
+int RFIDUser::init(const MainCtrlSettings& settings)
 {
     SCCLog::print("Initializating RFID User...");
 

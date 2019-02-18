@@ -10,12 +10,13 @@ public:
     RFIDBoquilla();
     ~RFIDBoquilla();
 
-    virtual int init();
+    virtual int init(const MainCtrlSettings& settings);
     bool isRFIDReceived();
 
     IDVehicleList idVehicleList;
 
-    virtual DeviceResult processDataReceived();
+    //virtual DeviceResult processDataReceived();
+    virtual bool processDataReceived(const std::string& msg = "");
 
 };
 

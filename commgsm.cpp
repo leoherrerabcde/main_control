@@ -10,7 +10,7 @@ commGSM::~commGSM()
 
 }
 
-int commGSM::init()
+int commGSM::init(const MainCtrlSettings& settings)
 {
     return 0;
 }

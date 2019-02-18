@@ -9,7 +9,7 @@ public:
     commGSM();
     ~commGSM();
 
-    virtual int init();
+    virtual int init(const MainCtrlSettings& settings);
 };
 
 #endif // COMMGSM_H

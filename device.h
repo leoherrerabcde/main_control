@@ -3,6 +3,9 @@
 
 #include <string>
 
+#include "MainCtrlSettings.h"
+//#include "SCCDeviceNames.h"
+
 enum DeviceResult
 {
     DeviceIdle = 0,
@@ -17,7 +20,7 @@ public:
     Device(const std::string& deviceName = "");
     virtual ~Device() {};
 
-    virtual int init() { return 0;};
+    virtual int init(const MainCtrlSettings& settings) { return 0;};
     virtual bool is_data_received() {return false;};
     virtual void send_data(std::string& data, int len = 0) {};
     virtual void send_data(unsigned char* data, int len = 0) {};
@@ -32,8 +35,15 @@ public:
 
 protected:
 
+    virtual int launchService(const std::string& servicePathName, const std::string& args;)
+    virtual void pushData(const std::string& msg) {m_strBuffer += msg;}
+    virtual std::string popFrontMessage();
+    virtual bool isBufferEmpty();
+
     std::string m_DeviceName;
     std::string m_strBuffer;
+
+    int         m_pidService;
 };
 
 #endif // DEVICE_H

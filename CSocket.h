@@ -96,7 +96,7 @@ class CSocket
 
         void listen();
         void connect();
-        void connect(std::string remoteHost, int remotePort);
+        void connect(const std::string& remoteHost, const int& remotePort);
         void disconnect();
 
         bool sendData(std::string msg);

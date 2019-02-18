@@ -132,6 +132,8 @@ void CSocket::throwError(const int sockErrCode)
     if (m_sckError != sockErrCode)
     {
         m_sckError = sockErrCode;
+
+        //SCCLog.print("");
         throw(strerror(sockErrCode));
     }
 }
@@ -168,9 +170,9 @@ void CSocket::init()
 void CSocket::setState(const SocketState newState, const std::string& msg)
 {
     m_sckState = newState;
-    SCCLog::print(getStateDescript());
+    /*SCCLog::print(getStateDescript());
     if (msg != "")
-        SCCLog::print(msg);
+        SCCLog::print(msg);*/
 }
 
 void CSocket::addSocket(int newSocket)
@@ -236,6 +238,13 @@ bool CSocket::listening()
     return true;
 }
 
+void CSocket::connect(const std::string& host, const int& port)
+{
+    setRemoteHost(host);
+    setRemotePort(port);
+    connect();
+}
+
 void CSocket::connect()
 {
     bzero(&serv_addr, sizeof(serv_addr));
@@ -261,11 +270,14 @@ bool CSocket::connecting()
     if (m_sckState == sckConnectionPending)
     {
         setState(sckConnecting);
-        for(size_t i = 0; i < 3; i++)
+        for(size_t i = 0; i < 15; i++)
         { //try to connect 3 times
             if(::connect(sockfd, (struct sockaddr*) &serv_addr, sizeof(serv_addr)) < 0)
+            {
                 //cerr << "Error on connecting: " << errno << "  " << strerror(errno) << endl;
-                throwError(errno);
+                //throwError(errno);
+                setState(sckError);
+            }
             else
             {
                 setConnected();

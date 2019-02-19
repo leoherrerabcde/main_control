@@ -29,6 +29,7 @@ void processDataClients(std::list<CSocket*>& socketList,
 
 int main(int argc, char* argv[])
 {
+
     std::unordered_map<std::string,Device*> deviceList;
     std::vector<Device*> onTheFlyDeviceList;
 
@@ -77,7 +78,9 @@ int main(int argc, char* argv[])
     SCCAlive keepAlive;
     keepAlive.start(mainSettings.noResponseTimeMilli);
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
-    keepAlive.stopTimer(mainTmr);
+    keepAlive.throwDisable();
+
+    std::cout << "Main Loop Started." << std::endl;
 
     for(;;)
     {
@@ -135,7 +138,7 @@ void processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::unordered_map<std::string,Device*>& dvcList,
                        std::vector<Device*>& onTheFlyDvcList)
 {
-    for (auto itSck = socketNewList.begin(); itSck != socketNewList.end(); ++itSck)
+    for (auto itSck = socketNewList.begin(); itSck != socketNewList.end();)
     {
         Device pDvc;
         if (pDvc.processDataReceived((*itSck)->getData()))
@@ -157,9 +160,11 @@ void processDataNewClients(std::list<CSocket*>& socketNewList,
                     onTheFlyDvcList.push_back(pDevice);
                 }
                 socketList.push_back(*itSck);
-                socketNewList.erase(itSck);
+                itSck = socketNewList.erase(itSck);
+                continue;
             }
         }
+        ++itSck;
     }
 }
 

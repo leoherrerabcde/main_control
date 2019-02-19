@@ -69,25 +69,25 @@ bool Device::getValueMessage(const std::string& msg, const std::string& valueNam
 
 bool Device::getValueMessage(const std::string& msg, const std::string& valueName, std::string& value)
 {
-    std::string::size_type pos_ini = m_strBuffer.find(valueName);
+    std::string::size_type pos_ini = msg.find(valueName);
 
     if (pos_ini == std::string::npos)
         return false;
 
-    pos_ini += valueName.length()+2;
+    pos_ini += valueName.length()+1;
 
     if (pos_ini >= msg.length())
         return false;
 
-    std::string::size_type pos_end = m_strBuffer.find(',', pos_ini + 1);
+    std::string::size_type pos_end = msg.find(',', pos_ini + 1);
 
     if (pos_end == std::string::npos)
-        pos_end = m_strBuffer.length();
+        pos_end = msg.length();
 
     if (pos_end <= pos_ini)
         return false;
 
-    value = msg.substr(pos_ini, pos_end - pos_ini -1);
+    value = msg.substr(pos_ini, pos_end - pos_ini);
 
     return true;
 }
@@ -121,6 +121,8 @@ bool Device::processDataReceived(const std::string& msg)
 {
     pushData(msg);
 
+    bool bMsgDetected = false;
+
     while (!isBufferEmpty())
     {
         std::string data;
@@ -133,6 +135,7 @@ bool Device::processDataReceived(const std::string& msg)
             {
                 setDeviceName(strValue);
                 m_bDeviceDetected = true;
+                bMsgDetected = true;
                 res =  getValueMessage(data, SERVICE_PID, strValue);
                 if (res)
                     m_pidService = std::atoi(strValue.c_str());
@@ -142,6 +145,6 @@ bool Device::processDataReceived(const std::string& msg)
         {
         }
     }
-    return true;
+    return bMsgDetected;
 }
 

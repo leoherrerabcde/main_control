@@ -32,6 +32,8 @@ class SCCAlive
         int addTimer(const int interval);
         void stopTimer(int timerHdl);
 
+        void throwDisable() {m_bThrowEnable = false;}
+
     protected:
 
     private:
@@ -42,6 +44,8 @@ class SCCAlive
     //std::chrono::duration<double> m_dMaxDiffTime;
     std::chrono::milliseconds m_dMaxDiffTime;
     std::vector<SCCTimer> m_TimerList;
+
+    bool m_bThrowEnable;
 };
 
 #endif // SCCALIVE_H

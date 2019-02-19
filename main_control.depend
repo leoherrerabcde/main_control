@@ -51,7 +51,7 @@
 1548792103 /home/pi/Documents/source/main_control/SCCLog.h
 	<string>
 
-1550608574 source:/home/pi/Documents/source/main_control/device.cpp
+1550614881 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	<stdlib.h>
 	<sstream>
@@ -95,7 +95,7 @@
 
 1548706438 /home/pi/Documents/source/main_control/mainstate.h
 
-1550609444 source:/home/pi/Documents/source/main_control/main.cpp
+1550615185 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -120,7 +120,7 @@
 1550511500 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 
-1548799461 /home/pi/Documents/source/main_control/SCCAlive.h
+1550613531 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
 	<thread>
 	<vector>
@@ -131,7 +131,7 @@
 1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1550607144 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1550611144 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
@@ -148,9 +148,10 @@
 	"rfiduser.h"
 	"SCCLog.h"
 
-1550610213 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1550613914 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
+	<iostream>
 
 1548792212 source:/home/pi/Documents/source/main_control/SCCLog.cpp
 	"SCCLog.h"

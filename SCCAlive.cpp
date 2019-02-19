@@ -1,7 +1,11 @@
+
 #include "SCCAlive.h"
 #include "SCCLog.h"
 
-SCCAlive::SCCAlive() : m_pThreadAlive(NULL), m_bStarted(false)
+#include <iostream>
+
+
+SCCAlive::SCCAlive() : m_pThreadAlive(NULL), m_bStarted(false), m_bThrowEnable(true)
 {
     //ctor
     m_clkLast = std::chrono::steady_clock::now();
@@ -31,10 +35,13 @@ void SCCAlive::run()
     {
         auto clkNow = std::chrono::steady_clock::now();
         std::chrono::duration<double> diff = clkNow - m_clkLast;
-        //std::chrono::milliseconds diff = clkNow - m_clkLast;
 
-        /*if (diff > m_dMaxDiffTime)
-            throw("Rutine is not Alive.");*/
+        if (diff > m_dMaxDiffTime)
+        {
+            std::cout << "Main Loop was stopped long time" << std::endl;
+            if (m_bThrowEnable)
+                throw("Rutine is not Alive.");
+        }
 
         for (unsigned int i = 0; i < m_TimerList.size(); ++i)
         {

@@ -1,7 +1,7 @@
 #include "electrovalvctrl.h"
 #include "SCCLog.h"
 
-ElectroValvCtrl::ElectroValvCtrl(const std::string& deviceName)
+ElectroValvCtrl::ElectroValvCtrl(const std::string& deviceName) : Device(deviceName)
 {
 
 }

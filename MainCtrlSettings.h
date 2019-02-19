@@ -25,7 +25,7 @@ class MainCtrlSettings
         size_t sckBufferSize;
 
         bool getValue(const std::string& deviceName, const std::string& argName, int& val, const int& valDefault = 0);
-        bool getValue(const std::string& deviceName, const std::string& argName, std::string& val, const std::string& valDefault = 0);
+        bool getValue(const std::string& deviceName, const std::string& argName, std::string& val, const std::string& valDefault = "");
 
     protected:
 

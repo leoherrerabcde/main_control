@@ -124,6 +124,7 @@ std::string CSocket::getRemoteHost() const
 void CSocket::throwError(const SocketError& sockErrCode)
 {
     m_sckError = sockErrCode;
+    printError(sockErrCode);
     throw(stErrorDescriptList[sockErrCode]);
 }
 
@@ -456,4 +457,11 @@ std::string CSocket::getData()
     while(n >= (int)(m_iBufferSize - 1));
 
     return resp;
+}
+
+void CSocket::printError(const SocketError& sockErrCode, const std::string& strErrorMsg)
+{
+    std::cout << "CSocket: " << stErrorDescriptList[sockErrCode] << std::endl;
+    if (strErrorMsg !="")
+        std::cout << strErrorMsg << std::endl;
 }

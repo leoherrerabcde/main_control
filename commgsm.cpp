@@ -1,6 +1,6 @@
 #include "commgsm.h"
 
-commGSM::commGSM(const std::string& deviceName)
+commGSM::commGSM(const std::string& deviceName) : Device(deviceName)
 {
 
 }

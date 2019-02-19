@@ -1,7 +1,7 @@
 #include "rfiduser.h"
 #include "SCCLog.h"
 
-RFIDUser::RFIDUser(const std::string& deviceName)
+RFIDUser::RFIDUser(const std::string& deviceName) : Device(deviceName)
 {
 
 }

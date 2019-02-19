@@ -114,6 +114,8 @@ class CSocket
         void throwError(const SocketError& sockErrCode);
         void throwError(const int sockErrCode);
 
+        void printError(const SocketError& sockErrCode, const std::string& strErrorMsg = "");
+
     private:
 
         int enableKeepAlive(const int sock);

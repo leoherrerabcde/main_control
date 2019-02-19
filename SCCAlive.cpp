@@ -33,8 +33,8 @@ void SCCAlive::run()
         std::chrono::duration<double> diff = clkNow - m_clkLast;
         //std::chrono::milliseconds diff = clkNow - m_clkLast;
 
-        if (diff > m_dMaxDiffTime)
-            throw("Rutine is not Alive.");
+        /*if (diff > m_dMaxDiffTime)
+            throw("Rutine is not Alive.");*/
 
         for (unsigned int i = 0; i < m_TimerList.size(); ++i)
         {

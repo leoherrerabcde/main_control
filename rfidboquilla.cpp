@@ -4,7 +4,7 @@
 
 #include <sstream>
 
-RFIDBoquilla::RFIDBoquilla(const std::string& deviceName)
+RFIDBoquilla::RFIDBoquilla(const std::string& deviceName) : Device(deviceName)
 {
 
 }
@@ -24,7 +24,7 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     std::string pathName;
     std::string serviceName;
     const std::string paramPathName(PARAM_PATH_NAME);
-    const std::string paramServiceName(PARAM_PATH_NAME);
+    const std::string paramServiceName(PARAM_SERVICE_NAME);
 
     settings.getValue(m_DeviceName,paramPathName,pathName);
     settings.getValue(m_DeviceName,paramServiceName,serviceName);

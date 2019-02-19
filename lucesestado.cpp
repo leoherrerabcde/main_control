@@ -1,7 +1,7 @@
 #include "lucesestado.h"
 #include "SCCLog.h"
 
-LucesEstado::LucesEstado(const std::string& deviceName)
+LucesEstado::LucesEstado(const std::string& deviceName) : Device(deviceName)
 {
 
 }

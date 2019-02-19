@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
     SCCAlive keepAlive;
     keepAlive.start(mainSettings.noResponseTimeMilli);
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
+    keepAlive.stopTimer(mainTmr);
 
     for(;;)
     {

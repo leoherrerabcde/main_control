@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <sstream>
+#include <cstring>
 
 Device::Device(const std::string& deviceName)
     : m_DeviceName(deviceName), m_bDeviceDetected(false)
@@ -13,9 +14,16 @@ int Device::launchService(const std::string& servicePathName, const std::string&
 {
     std::stringstream ss;
 
-    ss << servicePathName << " " <<args;
+    ss << servicePathName << " " << args << " &";
+    char cmdProgram[ss.str().length()+1];
 
-    int status = system(ss.str().c_str());
+    memcpy(cmdProgram, ss.str().c_str(), ss.str().length());
+    cmdProgram[ss.str().length()] = 0;
+
+    if (!system(NULL))
+        return 0;
+
+    int status = system(cmdProgram);
 
     return status;
 }

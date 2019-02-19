@@ -1,5 +1,6 @@
 #include "rfidboquilla.h"
 #include "SCCLog.h"
+#include "../commPort/SCCWirelessRcvrProtocol.h"
 
 #include <sstream>
 
@@ -22,9 +23,11 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     std::stringstream sService;
     std::string pathName;
     std::string serviceName;
+    const std::string paramPathName(PARAM_PATH_NAME);
+    const std::string paramServiceName(PARAM_PATH_NAME);
 
-    settings.getValue(m_DeviceName,PARAM_PATH_NAME,pathName);
-    settings.getValue(m_DeviceName,PARAM_SERVICE_NAME,serviceName);
+    settings.getValue(m_DeviceName,paramPathName,pathName);
+    settings.getValue(m_DeviceName,paramServiceName,serviceName);
 
     sService << pathName << "/" << serviceName;
 
@@ -66,20 +69,27 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
     {
         std::string data;
         data = popFrontMessage();
-        if (!m_bDeviceMatched)
+
+        std::string strValue;
+        std::string strTag;
+
+        bool bBatAlarm(m_bBatteryAlarm);
+        bool bFail(m_bFail);
+        bool bNozzleDetected(m_bNozzleActived);
+        bool bTagDetected(m_bTagDetected);
+
+        bool res = getValueMessage(data, VAR_BATTERY_ALARM, bBatAlarm);
+        res = res && getValueMessage(data, VAR_FAIL_STATUS, bFail);
+        res = res && getValueMessage(data, VAR_NOZZLE_ACTIVED, bNozzleDetected);
+        res = res && getValueMessage(data, VAR_TAG_DETECTED, strTag);
+
+        if (res)
         {
-            std::string strValue;
-            bool res = getValueMessage(data, DEVICE_NAME, strValue);
-            if (res && name() == strValue)
+            if (strTag == "false")
             {
-                m_bDeviceMatched = true;
-                res =  getValueMessage(data, SERVICE_PID, strValue);
-                if (res)
-                    m_pidService = std::atoi(strValue.c_str());
+                strTag = "";
+                bTagDetected = false;
             }
-        }
-        else
-        {
         }
     }
     return true;

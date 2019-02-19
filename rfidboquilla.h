@@ -18,6 +18,15 @@ public:
     //virtual DeviceResult processDataReceived();
     virtual bool processDataReceived(const std::string& msg = "");
 
+private:
+
+    bool            m_bBatteryAlarm;
+    bool            m_bFail;
+    bool            m_bNozzleActived;
+    bool            m_bTagDetected;
+
+    std::string     m_strTag;
+
 };
 
 #endif // RFIDBOQUILLA_H

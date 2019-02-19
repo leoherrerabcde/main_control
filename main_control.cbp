@@ -39,6 +39,7 @@
 		</Compiler>
 		<Unit filename="../commPort/SCCArgumentParser.cpp" />
 		<Unit filename="../commPort/SCCArgumentParser.h" />
+		<Unit filename="../commPort/SCCWirelessRcvrProtocol.h" />
 		<Unit filename="CSocket.cpp" />
 		<Unit filename="CSocket.h" />
 		<Unit filename="IDList.cpp" />

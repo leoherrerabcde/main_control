@@ -5,7 +5,7 @@
 1550511542 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1550510676 /home/pi/Documents/source/main_control/device.h
+1550603457 /home/pi/Documents/source/main_control/device.h
 	<string>
 	"MainCtrlSettings.h"
 
@@ -37,7 +37,7 @@
 1548792103 /home/pi/Documents/source/main_control/SCCLog.h
 	<string>
 
-1550510743 source:/home/pi/Documents/source/main_control/device.cpp
+1550595269 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	<stdlib.h>
 	<sstream>
@@ -80,10 +80,11 @@
 
 1548706438 /home/pi/Documents/source/main_control/mainstate.h
 
-1548860454 source:/home/pi/Documents/source/main_control/main.cpp
+1550604991 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
+	<list>
 	"lucesestado.h"
 	"commgsm.h"
 	"electrovalvctrl.h"
@@ -95,8 +96,9 @@
 	"CSocket.h"
 	"SCCLog.h"
 	"SCCAlive.h"
+	"SCCDeviceNames.h"
 
-1550511504 /home/pi/Documents/source/main_control/rfidboquilla.h
+1550594887 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
 	"IDVehicleList.h"
 
@@ -120,9 +122,10 @@
 1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1550511655 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1550605583 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
+	"../commPort/SCCWirelessRcvrProtocol.h"
 	<sstream>
 
 1550511649 source:/home/pi/Documents/source/main_control/rfiduser.cpp
@@ -144,4 +147,11 @@
 	<unordered_map>
 
 1550510439 /home/pi/Documents/source/main_control/SCCDeviceNames.h
+
+1550440646 /home/pi/Documents/source/commPort/SCCWirelessRcvrProtocol.h
+	<vector>
+	<list>
+	<unordered_map>
+	<queue>
+	<cstring>
 

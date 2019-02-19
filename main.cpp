@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <unordered_map>
+#include <list>
 
 using namespace std;
 
@@ -17,9 +18,19 @@ using namespace std;
 #include "SCCAlive.h"
 #include "SCCDeviceNames.h"
 
+void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
+void processDataNewClients(std::list<CSocket*>& socketNewList,
+                       std::list<CSocket*>& socketList,
+                       std::unordered_map<std::string,Device*>& dvcList,
+                       std::vector<Device*>& onTheFlyDvcList);
+
+void processDataClients(std::list<CSocket*>& socketList,
+                        std::unordered_map<std::string,Device*>& dvcList);
+
 int main(int argc, char* argv[])
 {
     std::unordered_map<std::string,Device*> deviceList;
+    std::vector<Device*> onTheFlyDeviceList;
 
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA);
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO);
@@ -33,7 +44,8 @@ int main(int argc, char* argv[])
     MainCtrlSettings mainSettings;
 
     CSocket socketServer;
-    std::vector<CSocket*> socketClientList;
+    std::list<CSocket*> socketClientList;
+    std::list<CSocket*> socketNewClientList;
     socketServer.setLocalPort(mainSettings.serverPort);
     socketServer.listen();
 
@@ -69,6 +81,7 @@ int main(int argc, char* argv[])
     for(;;)
     {
         bool bSleep = true;
+
         if (stateRbpi == MainState::waitForInitTransaction)
         {
             DeviceResult processResult = DeviceResult::IncompletedReceive;
@@ -88,32 +101,11 @@ int main(int argc, char* argv[])
                 bSleep = false;
             }
         }
-        if (socketServer.getState() == sckHostResolved)
-        {
-            CSocket* newClient = socketServer.getSocket();
-            newClient->setBufferSize(mainSettings.sckBufferSize);
-            socketClientList.push_back(newClient);
-            socketServer.listen();
-        }
 
-        for (auto itSck :socketClientList)
-        {
-            if (itSck->getIDClient() == "")
-            {
-                Device pDvc;
-                if (pDvc.processDataReceived(itSck->getData()))
-                    itSck->setIDClient(pDvc.name());
-            }
-            else
-            {
-                auto it = deviceList.find(itSck->getIDClient());
-                if (it != deviceList.end())
-                {
-                    Device* pDevice = it->second;
-                    pDevice->processDataReceived(itSck->getData());
-                }
-            }
-        }
+        proccesNewConnection(socketServer, mainSettings, socketNewClientList);
+        processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList);
+        processDataClients(socketClientList, deviceList);
+
 
         if (bSleep == true)
             usleep(50);
@@ -123,4 +115,63 @@ int main(int argc, char* argv[])
     keepAlive.stopTimer(mainTmr);
 
     return 0;
+}
+
+void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList)
+{
+    if (sckServer.getState() == sckHostResolved)
+    {
+        CSocket* newClient = sckServer.getSocket();
+        newClient->setBufferSize(settings.sckBufferSize);
+        socketList.push_back(newClient);
+        sckServer.listen();
+    }
+
+}
+
+void processDataNewClients(std::list<CSocket*>& socketNewList,
+                       std::list<CSocket*>& socketList,
+                       std::unordered_map<std::string,Device*>& dvcList,
+                       std::vector<Device*>& onTheFlyDvcList)
+{
+    for (auto itSck = socketNewList.begin(); itSck != socketNewList.end(); ++itSck)
+    {
+        Device pDvc;
+        if (pDvc.processDataReceived((*itSck)->getData()))
+        {
+            if (pDvc.name() != "")
+            {
+                (*itSck)->setIDClient(pDvc.name());
+                auto it = dvcList.find((*itSck)->getIDClient());
+                if (it != dvcList.end())
+                {
+                    Device* pDevice = it->second;
+                    pDevice->setServicePID(pDvc.getServicePID());
+                    pDevice->addData(pDvc.getData());
+                }
+                else
+                {
+                    Device* pDevice = new Device(pDvc);
+                    dvcList.insert(std::make_pair(pDevice->name(), pDevice));
+                    onTheFlyDvcList.push_back(pDevice);
+                }
+                socketList.push_back(*itSck);
+                socketNewList.erase(itSck);
+            }
+        }
+    }
+}
+
+void processDataClients(std::list<CSocket*>& sockeList,
+                        std::unordered_map<std::string,Device*>& dvcList)
+{
+    for (auto itSck : sockeList)
+    {
+        auto it = dvcList.find(itSck->getIDClient());
+        if (it != dvcList.end())
+        {
+            Device* pDevice = it->second;
+            pDevice->processDataReceived(itSck->getData());
+        }
+    }
 }

@@ -18,6 +18,7 @@ class Device
 {
 public:
     Device(const std::string& deviceName = "");
+    //Device(const Device&) = default;
     virtual ~Device() {};
 
     virtual int init(MainCtrlSettings& settings) { return 0;};
@@ -28,12 +29,20 @@ public:
     virtual int get_data(unsigned char** data) {return 0;};
     virtual int num_bytes_received() {return 0;};
 
-    virtual bool processDataReceived(const std::string& msg = "") {m_strBuffer += msg; return false;}
+    virtual bool processDataReceived(const std::string& msg = "");
 
-    virtual void setDeviceName() {m_DeviceName = "";}
+    virtual void setDeviceName(const std::string& strName) {m_DeviceName = strName;}
     virtual std::string name() {return m_DeviceName;}
 
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, std::string& value);
+    virtual bool getValueMessage(const std::string& msg, const std::string& valueName, int& value);
+    virtual bool getValueMessage(const std::string& msg, const std::string& valueName, bool& value);
+    virtual std::string getData() {std::string msg(m_strBuffer); m_strBuffer = ""; return msg;}
+
+    virtual int getServicePID() {return m_pidService;}
+    virtual void setServicePID(int pid) {m_pidService = pid;}
+
+    virtual void addData(const std::string msg) {m_strBuffer += msg;}
 
 protected:
 
@@ -46,8 +55,8 @@ protected:
     std::string m_strBuffer;
 
     int         m_pidService;
-    bool        m_bServiceConnected;
-    bool        m_bDeviceMatched;
+    bool        m_bDeviceDetected;
+    //bool        m_bDeviceMatched;
 };
 
 #endif // DEVICE_H

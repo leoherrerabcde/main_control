@@ -4,7 +4,7 @@
 #include <sstream>
 
 Device::Device(const std::string& deviceName)
-    : m_DeviceName(deviceName), m_bServiceConnected(false), m_bDeviceMatched(false)
+    : m_DeviceName(deviceName), m_bDeviceDetected(false)
 {
 
 }
@@ -32,6 +32,31 @@ std::string Device::popFrontMessage()
     msg = m_strBuffer.substr(1, pos-1);
     m_strBuffer = m_strBuffer.substr(pos+1);
     return msg;
+}
+
+bool Device::getValueMessage(const std::string& msg, const std::string& valueName, bool& value)
+{
+    std::string strValue;
+    bool res = getValueMessage(msg, valueName, strValue);
+    if (!res)
+        return false;
+    if (strValue == "false")
+        value = false;
+    else if (strValue == "true")
+        value = true;
+    else
+        return false;
+    return true;
+}
+
+bool Device::getValueMessage(const std::string& msg, const std::string& valueName, int& value)
+{
+    std::string strValue;
+    bool res = getValueMessage(msg, valueName, strValue);
+    if (!res)
+        return false;
+    value = std::stoi(strValue);
+    return true;
 }
 
 bool Device::getValueMessage(const std::string& msg, const std::string& valueName, std::string& value)
@@ -82,5 +107,33 @@ bool Device::isBufferEmpty()
     }
 
     return false;
+}
+
+bool Device::processDataReceived(const std::string& msg)
+{
+    pushData(msg);
+
+    while (!isBufferEmpty())
+    {
+        std::string data;
+        data = popFrontMessage();
+        if (!m_bDeviceDetected)
+        {
+            std::string strValue;
+            bool res = getValueMessage(data, DEVICE_NAME, strValue);
+            if (res)
+            {
+                setDeviceName(strValue);
+                m_bDeviceDetected = true;
+                res =  getValueMessage(data, SERVICE_PID, strValue);
+                if (res)
+                    m_pidService = std::atoi(strValue.c_str());
+            }
+        }
+        else
+        {
+        }
+    }
+    return true;
 }
 

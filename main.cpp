@@ -50,12 +50,6 @@ int main(int argc, char* argv[])
     socketServer.setLocalPort(mainSettings.serverPort);
     socketServer.listen();
 
-    rfidBoquilla.init(mainSettings);
-    rfidUser.init(mainSettings);
-    electroValv.init(mainSettings);
-    modCommGSM.init(mainSettings);
-    lucesDeEstado.init(mainSettings);
-
     Device* pDvc;
 
     pDvc = &rfidBoquilla;
@@ -79,6 +73,12 @@ int main(int argc, char* argv[])
     keepAlive.start(mainSettings.noResponseTimeMilli);
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
     keepAlive.throwDisable();
+
+    rfidBoquilla.init(mainSettings);
+    rfidUser.init(mainSettings);
+    electroValv.init(mainSettings);
+    modCommGSM.init(mainSettings);
+    lucesDeEstado.init(mainSettings);
 
     std::cout << "Main Loop Started." << std::endl;
 

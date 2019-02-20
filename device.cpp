@@ -139,10 +139,12 @@ bool Device::processDataReceived(const std::string& msg)
                 res =  getValueMessage(data, SERVICE_PID, strValue);
                 if (res)
                     m_pidService = std::atoi(strValue.c_str());
+                break;
             }
         }
         else
         {
+            break;
         }
     }
     return bMsgDetected;

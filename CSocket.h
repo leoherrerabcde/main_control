@@ -32,7 +32,8 @@ enum SocketError
     SetSockOptError,
     MaxSendDataTries,
     ReadTimeOut,
-    ReadError
+    ReadError,
+    SocketDisconected,
 };
 
 enum SocketState
@@ -115,6 +116,7 @@ class CSocket
         void throwError(const int sockErrCode);
 
         void printError(const SocketError& sockErrCode, const std::string& strErrorMsg = "");
+        void printError(const int& sockErrCode, const std::string& strErrorMsg = "");
 
     private:
 

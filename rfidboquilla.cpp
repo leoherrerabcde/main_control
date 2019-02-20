@@ -44,7 +44,8 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     std::string strService(sService.str());
     std::string strArgs(sArgs.str());
 
-    int ret = 0; // launchService(strService, strArgs);
+    //int ret = launchService(strService, strArgs);
+    int ret = 0;
 
     SCCLog::print("RFID Nozlle ready to use.");
 

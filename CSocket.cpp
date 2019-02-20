@@ -11,7 +11,8 @@ static std::vector<std::string> stErrorDescriptList = {
     "SetSockOptError",
     "Exceed Tries to Send Data",
     "Read Time Out",
-    "Error during reading process."
+    "Error during reading process.",
+    "Socket Disconected"
     };
 
 static std::vector<std::string> stStateDescriptList = {
@@ -134,6 +135,7 @@ void CSocket::throwError(const int sockErrCode)
     {
         m_sckError = sockErrCode;
 
+        printError(sockErrCode);
         //SCCLog.print("");
         throw(strerror(sockErrCode));
     }
@@ -142,6 +144,7 @@ void CSocket::throwError(const int sockErrCode)
 void CSocket::throwError(const SocketError& sockErrCode, const std::string& strErrorMsg)
 {
     m_sckError = sockErrCode;
+    printError(sockErrCode, strErrorMsg);
     throw(strErrorMsg);
 }
 
@@ -295,13 +298,13 @@ void CSocket::disconnect()
     if (m_sckState != sckClosed)
     {
         close(sockfd);
-        m_bConnected = false;
         setState(sckClosed);
-        if (m_pListeningThread != NULL)
+        if (m_pListeningThread != NULL && !m_bConnected)
         {
             m_pListeningThread->join();
             delete m_pListeningThread;
         }
+        m_bConnected = false;
     }
 }
 
@@ -380,7 +383,8 @@ bool CSocket::sendData(std::string msg)
             if(sentBytes == -1)
             {
                 //cerr << "Error sending IDs: " << errno << "  " << strerror(errno) << endl;
-                throwError(errno);
+                throwError(SocketDisconected);
+                disconnect();
                 return false;
             }
             tries = 0;
@@ -463,5 +467,14 @@ void CSocket::printError(const SocketError& sockErrCode, const std::string& strE
 {
     std::cout << "CSocket: " << stErrorDescriptList[sockErrCode] << std::endl;
     if (strErrorMsg !="")
-        std::cout << strErrorMsg << std::endl;
+        std::cout << " " << strErrorMsg << std::endl;
 }
+
+void CSocket::printError(const int& sockErrCode, const std::string& strErrorMsg)
+{
+    std::cout << "CSocket: " << strerror(sockErrCode) << std::endl;
+    if (strErrorMsg !="")
+        std::cout << " " << strErrorMsg << std::endl;
+}
+
+

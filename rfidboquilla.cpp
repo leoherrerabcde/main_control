@@ -3,6 +3,7 @@
 #include "../commPort/SCCWirelessRcvrProtocol.h"
 
 #include <sstream>
+#include <iostream>
 
 RFIDBoquilla::RFIDBoquilla(const std::string& deviceName) : Device(deviceName)
 {
@@ -44,12 +45,14 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     std::string strService(sService.str());
     std::string strArgs(sArgs.str());
 
+    setServicePath(strService);
+    setServiceArgs(strArgs);
     //int ret = launchService(strService, strArgs);
-    int ret = 0;
+    //int ret = 0;
 
-    SCCLog::print("RFID Nozlle ready to use.");
+    //SCCLog::print("RFID Nozzle Initiated.");
 
-    return ret;
+    return 0;
 }
 
 bool RFIDBoquilla::isRFIDReceived()
@@ -92,6 +95,7 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
                 bTagDetected = false;
             }
         }
+        std::cout << data << std::endl;
     }
     return true;
 }

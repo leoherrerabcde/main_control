@@ -44,6 +44,13 @@ public:
 
     virtual void addData(const std::string msg) {m_strBuffer += msg;}
 
+    void setServicePath(const std::string& path) {m_strServicePathName = path;}
+    std::string getServicePath() const {return m_strServicePathName;}
+    void setServiceArgs(const std::string& args) {m_strServiceArgs = args;}
+    std::string getServiceArgs() const {return m_strServiceArgs;}
+
+    int launchService();
+
 protected:
 
     virtual int launchService(const std::string& servicePathName, const std::string& args);
@@ -57,6 +64,8 @@ protected:
     int         m_pidService;
     bool        m_bDeviceDetected;
     //bool        m_bDeviceMatched;
+    std::string m_strServicePathName;
+    std::string m_strServiceArgs;
 };
 
 #endif // DEVICE_H

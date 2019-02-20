@@ -111,9 +111,9 @@ class CSocket
 
     protected:
 
-        void throwError(const SocketError& sockErrCode, const std::string& strErrorMsg);
-        void throwError(const SocketError& sockErrCode);
-        void throwError(const int sockErrCode);
+        void throwError(const int line, const SocketError& sockErrCode, const std::string& strErrorMsg);
+        void throwError(const int line, const SocketError& sockErrCode);
+        void throwError(const int line, const int sockErrCode);
 
         void printError(const SocketError& sockErrCode, const std::string& strErrorMsg = "");
         void printError(const int& sockErrCode, const std::string& strErrorMsg = "");

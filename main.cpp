@@ -18,6 +18,7 @@ using namespace std;
 #include "SCCAlive.h"
 #include "SCCDeviceNames.h"
 
+void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList);
 void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
 void processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::list<CSocket*>& socketList,
@@ -85,7 +86,7 @@ int main(int argc, char* argv[])
     for(;;)
     {
         bool bSleep = true;
-
+        verifyDeviceService(deviceList);
         if (stateRbpi == MainState::waitForInitTransaction)
         {
             DeviceResult processResult = DeviceResult::IncompletedReceive;
@@ -179,5 +180,15 @@ void processDataClients(std::list<CSocket*>& sockeList,
             Device* pDevice = it->second;
             pDevice->processDataReceived(itSck->getData());
         }
+    }
+}
+
+void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
+{
+    for (auto itDvc : dvcList)
+    {
+        Device* pDvc = itDvc.second;
+        if (pDvc->getServicePID() == 0)
+            pDvc->launchService();
     }
 }

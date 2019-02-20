@@ -5,14 +5,21 @@
 #include <cstring>
 
 Device::Device(const std::string& deviceName)
-    : m_DeviceName(deviceName), m_bDeviceDetected(false)
+    : m_DeviceName(deviceName), m_pidService(0), m_bDeviceDetected(false)
 {
 
+}
+int Device::launchService()
+{
+    return launchService(m_strServicePathName, m_strServiceArgs);
 }
 
 int Device::launchService(const std::string& servicePathName, const std::string& args)
 {
     std::stringstream ss;
+
+    if (servicePathName == "" || args == "")
+        return 0;
 
     ss << servicePathName << " " << args << " &";
     char cmdProgram[ss.str().length()+1];

@@ -122,14 +122,14 @@ std::string CSocket::getRemoteHost() const
     return m_strRemoteHost;
 }
 
-void CSocket::throwError(const SocketError& sockErrCode)
+void CSocket::throwError(const int line, const SocketError& sockErrCode)
 {
     m_sckError = sockErrCode;
     printError(sockErrCode);
     throw(stErrorDescriptList[sockErrCode]);
 }
 
-void CSocket::throwError(const int sockErrCode)
+void CSocket::throwError(const int line, const int sockErrCode)
 {
     if (m_sckError != sockErrCode)
     {
@@ -141,7 +141,7 @@ void CSocket::throwError(const int sockErrCode)
     }
 }
 
-void CSocket::throwError(const SocketError& sockErrCode, const std::string& strErrorMsg)
+void CSocket::throwError(const int line, const SocketError& sockErrCode, const std::string& strErrorMsg)
 {
     m_sckError = sockErrCode;
     printError(sockErrCode, strErrorMsg);
@@ -163,7 +163,7 @@ void CSocket::init()
         if (sockfd < 0)
         {
             setState(sckError);
-            throwError(OpeningSocket);
+            throwError(__LINE__, OpeningSocket);
             /*m_sckError = OpeningSocket;
             throw("ERROR opening socket");*/
         }
@@ -196,7 +196,7 @@ void CSocket::listen()
 
     int yes = 1;
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1)
-        throwError(SocketError::SetSockOptError, strerror(errno));
+        throwError(__LINE__, SocketError::SetSockOptError, strerror(errno));
 
     enableKeepAlive(sockfd);
 
@@ -207,7 +207,7 @@ void CSocket::listen()
 
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
           //perror("ERROR on binding");
-          throwError(SocketError::BindingSocket);
+          throwError(__LINE__, SocketError::BindingSocket);
 
     ::listen(sockfd, 5);
 
@@ -227,11 +227,11 @@ bool CSocket::listening()
     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
     if (newsockfd < 0)
       //error("ERROR on accept");
-      throwError(SocketError::AcceptError);
+      throwError(__LINE__, SocketError::AcceptError);
 
     if (newsockfd == -1)
     {
-        throwError(errno);
+        throwError(__LINE__, errno);
         return false;
     }
     else
@@ -314,7 +314,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, &yes, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
-        throwError(errno);
+        throwError(__LINE__, errno);
         return -1;
     }
 
@@ -322,7 +322,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPIDLE, &idle, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
-        throwError(errno);
+        throwError(__LINE__, errno);
         return -1;
     }
 
@@ -330,7 +330,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
-        throwError(errno);
+        throwError(__LINE__, errno);
         return -1;
     }
 
@@ -338,7 +338,7 @@ int CSocket::enableKeepAlive(const int sock)
 
     if(setsockopt(sock, IPPROTO_TCP, TCP_KEEPCNT, &maxpkt, sizeof(int)) == -1) {
         //cerr << errno << "  " << strerror(errno) << endl;
-        throwError(errno);
+        throwError(__LINE__, errno);
         return -1;
     }
 
@@ -369,12 +369,12 @@ bool CSocket::sendData(std::string msg)
 
         if(rv == -1)
             //cerr << errno << "  " << strerror(errno) << endl;
-            throwError(errno);
+            throwError(__LINE__, errno);
         else if(rv == 0)
         {
             sentBytes = 0;
             if (++tries > m_iMaxSendDataTries)
-                throwError(SocketError::MaxSendDataTries);
+                throwError(__LINE__, SocketError::MaxSendDataTries);
         }
         else if(rv > 0 && FD_ISSET(sockfd, &writefds))
         {
@@ -383,7 +383,7 @@ bool CSocket::sendData(std::string msg)
             if(sentBytes == -1)
             {
                 //cerr << "Error sending IDs: " << errno << "  " << strerror(errno) << endl;
-                throwError(SocketDisconected);
+                throwError(__LINE__, SocketDisconected);
                 disconnect();
                 return false;
             }
@@ -416,10 +416,10 @@ std::string CSocket::getData()
 
         if(rv <= -1)
             //cerr << errno << "  " << strerror(errno) << endl;
-            throwError(errno);
+            throwError(__LINE__, errno);
         else if(rv == 0)
         {
-            throwError(SocketError::ReadTimeOut);
+            throwError(__LINE__, SocketError::ReadTimeOut);
             break;
         }
         else if(rv > 0 && FD_ISSET(sockfd, &readfds))
@@ -446,7 +446,7 @@ std::string CSocket::getData()
                 }
                 else
                     //cerr << errno << "  " << strerror(errno) << endl;
-                    throwError(errno);
+                    throwError(__LINE__, errno);
 
                 break;
             }
@@ -455,7 +455,7 @@ std::string CSocket::getData()
         }
         else
             //cerr << "ERROR: rv: " << rv << endl;
-            throwError(SocketError::ReadError);
+            throwError(__LINE__, SocketError::ReadError);
 
     }
     while(n >= (int)(m_iBufferSize - 1));

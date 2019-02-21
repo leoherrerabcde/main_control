@@ -35,9 +35,9 @@ MainCtrlSettings::MainCtrlSettings()
 {
     //ctor
     serverPort = 4000;
-    noResponseTimeMilli = 5000;
-    mainTimerInterval = 15000;
-    sckBufferSize = 256;
+    noResponseTimeMilli = 7000;
+    mainTimerInterval = 5000;
+    sckBufferSize = 4096;
 }
 
 MainCtrlSettings::~MainCtrlSettings()

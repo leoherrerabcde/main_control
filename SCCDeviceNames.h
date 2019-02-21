@@ -12,4 +12,9 @@
 #define DEVICE_NAME             "DeviceName"
 #define SERVICE_PID             "ServicePID"
 
+#define MSG_HEADER_TYPE         "Header"
+
+#define MSG_SERV_ALIVE_HEADER   "AliveMessage"
+#define MSG_SERV_ALIVE_COUNT    "AliveCounter"
+
 #endif // SCCDEVICENAMES_H_INCLUDED

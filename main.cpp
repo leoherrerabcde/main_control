@@ -18,7 +18,7 @@ using namespace std;
 #include "SCCAlive.h"
 #include "SCCRemoteServer.h"
 #include "SCCDeviceNames.h"
-
+#include "SCCCreateMessage.h"
 
 SCCLog globalLog(std::cout);
 
@@ -30,6 +30,8 @@ void processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::vector<Device*>& onTheFlyDvcList);
 
 void processDataClients(std::list<CSocket*>& socketList,
+                        std::unordered_map<std::string,Device*>& dvcList);
+void sendAliveMessage(std::list<CSocket*>& socketList,
                         std::unordered_map<std::string,Device*>& dvcList);
 
 int main(int argc, char* argv[])
@@ -119,9 +121,12 @@ int main(int argc, char* argv[])
         processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList);
         processDataClients(socketClientList, deviceList);
 
+        if (keepAlive.isTimerEvent(mainTmr))
+            sendAliveMessage(socketClientList, deviceList);
 
         if (bSleep == true)
             usleep(50);
+
         keepAlive.update();
     }
 
@@ -136,6 +141,7 @@ void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::l
     {
         CSocket* newClient = sckServer.getSocket();
         newClient->setBufferSize(settings.sckBufferSize);
+        newClient->runRcvLoop();
         socketList.push_back(newClient);
         sckServer.listen();
     }
@@ -193,6 +199,28 @@ void processDataClients(std::list<CSocket*>& sockeList,
         }
     }
 }
+
+void sendAliveMessage(std::list<CSocket*>& socketList,
+                        std::unordered_map<std::string,Device*>& dvcList)
+{
+    for (auto itSck : socketList)
+    {
+        auto it = dvcList.find(itSck->getIDClient());
+        if (it != dvcList.end())
+        {
+            Device* pDevice = it->second;
+            if (!pDevice->isServiceAlive())
+            {
+                SCCCreateMessage sccAliveMsg;
+                sccAliveMsg.addParam(MSG_SERV_ALIVE_HEADER, MSG_SERV_ALIVE_HEADER);
+                sccAliveMsg.addParam(MSG_SERV_ALIVE_COUNT, std::to_string(pDevice->incAliveCounter()));
+                std::string msg = sccAliveMsg.makeMessage();
+                itSck->sendData(msg);
+            }
+        }
+    }
+}
+
 
 void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
 {

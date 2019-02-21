@@ -54,6 +54,11 @@ public:
 
     int launchService();
 
+    int getAliveCounter() const {return m_iAliveCounter;}
+    int incAliveCounter() {return ++m_iAliveCounter;}
+    bool isServiceAlive() {bool res(m_bServiceAlive); m_bServiceAlive=false;return res;}
+    void setServiceAlive() {m_bServiceAlive = false;}
+
 protected:
 
     virtual int launchService(const std::string& servicePathName, const std::string& args);
@@ -69,6 +74,9 @@ protected:
     //bool        m_bDeviceMatched;
     std::string m_strServicePathName;
     std::string m_strServiceArgs;
+
+    int         m_iAliveCounter;
+    bool        m_bServiceAlive;
 };
 
 #endif // DEVICE_H

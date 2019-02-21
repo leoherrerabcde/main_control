@@ -297,6 +297,12 @@ bool CSocket::connecting()
     return true;
 }
 
+void CSocket::runRcvLoop()
+{
+    if (getState() == sckConnected)
+        m_pReceivingThread = new std::thread(&CSocket::receivingLoop, this);
+}
+
 void CSocket::disconnect()
 {
     if (m_sckState != sckClosed)
@@ -307,8 +313,15 @@ void CSocket::disconnect()
         {
             m_pListeningThread->join();
             delete m_pListeningThread;
+            m_pListeningThread = NULL;
         }
         m_bConnected = false;
+        if (m_pReceivingThread != NULL)
+        {
+            m_pReceivingThread->join();
+            delete m_pReceivingThread;
+            m_pReceivingThread = NULL;
+        }
     }
 }
 

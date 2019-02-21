@@ -110,6 +110,8 @@ class CSocket
         int send(std::string msg);
         std::string& receive();
 
+        void runRcvLoop();
+
     protected:
 
         void receivingLoop();

@@ -55,6 +55,8 @@
 		<Unit filename="MainCtrlSettings.h" />
 		<Unit filename="SCCAlive.cpp" />
 		<Unit filename="SCCAlive.h" />
+		<Unit filename="SCCCreateMessage.cpp" />
+		<Unit filename="SCCCreateMessage.h" />
 		<Unit filename="SCCDeviceNames.h" />
 		<Unit filename="SCCDeviceParams.h" />
 		<Unit filename="SCCLog.cpp" />

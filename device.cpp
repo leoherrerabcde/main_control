@@ -6,7 +6,7 @@
 
 
 Device::Device(const std::string& deviceName)
-    : m_DeviceName(deviceName), m_pidService(0), m_bDeviceDetected(false)
+    : m_DeviceName(deviceName), m_pidService(0), m_bDeviceDetected(false), m_iAliveCounter(0)
 {
 
 }

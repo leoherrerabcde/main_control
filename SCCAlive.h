@@ -12,11 +12,15 @@ struct SCCTimer
         m_dInterval = std::chrono::milliseconds(interval);
         m_clkLast = std::chrono::steady_clock::now();
         m_bEnable = true;
+        m_bTimerEvent = false;
     }
     //std::chrono::duration<double> m_dInterval;
     std::chrono::milliseconds m_dInterval;
     std::chrono::time_point<std::chrono::steady_clock> m_clkLast;
     bool m_bEnable;
+    bool m_bTimerEvent;
+
+    bool isTimerEvent() {bool res(m_bTimerEvent); m_bTimerEvent = false; return res;}
 };
 
 class SCCAlive
@@ -31,6 +35,7 @@ class SCCAlive
         void run();
         int addTimer(const int interval);
         void stopTimer(int timerHdl);
+        bool isTimerEvent(const int tmrHdl);
 
         void throwDisable() {m_bThrowEnable = false;}
 

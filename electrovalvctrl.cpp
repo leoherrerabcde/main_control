@@ -1,6 +1,8 @@
 #include "electrovalvctrl.h"
 #include "SCCLog.h"
 
+extern SCCLog globalLog;
+
 ElectroValvCtrl::ElectroValvCtrl(const std::string& deviceName) : Device(deviceName)
 {
 
@@ -13,9 +15,9 @@ ElectroValvCtrl::~ElectroValvCtrl()
 
 int ElectroValvCtrl::init(MainCtrlSettings& settings)
 {
-    SCCLog::print("Initializating Electro Valve...");
+    globalLog << "Initializating Electro Valve..." << std::endl;
 
-    SCCLog::print("Electro Valve ready to use.");
+    globalLog << "Electro Valve ready to use." << std::endl;
 
     return 0;
 }

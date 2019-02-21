@@ -11,24 +11,26 @@
 1550511542 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1550632876 /home/pi/Documents/source/main_control/device.h
+1550714182 /home/pi/Documents/source/main_control/device.h
 	<string>
 	"MainCtrlSettings.h"
+	"SCCLog.h"
 
-1550606602 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1550683263 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
 	<unordered_map>
 	"SCCDeviceNames.h"
+	"SCCDeviceParams.h"
 	"../commPort/SCCArgumentParser.h"
 
-1550510439 /home/pi/Documents/source/main_control/SCCDeviceNames.h
+1550678388 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1550633609 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1550722568 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
 
-1550633337 /home/pi/Documents/source/main_control/CSocket.h
+1550721879 /home/pi/Documents/source/main_control/CSocket.h
 	<iostream>
 	<future>
 	<functional>
@@ -47,17 +49,19 @@
 	<netdb.h>
 	<unistd.h>
 	<sys/signal.h>
+	<mutex>
 
-1548792103 /home/pi/Documents/source/main_control/SCCLog.h
+1550715718 /home/pi/Documents/source/main_control/SCCLog.h
 	<string>
+	<ostream>
 
-1550632843 source:/home/pi/Documents/source/main_control/device.cpp
+1550716937 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	<stdlib.h>
 	<sstream>
 	<cstring>
 
-1550606988 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
+1550716910 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
 	"electrovalvctrl.h"
 	"SCCLog.h"
 
@@ -71,21 +75,21 @@
 	<map>
 	<unordered_map>
 
-1548792060 source:/home/pi/Documents/source/main_control/IDUserList.cpp
+1550716900 source:/home/pi/Documents/source/main_control/IDUserList.cpp
 	"IDUserList.h"
 	"SCCLog.h"
 
 1548705940 /home/pi/Documents/source/main_control/IDUserList.h
 	"IDList.h"
 
-1548792070 source:/home/pi/Documents/source/main_control/IDVehicleList.cpp
+1550716890 source:/home/pi/Documents/source/main_control/IDVehicleList.cpp
 	"IDVehicleList.h"
 	"SCCLog.h"
 
 1548705848 /home/pi/Documents/source/main_control/IDVehicleList.h
 	"IDList.h"
 
-1550606980 source:/home/pi/Documents/source/main_control/lucesestado.cpp
+1550716880 source:/home/pi/Documents/source/main_control/lucesestado.cpp
 	"lucesestado.h"
 	"SCCLog.h"
 
@@ -95,7 +99,7 @@
 
 1548706438 /home/pi/Documents/source/main_control/mainstate.h
 
-1550632929 source:/home/pi/Documents/source/main_control/main.cpp
+1550716868 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -111,6 +115,7 @@
 	"CSocket.h"
 	"SCCLog.h"
 	"SCCAlive.h"
+	"SCCRemoteServer.h"
 	"SCCDeviceNames.h"
 
 1550606900 /home/pi/Documents/source/main_control/rfidboquilla.h
@@ -125,13 +130,13 @@
 	<thread>
 	<vector>
 
-1550508742 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1550708911 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1550633137 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1550716844 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
@@ -145,16 +150,27 @@
 	<queue>
 	<cstring>
 
-1550606971 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1550716748 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 
-1550613914 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1550717534 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>
 
-1548792212 source:/home/pi/Documents/source/main_control/SCCLog.cpp
+1550713336 source:/home/pi/Documents/source/main_control/SCCLog.cpp
 	"SCCLog.h"
 	<iostream>
+
+1550687791 /home/pi/Documents/source/main_control/SCCDeviceParams.h
+
+1550687319 /home/pi/Documents/source/main_control/SCCRemoteServer.h
+	"device.h"
+	"SCCDeviceParams.h"
+
+1550716777 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
+	"SCCRemoteServer.h"
+	"SCCLog.h"
+	<sstream>
 

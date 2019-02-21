@@ -1,6 +1,8 @@
 #include "lucesestado.h"
 #include "SCCLog.h"
 
+extern SCCLog globalLog;
+
 LucesEstado::LucesEstado(const std::string& deviceName) : Device(deviceName)
 {
 
@@ -13,9 +15,9 @@ LucesEstado::~LucesEstado()
 
 int LucesEstado::init(MainCtrlSettings& settings)
 {
-    SCCLog::print("Initializating State Indicators...");
+    globalLog << "Initializating State Indicators..." << std::endl;
 
-    SCCLog::print("State Indicator ready to use.");
+    globalLog  << "State Indicator ready to use." << std::endl;
 
     return 0;
 }

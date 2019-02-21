@@ -1,6 +1,8 @@
 #include "IDVehicleList.h"
 #include "SCCLog.h"
 
+extern SCCLog globalLog;
+
 IDVehicleList::IDVehicleList()
 {
     //ctor
@@ -13,9 +15,9 @@ IDVehicleList::~IDVehicleList()
 
 bool IDVehicleList::isValidID(std::string& strIDVehicle)
 {
-    SCCLog::print("Loading Vehicle ID List...");
+    globalLog << "Loading Vehicle ID List..." << std::endl;
 
-    SCCLog::print("Vehicle ID List ready to use.");
+    globalLog << "Vehicle ID List ready to use." << std::endl;
 
     return false;
 }

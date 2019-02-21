@@ -4,6 +4,7 @@
 #include <sstream>
 #include <cstring>
 
+
 Device::Device(const std::string& deviceName)
     : m_DeviceName(deviceName), m_pidService(0), m_bDeviceDetected(false)
 {
@@ -141,12 +142,17 @@ bool Device::processDataReceived(const std::string& msg)
             if (res)
             {
                 setDeviceName(strValue);
+
                 m_bDeviceDetected = true;
                 bMsgDetected = true;
                 res =  getValueMessage(data, SERVICE_PID, strValue);
                 if (res)
                     m_pidService = std::atoi(strValue.c_str());
                 break;
+                //std::stringstream ss;
+                globalLog << "Device Name: " << name() << std::endl;
+                //SCCLog::print(ss.str());
+
             }
         }
         else

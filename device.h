@@ -4,7 +4,10 @@
 #include <string>
 
 #include "MainCtrlSettings.h"
+#include "SCCLog.h"
 //#include "SCCDeviceNames.h"
+
+extern SCCLog globalLog;
 
 enum DeviceResult
 {

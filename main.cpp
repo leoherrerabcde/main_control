@@ -16,7 +16,11 @@ using namespace std;
 #include "CSocket.h"
 #include "SCCLog.h"
 #include "SCCAlive.h"
+#include "SCCRemoteServer.h"
 #include "SCCDeviceNames.h"
+
+
+SCCLog globalLog(std::cout);
 
 void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList);
 void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
@@ -38,6 +42,7 @@ int main(int argc, char* argv[])
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO);
     ElectroValvCtrl electroValv(DEVICE_ELECTRO_VALVE);
     Device guiApp(DEVICE_GUI);
+    SCCRemoteServer restApi(DEVICE_REST_SERVICE);
 
     commGSM modCommGSM(DEVICE_SERVER);
     LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS);
@@ -65,19 +70,22 @@ int main(int argc, char* argv[])
     pDvc = &guiApp;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));
 
+    pDvc = &restApi;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
 
     MainState::State stateRbpi;
 
     stateRbpi = mainState.getLastState();
 
     SCCAlive keepAlive;
+    keepAlive.throwDisable();
     keepAlive.start(mainSettings.noResponseTimeMilli);
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
-    keepAlive.throwDisable();
 
     rfidBoquilla.init(mainSettings);
     rfidUser.init(mainSettings);
     electroValv.init(mainSettings);
+    restApi.init(mainSettings);
     modCommGSM.init(mainSettings);
     lucesDeEstado.init(mainSettings);
 
@@ -86,7 +94,7 @@ int main(int argc, char* argv[])
     for(;;)
     {
         bool bSleep = true;
-        verifyDeviceService(deviceList);
+        //verifyDeviceService(deviceList);
         if (stateRbpi == MainState::waitForInitTransaction)
         {
             DeviceResult processResult = DeviceResult::IncompletedReceive;
@@ -160,6 +168,9 @@ void processDataNewClients(std::list<CSocket*>& socketNewList,
                     dvcList.insert(std::make_pair(pDevice->name(), pDevice));
                     onTheFlyDvcList.push_back(pDevice);
                 }
+                //std::stringstream ss;
+                globalLog << "New Device connected: " << pDvc.name() << std::endl;
+                //SCCLog::print(ss.str());
                 socketList.push_back(*itSck);
                 itSck = socketNewList.erase(itSck);
                 continue;

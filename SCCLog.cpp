@@ -1,10 +1,10 @@
 #include "SCCLog.h"
 #include <iostream>
 
-SCCLog::SCCLog()
+/*SCCLog::SCCLog()
 {
     //ctor
-}
+}*/
 
 SCCLog::~SCCLog()
 {

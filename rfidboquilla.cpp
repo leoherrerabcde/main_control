@@ -5,6 +5,8 @@
 #include <sstream>
 #include <iostream>
 
+extern SCCLog globalLog;
+
 RFIDBoquilla::RFIDBoquilla(const std::string& deviceName) : Device(deviceName)
 {
 
@@ -17,7 +19,7 @@ RFIDBoquilla::~RFIDBoquilla()
 
 int RFIDBoquilla::init(MainCtrlSettings& settings)
 {
-    SCCLog::print("Initializating RFID Nozzle Receiver...");
+    globalLog << "Initializating RFID Nozzle Receiver..." << std::endl;
     idVehicleList.init();
 
     /* Launch Service*/

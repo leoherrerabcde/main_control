@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+extern SCCLog globalLog;
+
 
 SCCAlive::SCCAlive() : m_pThreadAlive(NULL), m_bStarted(false), m_bThrowEnable(true)
 {
@@ -39,6 +41,7 @@ void SCCAlive::run()
         if (diff > m_dMaxDiffTime)
         {
             std::cout << "Main Loop was stopped long time" << std::endl;
+            m_clkLast = clkNow;
             if (m_bThrowEnable)
                 throw("Rutine is not Alive.");
         }
@@ -54,7 +57,8 @@ void SCCAlive::run()
                     m_TimerList[i].m_clkLast = clkNow;
                     std::string tmrMsg("Timer ");
                     tmrMsg += std::to_string(i) + " event.";
-                    SCCLog::print(tmrMsg);
+                    globalLog << tmrMsg;
+                    globalLog << std::endl;
                 }
             }
         }
@@ -84,10 +88,10 @@ int SCCAlive::addTimer(const int interval)
         tmr = (int)m_TimerList.size();
         SCCTimer newTimer(interval);
         m_TimerList.push_back(newTimer);
-        SCCLog::print("Timer created");
+        globalLog << "Timer created" << std::endl;
     }
     else
-        SCCLog::print("Interval too small. Timerisnot created");
+        globalLog << "Interval too small. Timerisnot created" << std::endl;
     return tmr;
 }
 
@@ -100,9 +104,9 @@ void SCCAlive::stopTimer(int timerHdl)
             m_TimerList[timerHdl].m_bEnable = false;
         }
         else
-            SCCLog::print("Timer Handler out of scope.");
+            globalLog << "Timer Handler out of scope." << std::endl;
     }
     else
-        SCCLog::print("Timer Handler out of scope.");
+        globalLog << "Timer Handler out of scope." << std::endl;
 }
 

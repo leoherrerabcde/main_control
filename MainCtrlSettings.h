@@ -5,13 +5,10 @@
 #include <unordered_map>
 
 #include "SCCDeviceNames.h"
+#include "SCCDeviceParams.h"
 
 #include "../commPort/SCCArgumentParser.h"
 
-#define PARAM_SERVICE_NAME  "ServiceName"
-#define PARAM_PATH_NAME     "PathName"
-#define PARAM_COM_PORT      "COM"
-#define PARAM_BAUD_RATE     "BaudRate"
 
 class MainCtrlSettings
 {

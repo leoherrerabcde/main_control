@@ -6,6 +6,7 @@
 #define DEVICE_ELECTRO_VALVE    "ElectroValvula"
 #define DEVICE_STATUS_LIGHTS    "LucesStatus"
 #define DEVICE_SERVER           "Servidor"
+#define DEVICE_REST_SERVICE     "RestService"
 #define DEVICE_GUI              "GUI"
 
 #define DEVICE_NAME             "DeviceName"

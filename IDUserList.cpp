@@ -1,6 +1,8 @@
 #include "IDUserList.h"
 #include "SCCLog.h"
 
+extern SCCLog globalLog ;
+
 IDUserList::IDUserList()
 {
     //ctor
@@ -13,9 +15,9 @@ IDUserList::~IDUserList()
 
 bool IDUserList::isValidID(std::string& strID)
 {
-    SCCLog::print("Reading User ID List...");
+    globalLog <<"Reading User ID List..." << std::endl;
 
-    SCCLog::print("User ID List ready to use.");
+    globalLog  << "User ID List ready to use." << std::endl;
     return false;
 }
 

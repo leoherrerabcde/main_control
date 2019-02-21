@@ -21,6 +21,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <sys/signal.h>
+#include <mutex>
 
 
 enum SocketError
@@ -111,6 +112,8 @@ class CSocket
 
     protected:
 
+        void receivingLoop();
+
         void throwError(const int line, const SocketError& sockErrCode, const std::string& strErrorMsg);
         void throwError(const int line, const SocketError& sockErrCode);
         void throwError(const int line, const int sockErrCode);
@@ -125,6 +128,7 @@ class CSocket
         void clearBuffer();
 
         std::thread* m_pListeningThread;
+        std::thread* m_pReceivingThread;
 
         bool m_bConnected;
         int sockfd;
@@ -142,6 +146,9 @@ class CSocket
         std::string m_strID;
         std::queue<CSocket*> m_SockConnectedList;
         int m_iMaxSendDataTries;
+        bool m_bReceiveEvent;
+        std::string m_bufferIn;
+        std::mutex m_RecMutex;
 };
 
 #endif // CSOCKET_H

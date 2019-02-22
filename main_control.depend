@@ -23,9 +23,9 @@
 	"SCCDeviceParams.h"
 	"../commPort/SCCArgumentParser.h"
 
-1550747075 /home/pi/Documents/source/main_control/SCCDeviceNames.h
+1550760058 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1550723976 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1550795655 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
@@ -99,7 +99,7 @@
 
 1548706438 /home/pi/Documents/source/main_control/mainstate.h
 
-1550723634 source:/home/pi/Documents/source/main_control/main.cpp
+1550790820 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -117,6 +117,7 @@
 	"SCCAlive.h"
 	"SCCRemoteServer.h"
 	"SCCDeviceNames.h"
+	"SCCCreateMessage.h"
 
 1550606900 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
@@ -125,7 +126,7 @@
 1550511500 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 
-1550613531 /home/pi/Documents/source/main_control/SCCAlive.h
+1550752222 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
 	<thread>
 	<vector>
@@ -154,7 +155,7 @@
 	"rfiduser.h"
 	"SCCLog.h"
 
-1550723243 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1550753290 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>

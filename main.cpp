@@ -203,21 +203,24 @@ void processDataClients(std::list<CSocket*>& sockeList,
 void sendAliveMessage(std::list<CSocket*>& socketList,
                         std::unordered_map<std::string,Device*>& dvcList)
 {
-    for (auto itSck : socketList)
+    for (auto it = socketList.begin(); it != socketList.end();)
     {
-        auto it = dvcList.find(itSck->getIDClient());
-        if (it != dvcList.end())
+        CSocket* itSck = *it;
+        auto itDvc = dvcList.find(itSck->getIDClient());
+        if (itDvc != dvcList.end())
         {
-            Device* pDevice = it->second;
+            Device* pDevice = itDvc->second;
             if (!pDevice->isServiceAlive())
             {
                 SCCCreateMessage sccAliveMsg;
                 sccAliveMsg.addParam(MSG_SERV_ALIVE_HEADER, MSG_SERV_ALIVE_HEADER);
                 sccAliveMsg.addParam(MSG_SERV_ALIVE_COUNT, std::to_string(pDevice->incAliveCounter()));
                 std::string msg = sccAliveMsg.makeMessage();
-                itSck->sendData(msg);
+                if (!itSck->sendData(msg))
+                    it = socketList.erase(it);
             }
         }
+        ++it;
     }
 }
 

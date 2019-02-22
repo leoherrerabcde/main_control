@@ -400,7 +400,7 @@ bool CSocket::sendData(std::string msg)
             if(sentBytes == -1)
             {
                 //cerr << "Error sending IDs: " << errno << "  " << strerror(errno) << endl;
-                throwError(__LINE__, SocketDisconected);
+                //throwError(__LINE__, SocketDisconected);
                 disconnect();
                 return false;
             }
@@ -425,7 +425,8 @@ std::string CSocket::getData()
 
 void CSocket::receivingLoop()
 {
-    while(m_bConnected && m_sckState == sckConnected)
+    bool bBreakLoop = false;
+    while(m_bConnected && m_sckState == sckConnected && !bBreakLoop)
     {
         /*if (m_bConnected != true || m_sckState != sckConnected)
             return "";*/
@@ -483,9 +484,11 @@ void CSocket::receivingLoop()
                         }
                     }
                     else
+                    {
                         //cerr << errno << "  " << strerror(errno) << endl;
-                        throwError(__LINE__, errno);
-
+                        //throwError(__LINE__, errno);
+                        bBreakLoop = true;
+                    }
                     break;
                 }
                 else

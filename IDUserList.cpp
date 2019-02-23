@@ -3,7 +3,7 @@
 
 extern SCCLog globalLog ;
 
-IDUserList::IDUserList()
+IDUserList::IDUserList(const std::string& typeTable = "") : IDList(typeTable)
 {
     //ctor
 }
@@ -21,8 +21,11 @@ bool IDUserList::isValidID(std::string& strID)
     return false;
 }
 
-void IDUserList::init()
+void IDUserList::init(MainCtrlSettings& settings, const std::string& typeTable = "")
 {
+    if (typeTable != "")
+        m_strTableType = typeTable;
 
+    IDList::init();
 }
 

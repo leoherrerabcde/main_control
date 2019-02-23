@@ -6,15 +6,18 @@
 class IDVehicleList : public IDList
 {
     public:
-        IDVehicleList();
+        IDVehicleList(const std::string& typeTable = "");
         virtual ~IDVehicleList();
 
-        virtual bool isValidID(std::string& strIDVehicle);
-        virtual void init();
+        virtual bool isValidID(std::string& strId);
+        virtual void init(MainCtrlSettings& settings);
+
+        virtual bool readTable();
 
     protected:
 
     private:
+
 };
 
 #endif // IDVEHICLELIST_H

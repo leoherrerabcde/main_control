@@ -24,20 +24,42 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}}
 };
 
+std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =
+{
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "vehicle.txt"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}}
+};
+
+std::unordered_map<std::string, ArgumentStruct> st_TableVehicleParam =
+{
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "vehicle.txt"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}}
+};
+
+std::unordered_map<std::string, ArgumentStruct> st_FuelRegisterParam =
+{
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "fuelRegister.txt"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/registers"}}
+};
+
 
 std::unordered_map<std::string, std::unordered_map<std::string, ArgumentStruct>*> st_DeviceParam =
 {
     {DEVICE_RFID_BOQUILLA, &st_RFIDParam},
     {DEVICE_REST_SERVICE , &st_RestApiParam},
+    {TABLE_USERS         , &st_TableUserParam},
+    {TABLE_VEHICLES      , &st_TableVehicleParam},
+    {TABLE_REGISTERS     , &st_FuelRegisterParam},
 };
 
 MainCtrlSettings::MainCtrlSettings()
 {
     //ctor
-    serverPort = 4000;
-    noResponseTimeMilli = 7000;
-    mainTimerInterval = 5000;
-    sckBufferSize = 4096;
+    serverPort              = 4000;
+    noResponseTimeMilli     = 7000;
+    mainTimerInterval       = 5000;
+    sckBufferSize           = 4096;
+    requestTableTmrInterval = 300000;
 }
 
 MainCtrlSettings::~MainCtrlSettings()

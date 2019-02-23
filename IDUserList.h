@@ -6,11 +6,11 @@
 class IDUserList : public IDList
 {
     public:
-        IDUserList();
+        IDUserList(const std::string& typeTable = "");
         virtual ~IDUserList();
 
-        virtual void init();
-        virtual bool isValidID(std::string& strIDVehicle);
+        virtual void init(MainCtrlSettings& settings);
+        virtual bool isValidID(std::string& strId);
 
     protected:
 

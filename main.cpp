@@ -35,6 +35,8 @@ void processDataClients(std::list<CSocket*>& socketList,
                         std::unordered_map<std::string,Device*>& dvcList);
 void sendAliveMessage(std::list<CSocket*>& socketList,
                         std::unordered_map<std::string,Device*>& dvcList);
+void sendRequestTable(std::list<CSocket*>& socketList,
+                        std::unordered_map<std::string,Device*>& dvcList);
 
 int main(int argc, char* argv[])
 {
@@ -87,7 +89,9 @@ int main(int argc, char* argv[])
     SCCAlive keepAlive;
     keepAlive.throwDisable();
     keepAlive.start(mainSettings.noResponseTimeMilli);
+
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
+    int rqtTblTmr = keepAlive.addTimer();
 
     rfidBoquilla.init(mainSettings);
     rfidUser.init(mainSettings);
@@ -114,26 +118,26 @@ int main(int argc, char* argv[])
             {
                 bAuthorizedVehicle = VehicleList.isValidID(rfidBoquilla.getTagId());
             }
-
             mainState.processUserAuthorization(bAuthorizedUser);
             mainState.processVehicleAuthorization(bAuthorizedVehicle);
-
-            DeviceResult processResult = DeviceResult::IncompletedReceive;
-            if (processResult == DeviceResult::DeviceIdle)
-            {
-            }
-            else if (processResult == DeviceResult::IncompletedReceive)
-            {
-                bSleep = false;
-            }
-            else if (processResult == DeviceResult::NonAuthorizeID)
-            {
-                bSleep = false;
-            }
-            else if (processResult == DeviceResult::AuthorizeID)
-            {
-                bSleep = false;
-            }
+        }
+        else if (stateRbpi == MainState::RFIDVehicle)
+        {
+        }
+        else if (stateRbpi == MainState::RFIDUser)
+        {
+        }
+        else if (stateRbpi == MainState::startingTransaction)
+        {
+        }
+        else if (stateRbpi == MainState::chargingFuel)
+        {
+        }
+        else if (stateRbpi == MainState::chargingPaused)
+        {
+        }
+        else if (stateRbpi == MainState::finishingTransaction)
+        {
         }
 
         proccesNewConnection(socketServer, mainSettings, socketNewClientList);
@@ -144,6 +148,10 @@ int main(int argc, char* argv[])
         {
             sendAliveMessage(socketClientList, deviceList);
             //verifyDeviceService(deviceList);
+        }
+        if (keepAlive.isTimerEvent(rqtTblTmr))
+        {
+            sendRequestTable(socketClientList, deviceList);
         }
 
         if (bSleep == true)
@@ -273,3 +281,9 @@ void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
             pDvc->launchService();
     }
 }
+
+void sendRequestTable(std::list<CSocket*>& socketList,
+                        std::unordered_map<std::string,Device*>& dvcList)
+{
+}
+

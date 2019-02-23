@@ -20,7 +20,7 @@ RFIDBoquilla::~RFIDBoquilla()
 int RFIDBoquilla::init(MainCtrlSettings& settings)
 {
     globalLog << "Initializating RFID Nozzle Receiver..." << std::endl;
-    idVehicleList.init();
+    //idVehicleList.init();
 
     /* Launch Service*/
     std::stringstream sService;

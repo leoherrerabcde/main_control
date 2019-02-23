@@ -1,6 +1,8 @@
 #ifndef IDLIST_H
 #define IDLIST_H
 
+#include "MainCtrlSettings.h"
+
 #include <map>
 #include <unordered_map>
 
@@ -16,24 +18,34 @@ struct IDElement
 class IDList
 {
     public:
-        IDList();
+        IDList(const std::string& typeTable = "");
         virtual ~IDList();
 
-        virtual void init();
+        virtual void init(MainCtrlSettings& settings, const std::string& typeTable = "");
 
-        int readList();
-        int writeList();
-        int setFileName(const std::string& fileName);
+        virtual int readTable();
+        virtual int writeTable(const std::string& strData);
+        virtual int setFileName(const std::string& fileName);
 
-        std::string getAtributeValue(const std::string& strID, const std::string strAtribute);
-        void setAtributeValue(const std::string& strID, const std::string strAtribute, const std::string& strValue);
+        virtual std::string getAtributeValue(const std::string& strID, const std::string strAtribute);
+        virtual void setAtributeValue(const std::string& strID, const std::string strAtribute, const std::string& strValue);
+
+        virtual bool isValidID(std::string& strId);
 
     protected:
 
+        std::string     m_strTablePath;
+        std::string     m_strTableName;
+        std::string     m_strTableTemp;
+        std::string     m_strTableType;
+        std::string     m_strData;
+
+        bool            m_bTableReady;
+
     private:
 
-        std::string m_listFileName;
-        std::unordered_map<unsigned long, IDElement> m_IDElementList;
+        //std::string m_listFileName;
+        //std::unordered_map<unsigned long, IDElement> m_IDElementList;
 };
 
 #endif // IDLIST_H

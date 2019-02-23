@@ -15,6 +15,7 @@
 					<Add option="-g" />
 					<Add directory="include" />
 					<Add directory="/home/pi/Documents/source/main_control" />
+					<Add directory="main_control" />
 				</Compiler>
 				<Linker>
 					<Add library="pthread" />
@@ -29,6 +30,7 @@
 					<Add option="-O2" />
 					<Add directory="include" />
 					<Add directory="/home/pi/Documents/source/main_control" />
+					<Add directory="main_control" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -59,10 +61,16 @@
 		<Unit filename="SCCCreateMessage.h" />
 		<Unit filename="SCCDeviceNames.h" />
 		<Unit filename="SCCDeviceParams.h" />
+		<Unit filename="SCCFileManager.cpp" />
+		<Unit filename="SCCFileManager.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
+		<Unit filename="SCCRegisters.cpp" />
+		<Unit filename="SCCRegisters.h" />
 		<Unit filename="SCCRemoteServer.cpp" />
 		<Unit filename="SCCRemoteServer.h" />
+		<Unit filename="SCCStateVar.cpp" />
+		<Unit filename="SCCStateVar.h" />
 		<Unit filename="commgsm.cpp" />
 		<Unit filename="commgsm.h" />
 		<Unit filename="device.cpp" />

@@ -9,6 +9,11 @@
 #define DEVICE_REST_SERVICE     "RestService"
 #define DEVICE_GUI              "GUI"
 
+#define TABLE_USERS             "TablaUsuarios"
+#define TABLE_VEHICLES          "TablaVehicles"
+#define TABLE_REGISTERS         "TableRegisters"
+#define TABLE_HISTO_REGIST      "TableHistoRegists"
+
 #define DEVICE_NAME             "DeviceName"
 #define SERVICE_PID             "ServicePID"
 

@@ -17,14 +17,14 @@
 	"SCCLog.h"
 	"SCCDeviceNames.h"
 
-1550683263 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1550948418 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
 	<unordered_map>
 	"SCCDeviceNames.h"
 	"SCCDeviceParams.h"
 	"../commPort/SCCArgumentParser.h"
 
-1550864790 /home/pi/Documents/source/main_control/SCCDeviceNames.h
+1550939031 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
 1550795655 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
@@ -99,7 +99,8 @@
 	"device.h"
 	"mainstate.h"
 
-1550873867 /home/pi/Documents/source/main_control/mainstate.h
+1550882144 /home/pi/Documents/source/main_control/mainstate.h
+	"SCCStateVar.h"
 
 1550865139 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
@@ -185,4 +186,6 @@
 	"../commPort/SCCArgumentParser.h"
 	<list>
 	<utility>
+
+1550921006 /home/pi/Documents/source/main_control/SCCStateVar.h
 

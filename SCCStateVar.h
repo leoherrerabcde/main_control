@@ -25,12 +25,14 @@ class SCCStateVar
             clearVarState(false);
             return bVar;
         }
-        boolisVarStateChangeEvent()
+        bool isVarStateChangeEvent()
         {
             bool bVar(m_bChangeStateEvent);
             m_bChangeStateEvent = false;
             return bVar;
         }
+
+        bool get() {return m_bVarState;}
 
     protected:
 

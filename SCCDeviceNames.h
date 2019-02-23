@@ -17,4 +17,7 @@
 #define MSG_SERV_ALIVE_HEADER   "AliveMessage"
 #define MSG_SERV_ALIVE_COUNT    "AliveCounter"
 
+#define FRAME_START_MARK        '<'
+#define FRAME_STOP_MARK         '>'
+
 #endif // SCCDEVICENAMES_H_INCLUDED

@@ -19,3 +19,9 @@ MainState::State MainState::getLastState()
 {
     return m_LastState;
 }
+
+MainState::State MainState::getCurrentState()
+{
+    return m_CurrentState;
+}
+

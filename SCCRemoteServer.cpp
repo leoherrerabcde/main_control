@@ -57,7 +57,7 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
     //int ret = 0;
 
     //SCCLog::print("RFID Nozzle Initiated.");
-
+    m_bLaunchingService = true;
     return 0;
 }
 

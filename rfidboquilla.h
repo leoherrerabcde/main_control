@@ -13,10 +13,14 @@ public:
     virtual int init(MainCtrlSettings& settings);
     bool isRFIDReceived();
 
-    IDVehicleList idVehicleList;
+    //IDVehicleList idVehicleList;
 
     //virtual DeviceResult processDataReceived();
     virtual bool processDataReceived(const std::string& msg = "");
+
+    std::string getTagId() {return m_strTag;}
+
+    bool isTagDetected() {return m_bTagDetected;}
 
 private:
 

@@ -1,18 +1,31 @@
 #include "device.h"
+#include "SCCLog.h"
 
 #include <stdlib.h>
 #include <sstream>
 #include <cstring>
 
+extern bool     gl_bVerbose;
+extern SCCLog   globalLog;
+
 
 Device::Device(const std::string& deviceName)
-    : m_DeviceName(deviceName), m_pidService(0), m_bDeviceDetected(false), m_iAliveCounter(0)
+    : m_DeviceName(deviceName),
+    m_pidService(0),
+    m_bDeviceDetected(false),
+    m_iAliveCounter(0),
+    m_bLaunchingService(false)
 {
 
 }
 int Device::launchService()
 {
-    return launchService(m_strServicePathName, m_strServiceArgs);
+    if (!m_bLaunchingService)
+    {
+        m_bLaunchingService = true;
+        return launchService(m_strServicePathName, m_strServiceArgs);
+    }
+    return 0;
 }
 
 int Device::launchService(const std::string& servicePathName, const std::string& args)
@@ -31,6 +44,9 @@ int Device::launchService(const std::string& servicePathName, const std::string&
     if (!system(NULL))
         return 0;
 
+    if (gl_bVerbose)
+        globalLog << "Launching " << cmdProgram << CR_CHAR;
+
     int status = system(cmdProgram);
 
     return status;
@@ -43,7 +59,7 @@ std::string Device::popFrontMessage()
     if (isBufferEmpty())
         return msg;
 
-    std::string::size_type pos = m_strBuffer.find('}');
+    std::string::size_type pos = m_strBuffer.find(FRAME_STOP_MARK);
 
     msg = m_strBuffer.substr(1, pos-1);
     m_strBuffer = m_strBuffer.substr(pos+1);
@@ -102,7 +118,7 @@ bool Device::getValueMessage(const std::string& msg, const std::string& valueNam
 
 bool Device::isBufferEmpty()
 {
-    std::string::size_type pos = m_strBuffer.find('{');
+    std::string::size_type pos = m_strBuffer.find(FRAME_START_MARK);
 
     if (pos == std::string::npos)
     {
@@ -115,7 +131,7 @@ bool Device::isBufferEmpty()
         m_strBuffer = m_strBuffer.substr(pos);
     }
 
-    pos = m_strBuffer.find('}');
+    pos = m_strBuffer.find(FRAME_STOP_MARK);
 
     if (pos == std::string::npos)
     {
@@ -161,5 +177,37 @@ bool Device::processDataReceived(const std::string& msg)
         }
     }
     return bMsgDetected;
+}
+
+bool Device::isAliveMessage(const std::string& data)
+{
+    std::string strValue;
+    bool res;
+
+    res = getValueMessage(data, MSG_HEADER_TYPE, strValue);
+    if (!res || strValue != MSG_SERV_ALIVE_HEADER)
+        return false;
+
+    res = getValueMessage(data, MSG_SERV_ALIVE_COUNT, strValue);
+    if (!res)
+        return false;
+
+    if (m_iAliveCounter == std::stoi(strValue))
+        setServiceAlive();
+
+    return true;
+}
+
+bool Device::isFrameType(const std::string& header, const std::string& data)
+{
+    std::string strValue;
+    bool res;
+
+    res = getValueMessage(data, MSG_HEADER_TYPE, strValue);
+
+    if (!res || strValue != header)
+        return false;
+
+    return true;
 }
 

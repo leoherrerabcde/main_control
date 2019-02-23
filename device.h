@@ -5,7 +5,7 @@
 
 #include "MainCtrlSettings.h"
 #include "SCCLog.h"
-//#include "SCCDeviceNames.h"
+#include "SCCDeviceNames.h"
 
 extern SCCLog globalLog;
 
@@ -57,7 +57,12 @@ public:
     int getAliveCounter() const {return m_iAliveCounter;}
     int incAliveCounter() {return ++m_iAliveCounter;}
     bool isServiceAlive() {bool res(m_bServiceAlive); m_bServiceAlive=false;return res;}
-    void setServiceAlive() {m_bServiceAlive = false;}
+    void setServiceAlive() {m_bServiceAlive = true;}
+
+    void disconnect() {setDeviceName("");setServicePID(0);}
+
+    bool isAliveMessage(const std::string& data);
+    bool isFrameType(const std::string& header, const std::string& data);
 
 protected:
 
@@ -77,6 +82,7 @@ protected:
 
     int         m_iAliveCounter;
     bool        m_bServiceAlive;
+    bool        m_bLaunchingService;
 };
 
 #endif // DEVICE_H

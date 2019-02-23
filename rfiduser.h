@@ -11,6 +11,8 @@ public:
 
     virtual int init(MainCtrlSettings& settings);
     virtual DeviceResult processDataReceived();
+
+    std::string getUserId();
 };
 
 #endif // RFIDUSER_H

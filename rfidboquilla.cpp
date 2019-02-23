@@ -53,7 +53,7 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     //int ret = 0;
 
     //SCCLog::print("RFID Nozzle Initiated.");
-
+    m_bLaunchingService = true;
     return 0;
 }
 
@@ -76,6 +76,10 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
         std::string data;
         data = popFrontMessage();
 
+        if (isAliveMessage(data))
+            continue;
+        if (!isFrameType(DEVICE_RFID_BOQUILLA, data))
+            continue;
         std::string strValue;
         std::string strTag;
 
@@ -96,6 +100,12 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
                 strTag = "";
                 bTagDetected = false;
             }
+            else
+            {
+                bTagDetected = true,
+                m_strTag = strTag;
+            }
+            setServiceAlive();
         }
         std::cout << data << std::endl;
     }

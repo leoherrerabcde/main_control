@@ -4,6 +4,9 @@
 #include <string>
 #include <ostream>
 
+
+#define CR_CHAR '\n'
+
 class SCCLog : public std::ostream
 {
     public:

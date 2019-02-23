@@ -12,6 +12,7 @@ using namespace std;
 #include "rfiduser.h"
 #include "mainstate.h"
 #include "IDVehicleList.h"
+#include "IDUserList.h"
 #include "MainCtrlSettings.h"
 #include "CSocket.h"
 #include "SCCLog.h"
@@ -20,7 +21,8 @@ using namespace std;
 #include "SCCDeviceNames.h"
 #include "SCCCreateMessage.h"
 
-SCCLog globalLog(std::cout);
+SCCLog  globalLog(std::cout);
+bool    gl_bVerbose(true);
 
 void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList);
 void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
@@ -48,6 +50,9 @@ int main(int argc, char* argv[])
 
     commGSM modCommGSM(DEVICE_SERVER);
     LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS);
+
+    IDUserList UserList;
+    IDVehicleList VehicleList;
 
     MainState mainState;
     MainCtrlSettings mainSettings;
@@ -96,9 +101,23 @@ int main(int argc, char* argv[])
     for(;;)
     {
         bool bSleep = true;
-        //verifyDeviceService(deviceList);
+        stateRbpi = mainState.getCurrentState();
         if (stateRbpi == MainState::waitForInitTransaction)
         {
+            bool bAuthorizedUser = false;
+            bool bAuthorizedVehicle = false;
+            if (rfidUser.isUserDetected())
+            {
+                bAuthorizedUser = UserList.isValidID(rfidUser.getUserId())
+            }
+            if (rfidBoquilla.isTagDetected())
+            {
+                bAuthorizedVehicle = VehicleList.isValidID(rfidBoquilla.getTagId());
+            }
+
+            mainState.processUserAuthorization(bAuthorizedUser);
+            mainState.processVehicleAuthorization(bAuthorizedVehicle);
+
             DeviceResult processResult = DeviceResult::IncompletedReceive;
             if (processResult == DeviceResult::DeviceIdle)
             {
@@ -122,7 +141,10 @@ int main(int argc, char* argv[])
         processDataClients(socketClientList, deviceList);
 
         if (keepAlive.isTimerEvent(mainTmr))
+        {
             sendAliveMessage(socketClientList, deviceList);
+            //verifyDeviceService(deviceList);
+        }
 
         if (bSleep == true)
             usleep(50);
@@ -213,11 +235,28 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
             if (!pDevice->isServiceAlive())
             {
                 SCCCreateMessage sccAliveMsg;
-                sccAliveMsg.addParam(MSG_SERV_ALIVE_HEADER, MSG_SERV_ALIVE_HEADER);
+                sccAliveMsg.addParam(MSG_HEADER_TYPE, MSG_SERV_ALIVE_HEADER);
                 sccAliveMsg.addParam(MSG_SERV_ALIVE_COUNT, std::to_string(pDevice->incAliveCounter()));
                 std::string msg = sccAliveMsg.makeMessage();
-                if (!itSck->sendData(msg))
+                if (!itSck->isConnected())
+                {
                     it = socketList.erase(it);
+                    pDevice->disconnect();
+                    continue;
+                }
+                if (!itSck->sendData(msg))
+                {
+                    it = socketList.erase(it);
+                    pDevice->disconnect();
+                    continue;
+                }
+            }
+            else
+            {
+                /* Socket connected but no device detected */
+                itSck->disconnect();
+                it = socketList.erase(it);
+                continue;
             }
         }
         ++it;

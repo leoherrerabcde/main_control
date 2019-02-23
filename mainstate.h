@@ -18,11 +18,15 @@ public:
 
     State getLastState();
     int getLastIDTransaction();
+    State getCurrentState();
 
+    void processUserAuthorization(bool bAuthorized);
+    void processVehicleAuthorization(bool bAuthorized);
 
 private:
 
     State m_LastState;
+    State m_CurrentState;
 
 };
 

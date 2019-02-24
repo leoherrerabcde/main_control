@@ -78,8 +78,11 @@ bool SCCFileManager::writeFile(const std::string& filename, std::string& contain
         return false;
 
     f.write(container.c_str(), container.length());
+
+    bool res = f.good();
+
     f.close();
 
-    return true;
+    return res;
 }
 

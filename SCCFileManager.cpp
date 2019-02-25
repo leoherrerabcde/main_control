@@ -3,9 +3,10 @@
 #include <iostream>
 #include <fstream>
 
-SCCFileManager::SCCFileManager()
+SCCFileManager::SCCFileManager(const std::string& filename)
 {
     //ctor
+    m_ssFile << filename;
 }
 
 SCCFileManager::~SCCFileManager()
@@ -86,3 +87,12 @@ bool SCCFileManager::writeFile(const std::string& filename, std::string& contain
     return res;
 }
 
+bool
+
+std::string SCCFileManager::getTempFileName()
+{
+    std::string strFile(tmp_);
+    strFile += "1234";
+    strFile += ".json";
+    return strFile;
+}

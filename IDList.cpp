@@ -27,7 +27,7 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
 
 }
 
-int IDList::readTable()
+bool IDList::readTable()
 {
     std::string fileName(m_strTablePath);
     fileName += "/";
@@ -39,8 +39,13 @@ int IDList::readTable()
     return res;
 }
 
-int IDList::writeTable(const std::string& strData)
+bool IDList::writeTable(const std::string& strData)
 {
+    SCCFileManager fileman(m_strTablePath);
+
+    fileman << fileman.getTempFileName();
+
+    return fileman.writeFile(strData);
 }
 
 

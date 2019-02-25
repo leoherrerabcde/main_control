@@ -6,18 +6,35 @@
 class SCCFileManager
 {
     public:
-        SCCFileManager();
+        SCCFileManager(const std::string& filename);
         virtual ~SCCFileManager();
 
+        bool readFile(std::string& container);
         static bool readFile(const std::string& filename, std::string& container);
         static bool readFile(const std::string& filepath, const std::string& filename, std::string& container);
+
+        bool writeFile(std::string& container);
         static bool writeFile(const std::string& filename, std::string& container);
         static bool writeFile(const std::string& filepath, const std::string& filename, std::string& container);
 
+        bool deleteFile(std::string& container);
         static bool deleteFile(const std::string& filename, std::string& container);
         static bool deleteFile(const std::string& filepath, const std::string& filename, std::string& container);
 
-        static bool copyFile(const std::string& filesrc, const std::string& filedst);
+        bool copyFile(const std::string& fileSrc);
+        static bool copyFile(const std::string& fileSrc, const std::string& fileDst);
+
+        std::string getFileName() {return std::string(m_ssFile.str());}
+
+        std::string getTempFileName();
+
+        SCCFileManager& operator<<(SCCFileManager& fm, const std::string& str)
+        {
+            if (!m_ssFile.str().length())
+                m_ssFile << str;
+            else
+                m_ssFile << "/";
+        }
 
     protected:
 

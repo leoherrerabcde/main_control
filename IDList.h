@@ -23,14 +23,14 @@ class IDList
 
         virtual void init(MainCtrlSettings& settings, const std::string& typeTable = "");
 
-        virtual int readTable();
-        virtual int writeTable(const std::string& strData);
-        virtual int setFileName(const std::string& fileName);
+        virtual bool readTable();
+        virtual bool writeTable(const std::string& strData);
+        //virtual int setFileName(const std::string& fileName);
 
         virtual std::string getAtributeValue(const std::string& strID, const std::string strAtribute);
         virtual void setAtributeValue(const std::string& strID, const std::string strAtribute, const std::string& strValue);
 
-        virtual bool isValidID(std::string& strId);
+        virtual bool isValidID(const std::string& strId);
 
     protected:
 

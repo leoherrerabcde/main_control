@@ -9,8 +9,8 @@ class IDUserList : public IDList
         IDUserList(const std::string& typeTable = "");
         virtual ~IDUserList();
 
-        virtual void init(MainCtrlSettings& settings);
-        virtual bool isValidID(std::string& strId);
+        virtual void init(MainCtrlSettings& settings, const std::string& typeTable = "");
+        virtual bool isValidID(const std::string& strId);
 
     protected:
 

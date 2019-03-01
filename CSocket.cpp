@@ -214,19 +214,26 @@ void CSocket::listen()
 
     ::listen(sockfd, 5);
 
-    std::string msg("Listening by port ");
+    /*std::string msg("Listening by port ");
     msg += std::to_string(portno);
 
-    setState(sckListening, msg);
+    setState(sckListening, msg);*/
 
     clilen = sizeof(cli_addr);
 
     //CSocket* self = this;
     m_pListeningThread = new std::thread(&CSocket::listening, this);
+
+    while (m_sckState == sckClosed)
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 
 bool CSocket::listening()
 {
+    std::string msg("Listening by port ");
+    msg += std::to_string(portno);
+    setState(sckListening, msg);
+
     newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen);
     if (newsockfd < 0)
       //error("ERROR on accept");

@@ -9,10 +9,10 @@ class IDVehicleList : public IDList
         IDVehicleList(const std::string& typeTable = "");
         virtual ~IDVehicleList();
 
-        virtual bool isValidID(std::string& strId);
-        virtual void init(MainCtrlSettings& settings);
+        virtual bool isValidID(const std::string& strId);
+        virtual void init(MainCtrlSettings& settings, const std::string& typeTable = "");
 
-        virtual bool readTable();
+        //virtual bool readTable();
 
     protected:
 

@@ -5,7 +5,9 @@
 #include <ostream>
 
 
-//#define CR_CHAR '\n'
+#define CR_CHAR     '\r'
+#define LF_CHAR     '\n'
+#define NULL_CHAR   '\0'
 
 class SCCLog : public std::ostream
 {

@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
     keepAlive.start(mainSettings.noResponseTimeMilli);
 
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
-    int rqtTblTmr = keepAlive.addTimer();
+    int rqtTblTmr = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
 
     rfidBoquilla.init(mainSettings);
     rfidUser.init(mainSettings);
@@ -106,13 +106,13 @@ int main(int argc, char* argv[])
     {
         bool bSleep = true;
         stateRbpi = mainState.getCurrentState();
-        if (stateRbpi == MainState::waitForInitTransaction)
+        if (stateRbpi == MainState::State::waitForInitTransaction)
         {
             bool bAuthorizedUser = false;
             bool bAuthorizedVehicle = false;
             if (rfidUser.isUserDetected())
             {
-                bAuthorizedUser = UserList.isValidID(rfidUser.getUserId())
+                bAuthorizedUser = UserList.isValidID(rfidUser.getUserId());
             }
             if (rfidBoquilla.isTagDetected())
             {
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
             mainState.processUserAuthorization(bAuthorizedUser);
             mainState.processVehicleAuthorization(bAuthorizedVehicle);
         }
-        else if (stateRbpi == MainState::RFIDVehicle)
+        else if (stateRbpi == MainState::State::RFIDBoquilla)
         {
         }
         else if (stateRbpi == MainState::RFIDUser)
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
         }
 
         if (bSleep == true)
-            usleep(50);
+            usleep(500);
 
         keepAlive.update();
     }
@@ -225,7 +225,15 @@ void processDataClients(std::list<CSocket*>& sockeList,
         if (it != dvcList.end())
         {
             Device* pDevice = it->second;
-            pDevice->processDataReceived(itSck->getData());
+            std::string msg = itSck->getData();
+            if (msg != "")
+            {
+                if (gl_bVerbose)
+                    std::cout << pDevice->name() << ": " << msg << std::endl;
+                pDevice->processDataReceived(msg);
+            }
+            /*else
+                pDevice->processDataReceived(itSck->getData());*/
         }
     }
 }

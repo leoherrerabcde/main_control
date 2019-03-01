@@ -1,4 +1,5 @@
 #include "SCCFileManager.h"
+#include "SCCLog.h"
 
 #include <iostream>
 #include <fstream>
@@ -20,7 +21,7 @@ bool SCCFileManager::readFile(const std::string& filepath, const std::string& fi
     fileName += "/";
     fileName += filename;
 
-    readFile(fileName, container);
+    bool res = readFile(fileName, container);
 
     return res;
 }
@@ -32,17 +33,17 @@ bool SCCFileManager::readFile(const std::string& filename, std::string& containe
     if (filename == "")
         return false;
 
-    f.open(filename.c_str(), ios::in);
+    f.open(filename.c_str(), std::ios::in);
 
     if (!f.is_open())
         return false;
 
-    f.seekg(0,ifstream::end);
+    f.seekg(0, std::ifstream::end);
     size_t fileSize = f.tellg();
     if (fileSize == 0)
         return false;
 
-    f.seekg(0,ifstream::beg);
+    f.seekg(0,std::ifstream::beg);
 
     char buffer[fileSize+1];
 
@@ -55,25 +56,25 @@ bool SCCFileManager::readFile(const std::string& filename, std::string& containe
     return true;
 }
 
-bool SCCFileManager::writeFile(const std::string& filepath, const std::string& filename, std::string& container)
+bool SCCFileManager::writeFile(const std::string& filepath, const std::string& filename, const std::string& container)
 {
     std::string fileName(filepath);
     fileName += "/";
     fileName += filename;
 
-    writeFile(fileName, container);
+    bool res = writeFile(fileName, container);
 
     return res;
 }
 
-bool SCCFileManager::writeFile(const std::string& filename, std::string& container)
+bool SCCFileManager::writeFile(const std::string& filename, const std::string& container)
 {
     std::ofstream f;
 
     if (filename == "")
         return false;
 
-    f.open(filename.c_str(), ios::out);
+    f.open(filename.c_str(), std::ios::out);
 
     if (!f.is_open())
         return false;
@@ -87,11 +88,16 @@ bool SCCFileManager::writeFile(const std::string& filename, std::string& contain
     return res;
 }
 
-bool
+bool SCCFileManager::writeFile(const std::string& container)
+{
+    std::string filename = m_ssFile.str();
+
+    return writeFile(filename, container);
+}
 
 std::string SCCFileManager::getTempFileName()
 {
-    std::string strFile(tmp_);
+    std::string strFile("tmp_");
     strFile += "1234";
     strFile += ".json";
     return strFile;

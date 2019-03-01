@@ -1,7 +1,7 @@
 #include "IDList.h"
 #include "SCCFileManager.h"
 
-IDList::IDList(const std::string& typeTable = "") : m_strTableType(typeTable) , m_bTableReady(false)
+IDList::IDList(const std::string& typeTable) : m_strTableType(typeTable) , m_bTableReady(false)
 {
     //ctor
 }
@@ -49,7 +49,19 @@ bool IDList::writeTable(const std::string& strData)
 }
 
 
-bool isValidID(std::string& strId)
+bool IDList::isValidID(const std::string& strId)
+{
+    return false;
+}
+
+std::string IDList::getAtributeValue(const std::string& strID, const std::string strAtribute)
+{
+    return "";
+}
+
+void IDList::setAtributeValue(const std::string& strID, const std::string strAtribute, const std::string& strValue)
 {
 }
+
+
 

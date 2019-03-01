@@ -13,6 +13,8 @@ public:
     virtual DeviceResult processDataReceived();
 
     std::string getUserId();
+
+    bool isUserDetected() {return false;}
 };
 
 #endif // RFIDUSER_H

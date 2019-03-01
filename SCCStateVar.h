@@ -5,7 +5,7 @@
 class SCCStateVar
 {
     public:
-        SCCStateVar() : m_bVarState(false), m_bVarState(false)
+        SCCStateVar() : m_bVarState(false), m_bChangeStateEvent(false)
         {}
         virtual ~SCCStateVar();
 
@@ -22,7 +22,7 @@ class SCCStateVar
         bool isVarStateSet()
         {
             bool bVar(m_bVarState);
-            clearVarState(false);
+            clearVarState();
             return bVar;
         }
         bool isVarStateChangeEvent()

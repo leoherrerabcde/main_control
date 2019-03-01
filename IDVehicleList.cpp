@@ -3,7 +3,7 @@
 
 extern SCCLog globalLog;
 
-IDVehicleList::IDVehicleList(const std::string& typeTable = "") : IDList(typeTable)
+IDVehicleList::IDVehicleList(const std::string& typeTable) : IDList(typeTable)
 {
     //ctor
 }
@@ -13,7 +13,7 @@ IDVehicleList::~IDVehicleList()
     //dtor
 }
 
-bool IDVehicleList::isValidID(std::string& strIDVehicle)
+bool IDVehicleList::isValidID(const std::string& strIDVehicle)
 {
     globalLog << "Loading Vehicle ID List..." << std::endl;
 
@@ -22,10 +22,10 @@ bool IDVehicleList::isValidID(std::string& strIDVehicle)
     return false;
 }
 
-void IDVehicleList::init(MainCtrlSettings& settings, const std::string& typeTable = "")
+void IDVehicleList::init(MainCtrlSettings& settings, const std::string& typeTable)
 {
     if (typeTable != "")
         m_strTableType = typeTable;
 
-    IDList::init();
+    IDList::init(settings);
 }

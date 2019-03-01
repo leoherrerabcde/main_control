@@ -28,31 +28,32 @@ MainState::State MainState::getCurrentState()
 void MainState::processUserAuthorization(bool bAuthorized)
 {
     m_bUserAuthorized.setVarState(bAuthorized);
-    if (m_CurrentState == State.waitForInitTransaction)
+    if (m_CurrentState == State::waitForInitTransaction)
     {
         if (bAuthorized)
         {
             m_LastState = m_CurrentState;
             if (m_bvehicleAuthorized.get())
-                m_CurrentState = State.startingTransaction;
+                m_CurrentState = State::startingTransaction;
             else
-                m_CurrentState = State.RFIDUser;
+                m_CurrentState = State::RFIDUser;
         }
     }
 }
 
 void MainState::processVehicleAuthorization(bool bAuthorized)
 {
-    m_bVehicleAuthorized.setVarState(bAuthorized);
-    if (m_CurrentState == State.waitForInitTransaction)
+    //m_bVehicleAuthorized.setVarState(bAuthorized);
+    m_bvehicleAuthorized.setVarState(bAuthorized);
+    if (m_CurrentState == State::waitForInitTransaction)
     {
         if (bAuthorized)
         {
             m_LastState = m_CurrentState;
             if (m_bUserAuthorized.get())
-                m_CurrentState = State.startingTransaction;
+                m_CurrentState = State::startingTransaction;
             else
-                m_CurrentState = State.RFIDBoquilla;
+                m_CurrentState = State::RFIDBoquilla;
         }
     }
 }

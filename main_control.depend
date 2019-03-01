@@ -24,9 +24,9 @@
 	"SCCDeviceParams.h"
 	"../commPort/SCCArgumentParser.h"
 
-1550939031 /home/pi/Documents/source/main_control/SCCDeviceNames.h
+1551266988 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1550795655 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1551482361 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
@@ -52,11 +52,11 @@
 	<sys/signal.h>
 	<mutex>
 
-1550862756 /home/pi/Documents/source/main_control/SCCLog.h
+1551480095 /home/pi/Documents/source/main_control/SCCLog.h
 	<string>
 	<ostream>
 
-1550870700 source:/home/pi/Documents/source/main_control/device.cpp
+1551478499 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	<stdlib.h>
@@ -70,25 +70,27 @@
 1550511520 /home/pi/Documents/source/main_control/electrovalvctrl.h
 	"device.h"
 
-1548709514 source:/home/pi/Documents/source/main_control/IDList.cpp
+1551482021 source:/home/pi/Documents/source/main_control/IDList.cpp
 	"IDList.h"
+	"SCCFileManager.h"
 
-1548705791 /home/pi/Documents/source/main_control/IDList.h
+1551482051 /home/pi/Documents/source/main_control/IDList.h
+	"MainCtrlSettings.h"
 	<map>
 	<unordered_map>
 
-1550716900 source:/home/pi/Documents/source/main_control/IDUserList.cpp
+1551480353 source:/home/pi/Documents/source/main_control/IDUserList.cpp
 	"IDUserList.h"
 	"SCCLog.h"
 
-1548705940 /home/pi/Documents/source/main_control/IDUserList.h
+1551480337 /home/pi/Documents/source/main_control/IDUserList.h
 	"IDList.h"
 
-1550716890 source:/home/pi/Documents/source/main_control/IDVehicleList.cpp
+1551480319 source:/home/pi/Documents/source/main_control/IDVehicleList.cpp
 	"IDVehicleList.h"
 	"SCCLog.h"
 
-1548705848 /home/pi/Documents/source/main_control/IDVehicleList.h
+1551482141 /home/pi/Documents/source/main_control/IDVehicleList.h
 	"IDList.h"
 
 1550716880 source:/home/pi/Documents/source/main_control/lucesestado.cpp
@@ -102,7 +104,7 @@
 1550882144 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1550865139 source:/home/pi/Documents/source/main_control/main.cpp
+1551483044 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -114,6 +116,7 @@
 	"rfiduser.h"
 	"mainstate.h"
 	"IDVehicleList.h"
+	"IDUserList.h"
 	"MainCtrlSettings.h"
 	"CSocket.h"
 	"SCCLog.h"
@@ -122,11 +125,10 @@
 	"SCCDeviceNames.h"
 	"SCCCreateMessage.h"
 
-1550606900 /home/pi/Documents/source/main_control/rfidboquilla.h
+1550951114 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
-	"IDVehicleList.h"
 
-1550511500 /home/pi/Documents/source/main_control/rfiduser.h
+1551479872 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 
 1550752222 /home/pi/Documents/source/main_control/SCCAlive.h
@@ -134,27 +136,27 @@
 	<thread>
 	<vector>
 
-1550863059 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1550952121 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
-1548706277 source:/home/pi/Documents/source/main_control/mainstate.cpp
+1551479988 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1550864345 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1550951089 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
 	<sstream>
 	<iostream>
 
-1550440646 /home/pi/Documents/source/commPort/SCCWirelessRcvrProtocol.h
+1551106263 /home/pi/Documents/source/commPort/SCCWirelessRcvrProtocol.h
 	<vector>
 	<list>
 	<unordered_map>
 	<queue>
 	<cstring>
 
-1550716748 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1551480014 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 
@@ -187,5 +189,23 @@
 	<list>
 	<utility>
 
-1550921006 /home/pi/Documents/source/main_control/SCCStateVar.h
+1551479379 /home/pi/Documents/source/main_control/SCCStateVar.h
+
+1551479428 /home/pi/Documents/source/main_control/SCCFileManager.h
+	<string>
+	<sstream>
+
+1550952194 source:/home/pi/Documents/source/main_control/SCCRegisters.cpp
+	"SCCRegisters.h"
+
+1550952193 /home/pi/Documents/source/main_control/SCCRegisters.h
+
+1550881730 source:/home/pi/Documents/source/main_control/SCCStateVar.cpp
+	"SCCStateVar.h"
+
+1551481689 source:/home/pi/Documents/source/main_control/SCCFileManager.cpp
+	"SCCFileManager.h"
+	"SCCLog.h"
+	<iostream>
+	<fstream>
 

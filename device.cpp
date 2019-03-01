@@ -45,7 +45,7 @@ int Device::launchService(const std::string& servicePathName, const std::string&
         return 0;
 
     if (gl_bVerbose)
-        globalLog << "Launching " << cmdProgram << CR_CHAR;
+        globalLog << "Launching " << cmdProgram << LF_CHAR;
 
     int status = system(cmdProgram);
 

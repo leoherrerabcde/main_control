@@ -26,9 +26,9 @@ DeviceResult RFIDUser::processDataReceived()
     return DeviceResult::DeviceIdle;
 }
 
-std:.string RFIDUser::getUserId()
+std::string RFIDUser::getUserId()
 {
-    std:.string strUserId;
+    std::string strUserId;
 
     return strUserId;
 }

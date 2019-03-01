@@ -3,7 +3,7 @@
 
 extern SCCLog globalLog ;
 
-IDUserList::IDUserList(const std::string& typeTable = "") : IDList(typeTable)
+IDUserList::IDUserList(const std::string& typeTable) : IDList(typeTable)
 {
     //ctor
 }
@@ -13,7 +13,7 @@ IDUserList::~IDUserList()
     //dtor
 }
 
-bool IDUserList::isValidID(std::string& strID)
+bool IDUserList::isValidID(const std::string& strID)
 {
     globalLog <<"Reading User ID List..." << std::endl;
 
@@ -21,11 +21,11 @@ bool IDUserList::isValidID(std::string& strID)
     return false;
 }
 
-void IDUserList::init(MainCtrlSettings& settings, const std::string& typeTable = "")
+void IDUserList::init(MainCtrlSettings& settings, const std::string& typeTable)
 {
     if (typeTable != "")
         m_strTableType = typeTable;
 
-    IDList::init();
+    IDList::init(settings);
 }
 

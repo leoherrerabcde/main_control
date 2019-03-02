@@ -57,8 +57,8 @@ int main(int argc, char* argv[])
     commGSM modCommGSM(DEVICE_SERVER, bShowData);
     LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS, bShowData);
 
-    IDUserList UserList;
-    IDVehicleList VehicleList;
+    IDUserList UserList(TABLE_USERS);
+    IDVehicleList VehicleList(TABLE_VEHICLES);
 
     MainState mainState;
     MainCtrlSettings mainSettings;
@@ -107,6 +107,9 @@ int main(int argc, char* argv[])
     restApi.init(mainSettings);
     modCommGSM.init(mainSettings);
     lucesDeEstado.init(mainSettings);
+
+    UserList.init(mainSettings);
+    VehicleList.init(mainSettings);
 
     std::cout << "Main Loop Started." << std::endl;
 

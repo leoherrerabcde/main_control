@@ -25,6 +25,7 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
     settings.getValue(m_strTableType,PARAM_PATH_NAME    ,m_strTablePath);
     settings.getValue(m_strTableType,PARAM_SERVICE_NAME ,m_strTableName);
 
+    readTable();
 }
 
 bool IDList::readTable()

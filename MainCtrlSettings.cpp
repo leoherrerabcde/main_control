@@ -7,10 +7,26 @@ ArgumentStruct stPathName = {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/ho
 
 std::unordered_map<std::string, ArgumentStruct> st_RFIDParam =
 {
-    {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "0"}},
+    {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "2"}},
     {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "115200"}},
     {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "commPort"}},
     {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/commPort/bin/Release"}}
+};
+
+std::unordered_map<std::string, ArgumentStruct> st_RFIDUserParam =
+{
+    {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "1"}},
+    {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "9600"}},
+    {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "rfidUser"}},
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/rfidUser/bin/Release"}}
+};
+
+std::unordered_map<std::string, ArgumentStruct> st_FlowmeterParam =
+{
+    {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "0"}},
+    {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "9600"}},
+    {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "flowmCom"}},
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/flowmCom/bin/Release"}}
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
@@ -26,7 +42,7 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
 
 std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =
 {
-    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "vehicle.txt"}},
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "users.txt"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}}
 };
 
@@ -46,6 +62,8 @@ std::unordered_map<std::string, ArgumentStruct> st_FuelRegisterParam =
 std::unordered_map<std::string, std::unordered_map<std::string, ArgumentStruct>*> st_DeviceParam =
 {
     {DEVICE_RFID_BOQUILLA, &st_RFIDParam},
+    {DEVICE_RFID_BOMBERO , &st_RFIDUserParam},
+    {DEVICE_FLOWMETER    , &st_FlowmeterParam},
     {DEVICE_REST_SERVICE , &st_RestApiParam},
     {TABLE_USERS         , &st_TableUserParam},
     {TABLE_VEHICLES      , &st_TableVehicleParam},

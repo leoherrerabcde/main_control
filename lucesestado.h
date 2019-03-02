@@ -7,7 +7,7 @@
 class LucesEstado : public Device
 {
 public:
-    LucesEstado(const std::string& deviceName = "");
+    LucesEstado(const std::string& deviceName = "", bool bShowdata = false);
     ~LucesEstado();
 
     virtual int init(MainCtrlSettings& settings);

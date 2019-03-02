@@ -7,7 +7,7 @@
 class SCCRemoteServer : public Device
 {
     public:
-        SCCRemoteServer(const std::string& deviceName = "");
+        SCCRemoteServer(const std::string& deviceName = "", bool bShowData = false);
         virtual ~SCCRemoteServer();
 
         virtual int init(MainCtrlSettings& settings);

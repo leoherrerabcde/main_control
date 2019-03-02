@@ -1,9 +1,12 @@
 #include "rfiduser.h"
 #include "SCCLog.h"
 
+#include <iostream>
+
+
 extern SCCLog globalLog;
 
-RFIDUser::RFIDUser(const std::string& deviceName) : Device(deviceName)
+RFIDUser::RFIDUser(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata), m_bCardDetected(false)
 {
 
 }
@@ -21,15 +24,51 @@ int RFIDUser::init(MainCtrlSettings& settings)
     return 0;
 }
 
-DeviceResult RFIDUser::processDataReceived()
+bool RFIDUser::processDataReceived(const std::string& msg)
 {
-    return DeviceResult::DeviceIdle;
+    pushData(msg);
+
+    while (!isBufferEmpty())
+    {
+        std::string data;
+        data = popFrontMessage();
+
+        if (isAliveMessage(data))
+            continue;
+        if (!isFrameType(DEVICE_RFID_BOMBERO, data))
+            continue;
+        std::string strValue;
+        std::string strTag;
+
+        std::string strCardSerialNum;
+        std::string strCardDetected;
+
+        bool res = getValueMessage(data, VAR_CARD_DETECTED, strCardDetected);
+        res = res && getValueMessage(data, VAR_CARD_SERIALNUM, strCardSerialNum);
+
+        if (res)
+        {
+            if (strCardSerialNum == "false")
+            {
+                m_bCardDetected = false;
+            }
+            else
+            {
+                m_bCardDetected = true;
+            }
+            m_strCardSerialNum = strCardSerialNum;
+            setServiceAlive();
+        }
+        if (m_bShowData)
+            std::cout << data << std::endl;
+    }
+    return true;
 }
 
-std::string RFIDUser::getUserId()
+/*std::string RFIDUser::getUserId()
 {
     std::string strUserId;
 
     return strUserId;
-}
+}*/
 

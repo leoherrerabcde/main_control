@@ -9,15 +9,18 @@ extern bool     gl_bVerbose;
 extern SCCLog   globalLog;
 
 
-Device::Device(const std::string& deviceName)
+Device::Device(const std::string& deviceName, bool nShowdata)
     : m_DeviceName(deviceName),
     m_pidService(0),
     m_bDeviceDetected(false),
     m_iAliveCounter(0),
-    m_bLaunchingService(false)
+    m_bServiceAlive(false),
+    m_bLaunchingService(false),
+    m_bShowData(nShowdata)
 {
 
 }
+
 int Device::launchService()
 {
     if (!m_bLaunchingService)
@@ -88,6 +91,36 @@ bool Device::getValueMessage(const std::string& msg, const std::string& valueNam
     if (!res)
         return false;
     value = std::stoi(strValue);
+    return true;
+}
+
+bool Device::getValueMessage(const std::string& msg, const std::string& valueName, long& value)
+{
+    std::string strValue;
+    bool res = getValueMessage(msg, valueName, strValue);
+    if (!res)
+        return false;
+    value = std::stol(strValue);
+    return true;
+}
+
+bool Device::getValueMessage(const std::string& msg, const std::string& valueName, float& value)
+{
+    std::string strValue;
+    bool res = getValueMessage(msg, valueName, strValue);
+    if (!res)
+        return false;
+    value = std::stof(strValue);
+    return true;
+}
+
+bool Device::getValueMessage(const std::string& msg, const std::string& valueName, double& value)
+{
+    std::string strValue;
+    bool res = getValueMessage(msg, valueName, strValue);
+    if (!res)
+        return false;
+    value = std::stod(strValue);
     return true;
 }
 

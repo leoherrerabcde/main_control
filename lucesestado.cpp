@@ -3,7 +3,7 @@
 
 extern SCCLog globalLog;
 
-LucesEstado::LucesEstado(const std::string& deviceName) : Device(deviceName)
+LucesEstado::LucesEstado(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata)
 {
 
 }

@@ -20,7 +20,7 @@ enum DeviceResult
 class Device
 {
 public:
-    Device(const std::string& deviceName = "");
+    Device(const std::string& deviceName = "", bool bShowdata = false);
     //Device(const Device&) = default;
     virtual ~Device() {};
 
@@ -38,6 +38,9 @@ public:
     virtual std::string name() {return m_DeviceName;}
 
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, std::string& value);
+    virtual bool getValueMessage(const std::string& msg, const std::string& valueName, double& value);
+    virtual bool getValueMessage(const std::string& msg, const std::string& valueName, float& value);
+    virtual bool getValueMessage(const std::string& msg, const std::string& valueName, long& value);
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, int& value);
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, bool& value);
     virtual std::string getData() {std::string msg(m_strBuffer); m_strBuffer = ""; return msg;}
@@ -64,6 +67,9 @@ public:
     bool isAliveMessage(const std::string& data);
     bool isFrameType(const std::string& header, const std::string& data);
 
+    void setShowData() {m_bShowData = true;}
+
+
 protected:
 
     virtual int launchService(const std::string& servicePathName, const std::string& args);
@@ -83,6 +89,8 @@ protected:
     int         m_iAliveCounter;
     bool        m_bServiceAlive;
     bool        m_bLaunchingService;
+
+    bool        m_bShowData;
 };
 
 #endif // DEVICE_H

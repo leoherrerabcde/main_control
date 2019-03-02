@@ -7,7 +7,7 @@
 
 extern SCCLog globalLog;
 
-RFIDBoquilla::RFIDBoquilla(const std::string& deviceName) : Device(deviceName)
+RFIDBoquilla::RFIDBoquilla(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata)
 {
 
 }

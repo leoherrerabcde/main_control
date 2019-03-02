@@ -6,7 +6,7 @@
 class commGSM : public Device
 {
 public:
-    commGSM(const std::string& deviceName = "");
+    commGSM(const std::string& deviceName = "", bool bShowdata = false);
     ~commGSM();
 
     virtual int init(MainCtrlSettings& settings);

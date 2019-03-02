@@ -3,7 +3,7 @@
 
 extern SCCLog globalLog;
 
-ElectroValvCtrl::ElectroValvCtrl(const std::string& deviceName) : Device(deviceName)
+ElectroValvCtrl::ElectroValvCtrl(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata)
 {
 
 }

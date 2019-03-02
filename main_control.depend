@@ -5,13 +5,13 @@
 1550508543 /home/pi/Documents/source/commPort/SCCArgumentParser.h
 	<unordered_map>
 
-1550606999 source:/home/pi/Documents/source/main_control/commgsm.cpp
+1551556440 source:/home/pi/Documents/source/main_control/commgsm.cpp
 	"commgsm.h"
 
-1550511542 /home/pi/Documents/source/main_control/commgsm.h
+1551556337 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1550869896 /home/pi/Documents/source/main_control/device.h
+1551556315 /home/pi/Documents/source/main_control/device.h
 	<string>
 	"MainCtrlSettings.h"
 	"SCCLog.h"
@@ -56,18 +56,18 @@
 	<string>
 	<ostream>
 
-1551478499 source:/home/pi/Documents/source/main_control/device.cpp
+1551556277 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	<stdlib.h>
 	<sstream>
 	<cstring>
 
-1550716910 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
+1551556446 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
 	"electrovalvctrl.h"
 	"SCCLog.h"
 
-1550511520 /home/pi/Documents/source/main_control/electrovalvctrl.h
+1551556553 /home/pi/Documents/source/main_control/electrovalvctrl.h
 	"device.h"
 
 1551482021 source:/home/pi/Documents/source/main_control/IDList.cpp
@@ -93,18 +93,18 @@
 1551482141 /home/pi/Documents/source/main_control/IDVehicleList.h
 	"IDList.h"
 
-1550716880 source:/home/pi/Documents/source/main_control/lucesestado.cpp
+1551556452 source:/home/pi/Documents/source/main_control/lucesestado.cpp
 	"lucesestado.h"
 	"SCCLog.h"
 
-1550511512 /home/pi/Documents/source/main_control/lucesestado.h
+1551556342 /home/pi/Documents/source/main_control/lucesestado.h
 	"device.h"
 	"mainstate.h"
 
 1550882144 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1551484635 source:/home/pi/Documents/source/main_control/main.cpp
+1551556933 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -126,11 +126,12 @@
 	"SCCDeviceNames.h"
 	"SCCCreateMessage.h"
 
-1550951114 /home/pi/Documents/source/main_control/rfidboquilla.h
+1551556350 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
 
-1551479872 /home/pi/Documents/source/main_control/rfiduser.h
+1551556357 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
+	"../rfidUser/SCCRfidUserProtocol.h"
 
 1550752222 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
@@ -143,7 +144,7 @@
 1551479988 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1550951089 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1551556405 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
@@ -157,11 +158,12 @@
 	<queue>
 	<cstring>
 
-1551480014 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1551556466 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
+	<iostream>
 
-1550753290 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1551547760 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>
@@ -172,11 +174,11 @@
 
 1550687791 /home/pi/Documents/source/main_control/SCCDeviceParams.h
 
-1550687319 /home/pi/Documents/source/main_control/SCCRemoteServer.h
+1551556659 /home/pi/Documents/source/main_control/SCCRemoteServer.h
 	"device.h"
 	"SCCDeviceParams.h"
 
-1550864011 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
+1551556677 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
 	"SCCRemoteServer.h"
 	"SCCLog.h"
 	<sstream>
@@ -210,10 +212,32 @@
 	<iostream>
 	<fstream>
 
-1551484030 /home/pi/Documents/source/main_control/SCCFlowmeter.h
+1551556368 /home/pi/Documents/source/main_control/SCCFlowmeter.h
 	"device.h"
+	"../flowmCom/SCCFlowProtocol.h"
 
-1551484736 source:/home/pi/Documents/source/main_control/SCCFlowmeter.cpp
+1551556478 source:/home/pi/Documents/source/main_control/SCCFlowmeter.cpp
 	"SCCFlowmeter.h"
 	<sstream>
+	<iostream>
+
+1551554842 /home/pi/Documents/source/flowmCom/SCCFlowProtocol.h
+	<vector>
+	<list>
+	<unordered_map>
+	<queue>
+	<cstring>
+	<sstream>
+	<iomanip>
+	<locale>
+
+1551468903 /home/pi/Documents/source/rfidUser/SCCRfidUserProtocol.h
+	<vector>
+	<list>
+	<unordered_map>
+	<queue>
+	<cstring>
+	<sstream>
+	<iomanip>
+	<locale>
 

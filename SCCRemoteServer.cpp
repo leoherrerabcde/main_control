@@ -5,7 +5,7 @@
 
 extern SCCLog globalLog;
 
-SCCRemoteServer::SCCRemoteServer(const std::string& deviceName) : Device(deviceName)
+SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData)
 {
     //ctor
 }

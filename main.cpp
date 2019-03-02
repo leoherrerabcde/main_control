@@ -41,20 +41,21 @@ void sendRequestTable(std::list<CSocket*>& socketList,
 
 int main(int argc, char* argv[])
 {
+    bool bShowData(false);
 
     std::unordered_map<std::string,Device*> deviceList;
     std::vector<Device*> onTheFlyDeviceList;
 
 
-    SCCFlowmeter flowmeter(DEVICE_FLOWMETER);
-    RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA);
-    RFIDUser rfidUser(DEVICE_RFID_BOMBERO);
-    ElectroValvCtrl electroValv(DEVICE_ELECTRO_VALVE);
-    Device guiApp(DEVICE_GUI);
-    SCCRemoteServer restApi(DEVICE_REST_SERVICE);
+    SCCFlowmeter flowmeter(DEVICE_FLOWMETER, bShowData);
+    RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA, bShowData);
+    RFIDUser rfidUser(DEVICE_RFID_BOMBERO, bShowData);
+    ElectroValvCtrl electroValv(DEVICE_ELECTRO_VALVE, bShowData);
+    Device guiApp(DEVICE_GUI, bShowData);
+    SCCRemoteServer restApi(DEVICE_REST_SERVICE, bShowData);
 
-    commGSM modCommGSM(DEVICE_SERVER);
-    LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS);
+    commGSM modCommGSM(DEVICE_SERVER, bShowData);
+    LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS, bShowData);
 
     IDUserList UserList;
     IDVehicleList VehicleList;
@@ -153,7 +154,7 @@ int main(int argc, char* argv[])
 
         if (keepAlive.isTimerEvent(mainTmr))
         {
-            sendAliveMessage(socketClientList, deviceList);
+            //sendAliveMessage(socketClientList, deviceList);
             //verifyDeviceService(deviceList);
         }
         if (keepAlive.isTimerEvent(rqtTblTmr))
@@ -162,7 +163,7 @@ int main(int argc, char* argv[])
         }
 
         if (bSleep == true)
-            usleep(500);
+            usleep(1000);
 
         keepAlive.update();
     }

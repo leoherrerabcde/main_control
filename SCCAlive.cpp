@@ -35,6 +35,8 @@ void SCCAlive::run()
 {
     while(m_bStarted == true)
     {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
         auto clkNow = std::chrono::steady_clock::now();
         std::chrono::duration<double> diff = clkNow - m_clkLast;
 

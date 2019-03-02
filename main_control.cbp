@@ -63,6 +63,8 @@
 		<Unit filename="SCCDeviceParams.h" />
 		<Unit filename="SCCFileManager.cpp" />
 		<Unit filename="SCCFileManager.h" />
+		<Unit filename="SCCFlowmeter.cpp" />
+		<Unit filename="SCCFlowmeter.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
 		<Unit filename="SCCRegisters.cpp" />

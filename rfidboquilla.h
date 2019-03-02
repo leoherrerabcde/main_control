@@ -7,7 +7,7 @@
 class RFIDBoquilla : public Device
 {
 public:
-    RFIDBoquilla(const std::string& deviceName = "");
+    RFIDBoquilla(const std::string& deviceName = "", bool bShowdata = false);
     ~RFIDBoquilla();
 
     virtual int init(MainCtrlSettings& settings);

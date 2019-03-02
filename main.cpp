@@ -18,6 +18,7 @@ using namespace std;
 #include "SCCLog.h"
 #include "SCCAlive.h"
 #include "SCCRemoteServer.h"
+#include "SCCFlowmeter.h"
 #include "SCCDeviceNames.h"
 #include "SCCCreateMessage.h"
 
@@ -44,6 +45,8 @@ int main(int argc, char* argv[])
     std::unordered_map<std::string,Device*> deviceList;
     std::vector<Device*> onTheFlyDeviceList;
 
+
+    SCCFlowmeter flowmeter(DEVICE_FLOWMETER);
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA);
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO);
     ElectroValvCtrl electroValv(DEVICE_ELECTRO_VALVE);
@@ -82,6 +85,9 @@ int main(int argc, char* argv[])
     pDvc = &restApi;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));
 
+    pDvc = &flowmeter;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+
     MainState::State stateRbpi;
 
     stateRbpi = mainState.getLastState();
@@ -93,6 +99,7 @@ int main(int argc, char* argv[])
     int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
     int rqtTblTmr = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
 
+    flowmeter.init(mainSettings);
     rfidBoquilla.init(mainSettings);
     rfidUser.init(mainSettings);
     electroValv.init(mainSettings);

@@ -104,7 +104,7 @@
 1550882144 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1551483044 source:/home/pi/Documents/source/main_control/main.cpp
+1551484635 source:/home/pi/Documents/source/main_control/main.cpp
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -122,6 +122,7 @@
 	"SCCLog.h"
 	"SCCAlive.h"
 	"SCCRemoteServer.h"
+	"SCCFlowmeter.h"
 	"SCCDeviceNames.h"
 	"SCCCreateMessage.h"
 
@@ -208,4 +209,11 @@
 	"SCCLog.h"
 	<iostream>
 	<fstream>
+
+1551484030 /home/pi/Documents/source/main_control/SCCFlowmeter.h
+	"device.h"
+
+1551484736 source:/home/pi/Documents/source/main_control/SCCFlowmeter.cpp
+	"SCCFlowmeter.h"
+	<sstream>
 

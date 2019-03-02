@@ -48,7 +48,7 @@ bool RFIDUser::processDataReceived(const std::string& msg)
 
         if (res)
         {
-            if (strCardSerialNum == "false")
+            if (strCardDetected == "false")
             {
                 m_bCardDetected = false;
             }

@@ -141,7 +141,7 @@
 1550952121 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
-1551479988 source:/home/pi/Documents/source/main_control/mainstate.cpp
+1551561470 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
 1551556405 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
@@ -158,7 +158,7 @@
 	<queue>
 	<cstring>
 
-1551556466 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1551561820 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 	<iostream>

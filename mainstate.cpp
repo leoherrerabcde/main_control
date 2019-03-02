@@ -1,6 +1,6 @@
 #include "mainstate.h"
 
-MainState::MainState()
+MainState::MainState() : m_LastState(State::waitForInitTransaction), m_CurrentState(State::waitForInitTransaction)
 {
 
 }

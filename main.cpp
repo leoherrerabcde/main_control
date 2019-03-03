@@ -11,8 +11,9 @@ using namespace std;
 #include "rfidboquilla.h"
 #include "rfiduser.h"
 #include "mainstate.h"
-#include "IDVehicleList.h"
-#include "IDUserList.h"
+//#include "IDVehicleList.h"
+//#include "IDUserList.h"
+#include "IDList.h"
 #include "MainCtrlSettings.h"
 #include "CSocket.h"
 #include "SCCLog.h"
@@ -57,8 +58,10 @@ int main(int argc, char* argv[])
     commGSM modCommGSM(DEVICE_SERVER, bShowData);
     LucesEstado lucesDeEstado(DEVICE_STATUS_LIGHTS, bShowData);
 
-    IDUserList UserList(TABLE_USERS);
-    IDVehicleList VehicleList(TABLE_VEHICLES);
+    /*IDUserList UserList(TABLE_USERS);
+    IDVehicleList VehicleList(TABLE_VEHICLES);*/
+    IDList UserList(TABLE_USERS);
+    IDList VehicleList(TABLE_VEHICLES);
 
     MainState mainState;
     MainCtrlSettings mainSettings;

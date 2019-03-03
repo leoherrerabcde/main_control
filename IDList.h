@@ -1,7 +1,10 @@
 #ifndef IDLIST_H
 #define IDLIST_H
 
+
 #include "MainCtrlSettings.h"
+#include "../jsonParser/JsonParser.h"
+
 
 #include <map>
 #include <unordered_map>
@@ -46,6 +49,8 @@ class IDList
 
         //std::string m_listFileName;
         //std::unordered_map<unsigned long, IDElement> m_IDElementList;
+        JsonParser      m_jsonParser;
+        std::string     m_strIdKeyLabel;
 };
 
 #endif // IDLIST_H

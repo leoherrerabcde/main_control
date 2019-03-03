@@ -42,19 +42,22 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
 
 std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =
 {
-    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "users.txt"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}}
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "users.json"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
+    {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "id_user"}},
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_TableVehicleParam =
 {
-    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "vehicle.txt"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}}
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "vehicle.json"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
+    {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "id_vehiculo"}},
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_FuelRegisterParam =
 {
-    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "fuelRegister.txt"}},
+    {PARAM_FILE_EXTENSION,{PARAM_FILE_EXTENSION, Required, AlphaNumeric, true, ".txt"}},
+    {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "fuelRegister"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/registers"}}
 };
 

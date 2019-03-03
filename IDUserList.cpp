@@ -15,10 +15,11 @@ IDUserList::~IDUserList()
 
 bool IDUserList::isValidID(const std::string& strID)
 {
-    globalLog <<"Reading User ID List..." << std::endl;
+    /*globalLog <<"Reading User ID List..." << std::endl;
 
-    globalLog  << "User ID List ready to use." << std::endl;
-    return false;
+    globalLog  << "User ID List ready to use." << std::endl;*/
+    return IDList::isValidID(strID);
+    //return false;
 }
 
 void IDUserList::init(MainCtrlSettings& settings, const std::string& typeTable)

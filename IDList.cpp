@@ -24,8 +24,19 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
 
     settings.getValue(m_strTableType,PARAM_PATH_NAME    ,m_strTablePath);
     settings.getValue(m_strTableType,PARAM_SERVICE_NAME ,m_strTableName);
+    settings.getValue(m_strTableType,PARAM_TBL_ID_KEY   ,m_strIdKeyLabel);
+
 
     readTable();
+    /*std::string errMsg;
+    errMsg += m_strTableType;
+    errMsg += */
+    if (!m_bTableReady)
+        throw("JSON File cannot be read from disk.\nThe application can not continue working and it will be closed.\n");
+    m_jsonParser.loadPlaneText(m_strData);
+    if (!m_jsonParser.isDocJsonReady())
+        throw("JSON File is not parsed.\nThe application can not continue working and it will be closed.\n");
+    m_jsonParser.createIdTable();
 }
 
 bool IDList::readTable()
@@ -52,7 +63,10 @@ bool IDList::writeTable(const std::string& strData)
 
 bool IDList::isValidID(const std::string& strId)
 {
-    return false;
+    if (!m_jsonParser.isDocJsonReady())
+        return false;
+
+    return true;
 }
 
 std::string IDList::getAtributeValue(const std::string& strID, const std::string strAtribute)

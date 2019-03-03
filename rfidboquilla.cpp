@@ -86,7 +86,7 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
         bool bBatAlarm(m_bBatteryAlarm);
         bool bFail(m_bFail);
         bool bNozzleDetected(m_bNozzleActived);
-        bool bTagDetected(m_bTagDetected);
+        //bool bTagDetected(m_bTagDetected);
 
         bool res = getValueMessage(data, VAR_BATTERY_ALARM, bBatAlarm);
         res = res && getValueMessage(data, VAR_FAIL_STATUS, bFail);
@@ -98,15 +98,17 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
             if (strTag == "false")
             {
                 strTag = "";
-                bTagDetected = false;
+                m_bTagDetected = false;
             }
             else
             {
-                bTagDetected = true,
+                m_bTagDetected = true,
                 m_strTag = strTag;
             }
             setServiceAlive();
         }
+        else
+            m_bTagDetected = false;
         std::cout << data << std::endl;
     }
     return true;

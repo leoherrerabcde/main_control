@@ -59,6 +59,10 @@ std::unordered_map<std::string, ArgumentStruct> st_FuelRegisterParam =
     {PARAM_FILE_EXTENSION,{PARAM_FILE_EXTENSION, Required, AlphaNumeric, true, ".txt"}},
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "fuelRegister"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/registers"}}
+    {PARAM_NEW_REGS_PATH,{PARAM_NEW_REGS_PATH, Required, AlphaNumeric, true, "new_registers"}},
+    {PARAM_HISTO_REGS_PATH,{PARAM_HISTO_REGS_PATH, Required, AlphaNumeric, true, "histo_registers"}},
+    {PARAM_UPPER_REG_NUM,{PARAM_UPPER_REG_NUM, Required, Integer, true, "999999"}},
+
 };
 
 

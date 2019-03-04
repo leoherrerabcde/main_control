@@ -3,6 +3,11 @@
 
 #include <iostream>
 #include <fstream>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <dirent.h>
+
 
 SCCFileManager::SCCFileManager(const std::string& filename)
 {
@@ -56,25 +61,25 @@ bool SCCFileManager::readFile(const std::string& filename, std::string& containe
     return true;
 }
 
-bool SCCFileManager::writeFile(const std::string& filepath, const std::string& filename, const std::string& container)
+bool SCCFileManager::writeFile(const std::string& filepath, const std::string& filename, const std::string& container, std::ios::openmode mode)
 {
     std::string fileName(filepath);
     fileName += "/";
     fileName += filename;
 
-    bool res = writeFile(fileName, container);
+    bool res = writeFile(fileName, container, mode);
 
     return res;
 }
 
-bool SCCFileManager::writeFile(const std::string& filename, const std::string& container)
+bool SCCFileManager::writeFile(const std::string& filename, const std::string& container, std::ios::openmode mode)
 {
     std::ofstream f;
 
     if (filename == "")
         return false;
 
-    f.open(filename.c_str(), std::ios::out);
+    f.open(filename.c_str(), mode);
 
     if (!f.is_open())
         return false;
@@ -88,11 +93,34 @@ bool SCCFileManager::writeFile(const std::string& filename, const std::string& c
     return res;
 }
 
-bool SCCFileManager::writeFile(const std::string& container)
+bool SCCFileManager::writeFile(const std::string& container, std::ios::openmode mode)
 {
     std::string filename = m_ssFile.str();
 
-    return writeFile(filename, container);
+    return writeFile(filename, container, mode);
+}
+
+bool SCCFileManager::appendToFile(const std::string& container)
+{
+    std::string filename = m_ssFile.str();
+
+    return appendToFile(filename, container);
+}
+
+bool SCCFileManager::appendToFile(const std::string& filename, const std::string& container)
+{
+    return writeFile(filename, container, std::ios::app);
+}
+
+bool SCCFileManager::appendToFile(const std::string& filepath, const std::string& filename, const std::string& container)
+{
+    std::string fileName(filepath);
+    fileName += "/";
+    fileName += filename;
+
+    bool res = appendToFile(fileName, container);
+
+    return res;
 }
 
 std::string SCCFileManager::getTempFileName()
@@ -101,4 +129,84 @@ std::string SCCFileManager::getTempFileName()
     strFile += "1234";
     strFile += ".json";
     return strFile;
+}
+
+bool SCCFileManager::isFileExist()
+{
+    std::string strFile(m_ssFile.str());
+    return isFileExist(strFile);
+}
+
+bool SCCFileManager::isFileExist(const std::string& filename)
+{
+    struct stat buffer;
+    return (stat (filename.c_str(), &buffer) == 0);
+}
+
+bool SCCFileManager::moveFile(const std::string& fileDst)
+{
+    std::string strFile(m_ssFile.str());
+    return moveFile(strFile, fileDst);
+}
+
+bool SCCFileManager::moveFile(const std::string& fileSrc, const std::string& fileDst)
+{
+    int res = rename(fileSrc, fileDst);
+    return (res == 0);
+}
+
+void SCCFileManager::getFileList(std::list<std::string>& listFile)
+{
+    std::string strFile(m_ssFile.str());
+    getFileList(strFile, listFile);
+}
+
+void SCCFileManager::getFileList(const std::string& path, std::list<std::string>& listFile)
+{
+    DIR* dir = opendir(path.c_str());
+    if (dir == NULL)
+        return;
+    struct dirent *ent;
+
+    while ((ent = readdir(dir)) != NULL)
+    {
+        listFile.push_back(ent->d_name);
+    }
+    closedir(dir);
+}
+
+bool SCCFileManager::copyFile(const std::string& fileDst)
+{
+    return copyFile(fileDst, getFileName());
+}
+
+bool SCCFileManager::copyFile(const std::string& fileSrc, const std::string& fileDst)
+{
+    ifstream src(fileSrc; std::ios::binary);
+    ofstream dst(fileDst, std::ios::binary);
+    dst << src;
+}
+
+bool SCCFileManager::deleteFile()
+{
+    return deleteFile(getFileName());
+}
+
+bool SCCFileManager::deleteFile(const std::string& filename)
+{
+    if (!isFileExist(filename))
+        return true;
+
+    return (remove(filename.c_str()) == 0);
+}
+
+bool SCCFileManager::deleteFile(const std::string& filepath, const std::string& filename)
+{
+    std::string fileName(filepath);
+    fileName += "/";
+    fileName += filename;
+
+    bool res = deleteFile(fileName);
+
+    return res;
 }

@@ -21,6 +21,12 @@ class SCCLog : public std::ostream
             out << v;
             return *this;
         }*/
+    SCCLog& operator<<(std::StandardEndLine endLineManip)
+    {
+        endLineManip(os.out);
+        return *this;
+    }
+
     template<class T>
     friend SCCLog& operator<<(SCCLog& os, const T& s)
     {

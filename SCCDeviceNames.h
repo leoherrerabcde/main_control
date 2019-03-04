@@ -15,6 +15,8 @@
 #define TABLE_REGISTERS         "TableRegisters"
 #define TABLE_HISTO_REGIST      "TableHistoRegists"
 
+#define HEADER_REGISTER         "FuelRegister"
+
 #define DEVICE_NAME             "DeviceName"
 #define SERVICE_PID             "ServicePID"
 

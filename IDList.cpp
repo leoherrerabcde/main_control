@@ -27,16 +27,26 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
     settings.getValue(m_strTableType,PARAM_TBL_ID_KEY   ,m_strIdKeyLabel);
 
 
+    std::cout << m_strTableType << " -> Reading Table from disk." << std::endl;
     readTable();
     /*std::string errMsg;
     errMsg += m_strTableType;
     errMsg += */
+    m_jsonParser.setIdKeyLabel(m_strIdKeyLabel);
+
     if (!m_bTableReady)
         throw("JSON File cannot be read from disk.\nThe application can not continue working and it will be closed.\n");
+
+    std::cout << m_strTableType << " -> Parsing Table." << std::endl;
     m_jsonParser.loadPlaneText(m_strData);
     if (!m_jsonParser.isDocJsonReady())
         throw("JSON File is not parsed.\nThe application can not continue working and it will be closed.\n");
+
+    std::cout << m_strTableType << " -> Creating Id Table." << std::endl;
     m_jsonParser.createIdTable();
+
+    if (!m_jsonParser.isMapIDReady())
+        throw("Table was not created.\nThe application can not continue working and it will be closed.\n");
 }
 
 bool IDList::readTable()
@@ -63,10 +73,11 @@ bool IDList::writeTable(const std::string& strData)
 
 bool IDList::isValidID(const std::string& strId)
 {
-    if (!m_jsonParser.isDocJsonReady())
+    if (!m_jsonParser.isMapIDReady())
         return false;
 
-    return true;
+    return m_jsonParser.hasID(strId);
+    //return true;
 }
 
 std::string IDList::getAtributeValue(const std::string& strID, const std::string strAtribute)

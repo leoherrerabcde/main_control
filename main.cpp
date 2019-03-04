@@ -134,6 +134,9 @@ int main(int argc, char* argv[])
             }
             mainState.processUserAuthorization(bAuthorizedUser);
             mainState.processVehicleAuthorization(bAuthorizedVehicle);
+            initFuelTransaction();
+            if (bAuthorizedUser)
+
         }
         else if (stateRbpi == MainState::State::RFIDBoquilla)
         {

@@ -44,6 +44,8 @@
 		</Compiler>
 		<Unit filename="../commPort/SCCArgumentParser.cpp" />
 		<Unit filename="../commPort/SCCArgumentParser.h" />
+		<Unit filename="../commPort/SCCRealTime.cpp" />
+		<Unit filename="../commPort/SCCRealTime.h" />
 		<Unit filename="../commPort/SCCWirelessRcvrProtocol.h" />
 		<Unit filename="../jsonParser/JsonParser.cpp" />
 		<Unit filename="../jsonParser/JsonParser.h" />
@@ -88,10 +90,6 @@
 		<Unit filename="CSocket.h" />
 		<Unit filename="IDList.cpp" />
 		<Unit filename="IDList.h" />
-		<Unit filename="IDUserList.cpp" />
-		<Unit filename="IDUserList.h" />
-		<Unit filename="IDVehicleList.cpp" />
-		<Unit filename="IDVehicleList.h" />
 		<Unit filename="MainCtrlSettings.cpp" />
 		<Unit filename="MainCtrlSettings.h" />
 		<Unit filename="SCCAlive.cpp" />
@@ -100,10 +98,13 @@
 		<Unit filename="SCCCreateMessage.h" />
 		<Unit filename="SCCDeviceNames.h" />
 		<Unit filename="SCCDeviceParams.h" />
+		<Unit filename="SCCDeviceVars.h" />
 		<Unit filename="SCCFileManager.cpp" />
 		<Unit filename="SCCFileManager.h" />
 		<Unit filename="SCCFlowmeter.cpp" />
 		<Unit filename="SCCFlowmeter.h" />
+		<Unit filename="SCCFuelTransaction.cpp" />
+		<Unit filename="SCCFuelTransaction.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
 		<Unit filename="SCCRegisters.cpp" />

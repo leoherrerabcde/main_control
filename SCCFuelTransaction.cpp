@@ -66,18 +66,34 @@ bool SCCFuelTransaction::initTransaction(const double dCurrentFlowAcum)
 
 bool SCCFuelTransaction::addUser(const std::string& strID)
 {
+    std::stringstream ss;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_USER_ID << ASSIGN_CHAR << strID;
+
+    m_filemanRegister.appendToFile(std::string(ss.str()));
 }
 
 bool SCCFuelTransaction::addVehicle(const std::string& strID)
 {
+    std::stringstream ss;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_VEHICLE_ID << ASSIGN_CHAR << strID;
+
+    m_filemanRegister.appendToFile(std::string(ss.str()));
 }
 
 void SCCFuelTransaction::addFlowMeterBegin(const double dCurrentFlowAcum)
 {
+    std::stringstream ss;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_INIT_FLOW << ASSIGN_CHAR << strID;
+
+    m_filemanRegister.appendToFile(std::string(ss.str()));
 }
 
-void SCCFuelTransaction::addFlowMeterEnd(const double dCurrentFlowAcum)
+void SCCFuelTransaction::addFlowMeterEnd(std::stringstream& ss, const double dCurrentFlowAcum)
 {
+    std::stringstream ss;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_END_FLOW << ASSIGN_CHAR << strID;
+
+    m_filemanRegister.appendToFile(std::string(ss.str()));
 }
 
 void SCCFuelTransaction::addTimeIni(std::stringstream& ss)
@@ -85,7 +101,7 @@ void SCCFuelTransaction::addTimeIni(std::stringstream& ss)
     ss << SEPARATOR_CHAR << VAR_REGISTER_TIME_INIT << ASSIGN_CHAR << SCCRealTime::getTimeStamp(true);
 }
 
-void SCCFuelTransaction::addTimeEnd()
+void SCCFuelTransaction::addTimeEnd(std::stringstream& ss)
 {
 }
 
@@ -106,16 +122,21 @@ bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
         bool bFlowEnd, bTimeEnd;
         double dFlowIni, dFlowEnd;
         std::string strValue;
+        std::stringstream ss;
         bFlowEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
         if (!bFlowEnd)
-            addFlowMeterEnd(dFlowEnd);
-        bTimeEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
+            addFlowMeterEnd(ss, dFlowEnd);
+        bTimeEnd = getValueMessage(dataFile, VAR_REGISTER_TIME_END, strValue);
         if (!bTimeEnd)
-            addTimeEnd();
+            addTimeEnd(ss);
+        if (!bFlowEnd || !bTimeEnd)
+            m_filemanRegister.appendToFile(std::string(ss.str()));
+
         SCCFileManager dst(m_strRegisterPath);
         dst << m_strHistoRegsPath << "_" << regNumber2String(number) << m_strFileExtension;
         m_filemanRegister.copyFile(dst.getFileName());
         m_filemanRegister.deleteFile();
+
         return true;
     }
     return true;

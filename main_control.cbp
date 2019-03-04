@@ -107,8 +107,6 @@
 		<Unit filename="SCCFuelTransaction.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
-		<Unit filename="SCCRegisters.cpp" />
-		<Unit filename="SCCRegisters.h" />
 		<Unit filename="SCCRemoteServer.cpp" />
 		<Unit filename="SCCRemoteServer.h" />
 		<Unit filename="SCCStateVar.cpp" />

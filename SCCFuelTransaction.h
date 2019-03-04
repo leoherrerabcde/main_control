@@ -22,9 +22,9 @@ class SCCFuelTransaction : public Device
         bool addUser(const std::string& strID);
         bool addVehicle(const std::string& strID);
         void addFlowMeterBegin(const double dCurrentFlowAcum);
-        void addFlowMeterEnd(const double dCurrentFlowAcum);
+        void addFlowMeterEnd(std::stringstream& ss, const double dCurrentFlowAcum);
         void addTimeIni(std::stringstream& ss);
-        void addTimeEnd();
+        void addTimeEnd(std::stringstream& ss);
         void addRegisterNumber(std::stringstream& ss, int regNum);
         bool finishTransaction(const double dCurrentFlowAcum);
 

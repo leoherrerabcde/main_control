@@ -22,6 +22,8 @@ using namespace std;
 #include "SCCFlowmeter.h"
 #include "SCCDeviceNames.h"
 #include "SCCCreateMessage.h"
+//#include "SCCRegisters.h"
+#include "SCCFuelTransaction.h"
 
 SCCLog  globalLog(std::cout);
 bool    gl_bVerbose(true);
@@ -47,7 +49,7 @@ int main(int argc, char* argv[])
     std::unordered_map<std::string,Device*> deviceList;
     std::vector<Device*> onTheFlyDeviceList;
 
-
+    SCCFuelTransaction fuelRegister(TABLE_REGISTERS);
     SCCFlowmeter flowmeter(DEVICE_FLOWMETER, bShowData);
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA, bShowData);
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO, bShowData);
@@ -70,7 +72,6 @@ int main(int argc, char* argv[])
     std::list<CSocket*> socketClientList;
     std::list<CSocket*> socketNewClientList;
     socketServer.setLocalPort(mainSettings.serverPort);
-    socketServer.listen();
 
     Device* pDvc;
 
@@ -114,7 +115,12 @@ int main(int argc, char* argv[])
     UserList.init(mainSettings);
     VehicleList.init(mainSettings);
 
+    fuelRegister.init(mainSettings);
+    int tmrFuelTransaction = 0;
+
     std::cout << "Main Loop Started." << std::endl;
+
+    socketServer.listen();
 
     for(;;)
     {
@@ -134,12 +140,18 @@ int main(int argc, char* argv[])
             }
             mainState.processUserAuthorization(bAuthorizedUser);
             mainState.processVehicleAuthorization(bAuthorizedVehicle);
-            initFuelTransaction();
-            if (bAuthorizedUser)
-
         }
         else if (stateRbpi == MainState::State::RFIDBoquilla)
         {
+            fuelRegister.initTransaction(flowmeter.getAcumFlow());
+            fuelRegister.addUser(rfidUser.getUserId());
+            tmrFuelTransaction = keepAlive.addTimer(150000);
+            bool bAuthorizedVehicle = false;
+            if (rfidBoquilla.isTagDetected())
+            {
+                bAuthorizedVehicle = VehicleList.isValidID(rfidBoquilla.getTagId());
+            }
+            mainState.processVehicleAuthorization(bAuthorizedVehicle);
         }
         else if (stateRbpi == MainState::RFIDUser)
         {

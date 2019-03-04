@@ -1,0 +1,196 @@
+#include "SCCFuelTransaction.h"
+#include "SCCLog.h"
+#include "../commPort/SCCRealTime.h"
+
+#include <set>
+#include <list>
+
+
+extern SCCLog globalLog;
+
+SCCFuelTransaction::SCCFuelTransaction(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata)
+{
+    //ctor
+}
+
+SCCFuelTransaction::~SCCFuelTransaction()
+{
+    //dtor
+}
+
+int SCCFuelTransaction::init(MainCtrlSettings& settings)
+{
+    globalLog << "Initializating Register Class ..." << std::endl;
+    //idVehicleList.init();
+
+    std::stringstream sService;
+
+    settings.getValue(m_DeviceName,PARAM_PATH_NAME,m_strRegisterPath);
+    settings.getValue(m_DeviceName,PARAM_SERVICE_NAME,m_strRegisterName);
+    settings.getValue(m_DeviceName,PARAM_FILE_EXTENSION,m_strFileExtension);
+    settings.getValue(m_DeviceName,PARAM_NEW_REGS_PATH,m_strNewRegsPath);
+    settings.getValue(m_DeviceName,PARAM_HISTO_REGS_PATH,m_strHistoRegsPath);
+    settings.getValue(m_DeviceName,PARAM_CONSE_NUM_LENGTH,m_iConseNumLength);
+    settings.getValue(m_DeviceName,PARAM_UPPER_REG_NUM,m_iUpperRegNum);
+
+    sService << m_strRegisterPath << "/" << m_strRegisterName;
+
+    std::string strService(sService.str());
+
+    setServicePath(strService);
+
+    m_filemanRegister << strService;
+
+    m_bLaunchingService = true;
+
+    finishingTransaction();
+
+    return 0;
+}
+
+bool SCCFuelTransaction::initTransaction(const double dCurrentFlowAcum)
+{
+    finishingTransaction(dCurrentFlowAcum);
+
+    int regNum = getLastRegisterNumber();
+    ++regNum;
+    //clearRegData();
+    std::stringstream ss;
+    ss << MSG_HEADER_TYPE << ASSIGN_CHAR << HEADER_REGISTER;
+    addRegisterNumber(ss, regNum);
+    addTimeIni(ss);
+
+    m_filemanRegister.appendToFile(std::string(ss.str()));
+    return true;
+}
+
+bool SCCFuelTransaction::addUser(const std::string& strID)
+{
+}
+
+bool SCCFuelTransaction::addVehicle(const std::string& strID)
+{
+}
+
+void SCCFuelTransaction::addFlowMeterBegin(const double dCurrentFlowAcum)
+{
+}
+
+void SCCFuelTransaction::addFlowMeterEnd(const double dCurrentFlowAcum)
+{
+}
+
+void SCCFuelTransaction::addTimeIni(std::stringstream& ss)
+{
+    ss << SEPARATOR_CHAR << VAR_REGISTER_TIME_INIT << ASSIGN_CHAR << SCCRealTime::getTimeStamp(true);
+}
+
+void SCCFuelTransaction::addTimeEnd()
+{
+}
+
+void SCCFuelTransaction::addRegisterNumber(std::stringstream& ss, const int regNum)
+{
+    ss << SEPARATOR_CHAR << VAR_REGISTER_NUMBER << ASSIGN_CHAR << regNum;
+}
+
+bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
+{
+    if (m_filemanRegister.isFileExist())
+    {
+        int number = getRegisterNumber(getServicePath());
+
+        std::string dataFile;
+        m_filemanRegister.readFile(datFile);
+
+        bool bFlowEnd, bTimeEnd;
+        double dFlowIni, dFlowEnd;
+        std::string strValue;
+        bFlowEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
+        if (!bFlowEnd)
+            addFlowMeterEnd(dFlowEnd);
+        bTimeEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
+        if (!bTimeEnd)
+            addTimeEnd();
+        SCCFileManager dst(m_strRegisterPath);
+        dst << m_strHistoRegsPath << "_" << regNumber2String(number) << m_strFileExtension;
+        m_filemanRegister.copyFile(dst.getFileName());
+        m_filemanRegister.deleteFile();
+        return true;
+    }
+    return true;
+}
+std::string SCCFuelTransaction::regNumber2String(const int regNumber)
+{
+    std::string strNum(m_iConseNumLength, '0');
+
+    strNum += std::to_string(regNumber);
+    return strNum.sub_str(strNum.length()-m_iConseNumLength);
+}
+
+int SCCFuelTransaction::getLastRegisterNumber(const std::string& strPath)
+{
+    SCCFileManager newRegsPath(strPath);
+
+    std::list<std::string> fileList;
+    std::set<unsigned long> numberList;
+
+    newRegsPath.getFileList(fileList);
+
+    for (auto filename : fileList)
+    {
+        numberList.insert(getRegisterNumber(filename));
+    }
+
+    if (numberList.size())
+    {
+        auto rit = numberList.rbegin();
+        return *rit;
+    }
+    return LOWER_REGISTER_NUM-1;
+}
+
+int SCCFuelTransaction::getLastRegisterNumber()
+{
+    std::string strLastFile;
+
+    if (m_filemanRegister.isFileExist())
+        return getRegisterNumber(m_filemanRegister.getFileName());
+
+    SCCFileManager newRegsPath(m_strRegisterPath);
+    newRegsPath << m_strNewRegsPath;
+    int num = getLastRegisterNumber(newRegsPath.getFileName());
+    if (num >= LOWER_REGISTER_NUM)
+        return num;
+
+    SCCFileManager histoRegsPath(m_strRegisterPath);
+    histoRegsPath << m_strHistoRegsPath;
+    int num = getLastRegisterNumber(histoRegsPath.getFileName());
+
+    return num;
+}
+
+unsigned long SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
+{
+    std::string strNum;
+
+    strNum = strFileName.substr(m_strRegisterName.length()+1, m_iConseNumLength);
+    if (strNum != "")
+    {
+        int num = std::stoul(strNum);
+        if (num > m_iUpperRegNum || num < LOWER_REGISTER_NUM)
+            num = LOWER_REGISTER_NUM-1;
+        return num;
+    }
+
+    SCCFileManager reg(strFileName);
+    std::string dataFile;
+    reg.readFile(dataFile);
+    int num;
+    if (getValueMessage(dataFile, VAR_REGISTER_NUMBER, num))
+        return num;
+
+    return LOWER_REGISTER_NUM-1;
+}
+
+

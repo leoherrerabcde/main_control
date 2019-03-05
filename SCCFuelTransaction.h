@@ -30,10 +30,10 @@ class SCCFuelTransaction : public Device
 
     protected:
 
-        std::string     getLastRegisterNumber();
-        std::string     getLastRegisterNumber(const std::string& strPath);
+        int             getLastRegisterNumber();
+        int             getLastRegisterNumber(const std::string& strPath);
         int             getRegisterNumber(const std::string& strFileName);
-        std::string     regNumber2String(conts int regNumber);
+        std::string     regNumber2String(const int regNumber);
         void            clearRegData() {m_ssRegData.str(std::string());}
         bool            appendRegData();
 

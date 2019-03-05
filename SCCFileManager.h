@@ -3,11 +3,13 @@
 
 #include <string>
 #include <sstream>
+#include <list>
+
 
 class SCCFileManager
 {
     public:
-        SCCFileManager(const std::string& filename);
+        SCCFileManager(const std::string& filename = "", bool bShowdata = false);
         virtual ~SCCFileManager();
 
         bool readFile(std::string& container);

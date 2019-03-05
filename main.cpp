@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
     bool bShowData(false);
 
     std::unordered_map<std::string,Device*> deviceList;
+    std::unordered_map<std::string,CSocket*> socketMap;
     std::vector<Device*> onTheFlyDeviceList;
 
     SCCFuelTransaction fuelRegister(TABLE_REGISTERS);

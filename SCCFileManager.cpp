@@ -9,7 +9,7 @@
 #include <dirent.h>
 
 
-SCCFileManager::SCCFileManager(const std::string& filename)
+SCCFileManager::SCCFileManager(const std::string& filename, bool bShowdata)
 {
     //ctor
     m_ssFile << filename;
@@ -59,6 +59,13 @@ bool SCCFileManager::readFile(const std::string& filename, std::string& containe
 
     container = buffer;
     return true;
+}
+
+bool SCCFileManager::readFile(std::string& container)
+{
+    bool res = readFile(getFileName(), container);
+
+    return res;
 }
 
 bool SCCFileManager::writeFile(const std::string& filepath, const std::string& filename, const std::string& container, std::ios::openmode mode)
@@ -151,7 +158,7 @@ bool SCCFileManager::moveFile(const std::string& fileDst)
 
 bool SCCFileManager::moveFile(const std::string& fileSrc, const std::string& fileDst)
 {
-    int res = rename(fileSrc, fileDst);
+    int res = rename(fileSrc.c_str(), fileDst.c_str());
     return (res == 0);
 }
 
@@ -182,9 +189,10 @@ bool SCCFileManager::copyFile(const std::string& fileDst)
 
 bool SCCFileManager::copyFile(const std::string& fileSrc, const std::string& fileDst)
 {
-    ifstream src(fileSrc; std::ios::binary);
-    ofstream dst(fileDst, std::ios::binary);
-    dst << src;
+    std::ifstream src(fileSrc, std::ios::binary);
+    std::ofstream dst(fileDst, std::ios::binary);
+    dst << src.rdbuf();
+    return true;
 }
 
 bool SCCFileManager::deleteFile()

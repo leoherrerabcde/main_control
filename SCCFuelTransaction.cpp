@@ -1,6 +1,9 @@
 #include "SCCFuelTransaction.h"
 #include "SCCLog.h"
 #include "../commPort/SCCRealTime.h"
+#include "SCCDeviceVars.h"
+#include "SCCGeneralDefines.h"
+
 
 #include <set>
 #include <list>
@@ -43,14 +46,14 @@ int SCCFuelTransaction::init(MainCtrlSettings& settings)
 
     m_bLaunchingService = true;
 
-    finishingTransaction();
+    //finishTransaction();
 
     return 0;
 }
 
 bool SCCFuelTransaction::initTransaction(const double dCurrentFlowAcum)
 {
-    finishingTransaction(dCurrentFlowAcum);
+    finishTransaction(dCurrentFlowAcum);
 
     int regNum = getLastRegisterNumber();
     ++regNum;
@@ -70,6 +73,8 @@ bool SCCFuelTransaction::addUser(const std::string& strID)
     ss << SEPARATOR_CHAR << VAR_REGISTER_USER_ID << ASSIGN_CHAR << strID;
 
     m_filemanRegister.appendToFile(std::string(ss.str()));
+
+    return true;
 }
 
 bool SCCFuelTransaction::addVehicle(const std::string& strID)
@@ -78,20 +83,22 @@ bool SCCFuelTransaction::addVehicle(const std::string& strID)
     ss << SEPARATOR_CHAR << VAR_REGISTER_VEHICLE_ID << ASSIGN_CHAR << strID;
 
     m_filemanRegister.appendToFile(std::string(ss.str()));
+
+    return true;
 }
 
 void SCCFuelTransaction::addFlowMeterBegin(const double dCurrentFlowAcum)
 {
     std::stringstream ss;
-    ss << SEPARATOR_CHAR << VAR_REGISTER_INIT_FLOW << ASSIGN_CHAR << strID;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_INIT_FLOW << ASSIGN_CHAR << dCurrentFlowAcum;
 
     m_filemanRegister.appendToFile(std::string(ss.str()));
 }
 
 void SCCFuelTransaction::addFlowMeterEnd(std::stringstream& ss, const double dCurrentFlowAcum)
 {
-    std::stringstream ss;
-    ss << SEPARATOR_CHAR << VAR_REGISTER_END_FLOW << ASSIGN_CHAR << strID;
+    //std::stringstream ss;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_END_FLOW << ASSIGN_CHAR << dCurrentFlowAcum;
 
     m_filemanRegister.appendToFile(std::string(ss.str()));
 }
@@ -117,10 +124,10 @@ bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
         int number = getRegisterNumber(getServicePath());
 
         std::string dataFile;
-        m_filemanRegister.readFile(datFile);
+        m_filemanRegister.readFile(dataFile);
 
         bool bFlowEnd, bTimeEnd;
-        double dFlowIni, dFlowEnd;
+        double /*dFlowIni,*/ dFlowEnd;
         std::string strValue;
         std::stringstream ss;
         bFlowEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
@@ -146,7 +153,8 @@ std::string SCCFuelTransaction::regNumber2String(const int regNumber)
     std::string strNum(m_iConseNumLength, '0');
 
     strNum += std::to_string(regNumber);
-    return strNum.sub_str(strNum.length()-m_iConseNumLength);
+    strNum = strNum.substr(strNum.length()-m_iConseNumLength);
+    return strNum;
 }
 
 int SCCFuelTransaction::getLastRegisterNumber(const std::string& strPath)
@@ -186,12 +194,12 @@ int SCCFuelTransaction::getLastRegisterNumber()
 
     SCCFileManager histoRegsPath(m_strRegisterPath);
     histoRegsPath << m_strHistoRegsPath;
-    int num = getLastRegisterNumber(histoRegsPath.getFileName());
+    num = getLastRegisterNumber(histoRegsPath.getFileName());
 
     return num;
 }
 
-unsigned long SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
+int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
 {
     std::string strNum;
 

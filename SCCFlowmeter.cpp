@@ -95,3 +95,7 @@ bool SCCFlowmeter::processDataReceived(const std::string& msg)
     return true;
 }
 
+double SCCFlowmeter::getAcumFlow()
+{
+    return 0.0;
+}

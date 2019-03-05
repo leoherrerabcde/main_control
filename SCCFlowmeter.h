@@ -13,6 +13,7 @@ class SCCFlowmeter : public Device
 
     virtual int init(MainCtrlSettings& settings);
     virtual bool processDataReceived(const std::string& msg = "");
+    double getAcumFlow();
 
     protected:
 

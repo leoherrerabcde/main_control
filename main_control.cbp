@@ -105,6 +105,7 @@
 		<Unit filename="SCCFlowmeter.h" />
 		<Unit filename="SCCFuelTransaction.cpp" />
 		<Unit filename="SCCFuelTransaction.h" />
+		<Unit filename="SCCGeneralDefines.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
 		<Unit filename="SCCRemoteServer.cpp" />

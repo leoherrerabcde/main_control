@@ -15,12 +15,17 @@ public:
 
     std::string getUserId() {return m_strCardSerialNum;};
 
+    std::string getCmdBeepSound();
+
     bool isUserDetected() {return m_bCardDetected;}
 
 private:
 
     std::string m_strCardSerialNum;
     bool        m_bCardDetected;
+
+    int         m_iBeepDuration;
+    int         m_iBeepTimes;
 };
 
 #endif // RFIDUSER_H

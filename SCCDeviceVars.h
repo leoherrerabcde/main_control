@@ -12,4 +12,7 @@
 //#define VAR_REGISTER_
 
 
+#define CMD_RFIDUSER_BEEPSOUND      "BeepSound"
+
+
 #endif // SCCDEVICEVARS_H_INCLUDED

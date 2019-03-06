@@ -1,5 +1,7 @@
 #include "rfiduser.h"
 #include "SCCLog.h"
+#include "SCCDeviceVars.h"
+
 
 #include <iostream>
 
@@ -71,4 +73,21 @@ bool RFIDUser::processDataReceived(const std::string& msg)
 
     return strUserId;
 }*/
+
+std::string RFIDUser::getCmdBeepSound()
+{
+    std::stringstream ss;
+
+    ss << FRAME_START_MARK ;
+
+    ss << MSG_HEADER_TYPE << ASSIGN_CHAR << DEVICE_RFID_BOMBERO;
+
+    ss << SEPARATOR_CHAR << MSG_COMMAND_TYPE 		<< ASSIGN_CHAR << CMD_RFIDUSER_BEEPSOUND;
+    ss << SEPARATOR_CHAR << PARAM_BEEP_DURATION 	<< ASSIGN_CHAR << m_iBeepDuration;
+    ss << SEPARATOR_CHAR << PARAM_BEEP_TIMES 	    << ASSIGN_CHAR << m_iBeepTimes;
+
+    ss << FRAME_STOP_MARK;
+
+    return std::string(ss.str());
+}
 

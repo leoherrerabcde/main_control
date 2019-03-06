@@ -24,4 +24,8 @@
 #define PARAM_CONSE_NUM_LENGTH  "6"
 #define PARAM_UPPER_REG_NUM     "UpperRegisterNumber"
 
+
+#define PARAM_BEEP_DURATION     "100"
+#define PARAM_BEEP_TIMES        "1"
+
 #endif // SCCDEVICEPARAMS_H_INCLUDED

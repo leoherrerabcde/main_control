@@ -35,6 +35,8 @@ class IDList
 
         virtual bool isValidID(const std::string& strId);
 
+        virtual std::string getTableType() {return m_strTableType;}
+
     protected:
 
         std::string     m_strTablePath;

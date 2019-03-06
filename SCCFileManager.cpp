@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <cstring>
 
 
 SCCFileManager::SCCFileManager(const std::string& filename, bool bShowdata)
@@ -150,6 +151,20 @@ bool SCCFileManager::isFileExist(const std::string& filename)
     return (stat (filename.c_str(), &buffer) == 0);
 }
 
+bool SCCFileManager::isFolder()
+{
+    std::string strFile(m_ssFile.str());
+    return isFolder(strFile);
+}
+
+bool SCCFileManager::isFolder(const std::string& filename)
+{
+    struct stat stat_buf;
+    if (stat (filename.c_str(), &stat_buf) != 0)
+        return false;
+    return (S_ISDIR(stat_buf.st_mode));
+}
+
 bool SCCFileManager::moveFile(const std::string& fileDst)
 {
     std::string strFile(m_ssFile.str());
@@ -177,7 +192,14 @@ void SCCFileManager::getFileList(const std::string& path, std::list<std::string>
 
     while ((ent = readdir(dir)) != NULL)
     {
-        listFile.push_back(ent->d_name);
+        if (strcmp(ent->d_name, ".") != 0 && strcmp(ent->d_name, "..") != 0)
+        {
+            std::string strTmp(path);
+            strTmp += "/";
+            strTmp += ent->d_name;
+            if (!isFolder(strTmp))
+                listFile.push_back(ent->d_name);
+        }
     }
     closedir(dir);
 }

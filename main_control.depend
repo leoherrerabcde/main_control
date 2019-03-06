@@ -63,14 +63,14 @@
 	<sstream>
 	<cstring>
 
-1551556446 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
+1551844011 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
 	"electrovalvctrl.h"
 	"SCCLog.h"
 
-1551556553 /home/pi/Documents/source/main_control/electrovalvctrl.h
+1551843940 /home/pi/Documents/source/main_control/electrovalvctrl.h
 	"device.h"
 
-1551631934 source:/home/pi/Documents/source/main_control/IDList.cpp
+1551898201 source:/home/pi/Documents/source/main_control/IDList.cpp
 	"IDList.h"
 	"SCCFileManager.h"
 
@@ -102,10 +102,10 @@
 	"device.h"
 	"mainstate.h"
 
-1550882144 /home/pi/Documents/source/main_control/mainstate.h
+1551897054 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1551841629 source:/home/pi/Documents/source/main_control/main.cpp
+1551897792 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -129,22 +129,22 @@
 1551556350 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
 
-1551798393 /home/pi/Documents/source/main_control/rfiduser.h
+1551897381 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 	"../rfidUser/SCCRfidUserProtocol.h"
 
-1550752222 /home/pi/Documents/source/main_control/SCCAlive.h
+1551875698 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
 	<thread>
 	<vector>
 
-1551792760 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1551889444 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
-1551561470 source:/home/pi/Documents/source/main_control/mainstate.cpp
+1551897152 source:/home/pi/Documents/source/main_control/mainstate.cpp
 	"mainstate.h"
 
-1551612845 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1551898279 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
@@ -158,13 +158,13 @@
 	<queue>
 	<cstring>
 
-1551840867 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1551897405 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 	"SCCDeviceVars.h"
 	<iostream>
 
-1551547760 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1551897433 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>
@@ -173,7 +173,7 @@
 	"SCCLog.h"
 	<iostream>
 
-1551798352 /home/pi/Documents/source/main_control/SCCDeviceParams.h
+1551843003 /home/pi/Documents/source/main_control/SCCDeviceParams.h
 
 1551556659 /home/pi/Documents/source/main_control/SCCRemoteServer.h
 	"device.h"
@@ -195,7 +195,7 @@
 
 1551479379 /home/pi/Documents/source/main_control/SCCStateVar.h
 
-1551795869 /home/pi/Documents/source/main_control/SCCFileManager.h
+1551900177 /home/pi/Documents/source/main_control/SCCFileManager.h
 	<string>
 	<sstream>
 	<list>
@@ -208,7 +208,7 @@
 1550881730 source:/home/pi/Documents/source/main_control/SCCStateVar.cpp
 	"SCCStateVar.h"
 
-1551796298 source:/home/pi/Documents/source/main_control/SCCFileManager.cpp
+1551901493 source:/home/pi/Documents/source/main_control/SCCFileManager.cpp
 	"SCCFileManager.h"
 	"SCCLog.h"
 	<iostream>
@@ -217,6 +217,7 @@
 	<unistd.h>
 	<sys/types.h>
 	<dirent.h>
+	<cstring>
 
 1551792750 /home/pi/Documents/source/main_control/SCCFlowmeter.h
 	"device.h"
@@ -418,7 +419,7 @@
 	"../commPort/SCCRealTime.h"
 	<chrono>
 
-1551796119 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
+1551901995 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
 	"SCCFuelTransaction.h"
 	"SCCLog.h"
 	"../commPort/SCCRealTime.h"
@@ -427,7 +428,7 @@
 	<set>
 	<list>
 
-1551798297 /home/pi/Documents/source/main_control/SCCDeviceVars.h
+1551842804 /home/pi/Documents/source/main_control/SCCDeviceVars.h
 
 1551795446 /home/pi/Documents/source/main_control/SCCGeneralDefines.h
 
@@ -452,4 +453,7 @@
 	"SCCDeviceNames.h"
 	"SCCCreateMessage.h"
 	"SCCFuelTransaction.h"
+
+1551841715 source:/home/pi/Documents/source/main_control/main_functions.cpp
+	"main_functions.h"
 

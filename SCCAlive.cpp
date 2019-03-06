@@ -130,3 +130,19 @@ bool SCCAlive::isTimerEvent(const int tmrHdl)
     return false;
 }
 
+void SCCAlive::resetTimer(const int timerHdl)
+{
+    if (timerHdl >= 0)
+    {
+        if ((unsigned int)timerHdl < m_TimerList.size())
+        {
+            m_TimerList[timerHdl].resetTimer();
+        }
+        else
+            globalLog << "Timer Handler out of scope." << std::endl;
+    }
+    else
+        globalLog << "Timer Handler out of scope." << std::endl;
+}
+
+

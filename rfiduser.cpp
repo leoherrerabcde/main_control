@@ -56,7 +56,7 @@ int RFIDUser::init(MainCtrlSettings& settings)
     //SCCLog::print("RFID Nozzle Initiated.");
     settings.getValue(m_DeviceName, PARAM_BEEP_DURATION, m_iBeepDuration, 100);
     settings.getValue(m_DeviceName, PARAM_BEEP_TIMES, comPort, m_iBeepTimes);
-    settings.getValue(m_DeviceName, PARAM_TIME_OUT, comPort, m_iLockTimeout);
+    settings.getValue(m_DeviceName, PARAM_TIME_OUT, comPort, m_iLockTimeOut);
 
     m_bLaunchingService = true;
     return 0;

@@ -36,7 +36,7 @@ int SCCFuelTransaction::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,PARAM_CONSE_NUM_LENGTH,m_iConseNumLength);
     settings.getValue(m_DeviceName,PARAM_UPPER_REG_NUM,m_iUpperRegNum);
 
-    sService << m_strRegisterPath << "/" << m_strRegisterName;
+    sService << m_strRegisterPath << "/" << m_strRegisterName << m_strFileExtension;
 
     std::string strService(sService.str());
 
@@ -202,6 +202,9 @@ int SCCFuelTransaction::getLastRegisterNumber()
 int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
 {
     std::string strNum;
+
+    if (strFileName.find(m_strRegisterName) != 0)
+        return LOWER_REGISTER_NUM-1;
 
     strNum = strFileName.substr(m_strRegisterName.length()+1, m_iConseNumLength);
     if (strNum != "")

@@ -36,6 +36,8 @@ class SCCFileManager
 
         bool isFileExist();
         static bool isFileExist(const std::string& filename);
+        bool isFolder();
+        static bool isFolder(const std::string& filename);
 
         std::string getFileName() {return std::string(m_ssFile.str());}
 
@@ -47,10 +49,9 @@ class SCCFileManager
 
         SCCFileManager& operator<<(/*SCCFileManager& fm,*/ const std::string& str)
         {
-            if (!m_ssFile.str().length())
-                m_ssFile << str;
-            else
+            if (m_ssFile.str().length())
                 m_ssFile << "/";
+            m_ssFile << str;
             return *this;
         }
 

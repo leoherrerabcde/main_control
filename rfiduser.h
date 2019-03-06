@@ -27,7 +27,7 @@ private:
 
     int         m_iBeepDuration;
     int         m_iBeepTimes;
-    int         m_iLockTimeout;
+    int         m_iLockTimeOut;
 };
 
 #endif // RFIDUSER_H

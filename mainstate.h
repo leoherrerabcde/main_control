@@ -27,6 +27,9 @@ public:
 
     void processUserAuthorization(bool bAuthorized);
     void processVehicleAuthorization(bool bAuthorized);
+    void processLostVehicleTag();
+    void processResumeFueling();
+    void processFinishFueling();
 
 private:
 

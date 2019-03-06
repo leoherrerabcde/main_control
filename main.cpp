@@ -109,7 +109,10 @@ int main(int argc, char* argv[])
     fuelRegister.init(mainSettings);
     int tmrFuelTransaction = 0;
 
-    std::cout << "Main Loop Started." << std::endl;
+    double dAcumFlowOld;
+    std::string strTagVehicle;
+
+    globalLog << "Main Loop Started." << std::endl;
 
     socketServer.listen();
 
@@ -119,7 +122,13 @@ int main(int argc, char* argv[])
         if (tmrFuelTransaction)
         {
             if (keepAlive.isTimerEvent(tmrFuelTransaction))
-                fuelTransactionTimeOut();
+            {
+                electroValve.closeValve();
+                fuelRegister.finishTransaction(flowmeter.getAcumFlow());
+                //fuelTransactionTimeOut();
+                keepAlive.stopTimer(tmrFuelTransaction);
+                tmrFuelTransaction = 0;
+            }
         }
         stateRbpi = mainState.getCurrentState();
         if (stateRbpi == MainState::State::waitForInitTransaction)
@@ -142,11 +151,15 @@ int main(int argc, char* argv[])
             }
             if (bAuthorizedUser || bAuthorizedVehicle)
             {
+                dAcumFlowOld = flowmeter.getAcumFlow();
                 fuelRegister.initTransaction(flowmeter.getAcumFlow());
                 if (bAuthorizedUser)
                     fuelRegister.addUser(rfidUser.getUserId());
                 if (bAuthorizedVehicle)
-                    fuelRegister.addVehicle(rfidBoquilla.getUserId());
+                {
+                    fuelRegister.addVehicle(rfidBoquilla.getTagId());
+                    strTagVehicle = rfidBoquilla.getTagId();
+                }
                 fuelRegister.addFlowMeterBegin(flowmeter.getAcumFlow());
                 tmrFuelTransaction = keepAlive.addTimer(150000);
                 mainState.processUserAuthorization(bAuthorizedUser);
@@ -156,14 +169,19 @@ int main(int argc, char* argv[])
         else if (stateRbpi == MainState::State::RFIDBoquilla)
         {
             bool bAuthorizedUser = false;
-            if (rfidUser.isTagDetected())
+            if (rfidUser.isUserDetected())
             {
-                bAuthorizedUser = UserList.isValidID(rfidUser.getTagId());
+                bAuthorizedUser = UserList.isValidID(rfidUser.getUserId());
             }
             if (bAuthorizedUser)
             {
+                sendData(UserList.getTableType(), socketMap, rfidUser.getCmdBeepSound());
+                sendData(UserList.getTableType(), socketMap, rfidUser.getCmdLockReader());
                 fuelRegister.addUser(rfidUser.getUserId());
-                mainState.processVehicleAuthorization(bAuthorizedUser);
+                mainState.processUserAuthorization(bAuthorizedUser);
+                keepAlive.resetTimer(tmrFuelTransaction);
+                dAcumFlowOld = flowmeter.getAcumFlow();
+                electroValve.openValve();
             }
         }
         else if (stateRbpi == MainState::RFIDUser)
@@ -175,23 +193,49 @@ int main(int argc, char* argv[])
             }
             if (bAuthorizedVehicle)
             {
-                fuelRegister.addVehicle(rfidBoquilla.getUserId());
+                fuelRegister.addVehicle(rfidBoquilla.getTagId());
                 mainState.processVehicleAuthorization(bAuthorizedVehicle);
+                keepAlive.resetTimer(tmrFuelTransaction);
+                dAcumFlowOld = flowmeter.getAcumFlow();
                 electroValve.openValve();
             }
         }
-        else if (stateRbpi == MainState::startingTransaction)
+        /*else if (stateRbpi == MainState::startingTransaction)
         {
-        }
+        }*/
         else if (stateRbpi == MainState::chargingFuel)
         {
+            if (dAcumFlowOld != flowmeter.getAcumFlow())
+            {
+                keepAlive.resetTimer(tmrFuelTransaction);
+                dAcumFlowOld = flowmeter.getAcumFlow();
+            }
+            if (!rfidBoquilla.isTagDetected() || strTagVehicle != rfidBoquilla.getTagId())
+            {
+                mainState.processLostVehicleTag();
+                electroValve.closeValve();
+            }
         }
         else if (stateRbpi == MainState::chargingPaused)
         {
+            if (rfidBoquilla.isTagDetected())
+            {
+                if (strTagVehicle == rfidBoquilla.getTagId())
+                {
+                    mainState.processResumeFueling();
+                    electroValve.openValve();
+                }
+                else
+                {
+                    electroValve.closeValve();
+                    fuelRegister.finishTransaction(flowmeter.getAcumFlow());
+                    mainState.processFinishFueling();
+                }
+            }
         }
-        else if (stateRbpi == MainState::finishingTransaction)
+        /*else if (stateRbpi == MainState::finishingTransaction)
         {
-        }
+        }*/
 
         proccesNewConnection(socketServer, mainSettings, socketNewClientList);
         processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap);

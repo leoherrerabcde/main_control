@@ -73,7 +73,7 @@ bool IDList::writeTable(const std::string& strData)
 
 bool IDList::isValidID(const std::string& strId)
 {
-    if (!m_jsonParser.isMapIDReady())
+    if (!m_jsonParser.isMapIDReady() || strId == "")
         return false;
 
     return m_jsonParser.hasID(strId);

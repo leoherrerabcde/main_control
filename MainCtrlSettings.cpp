@@ -18,7 +18,9 @@ std::unordered_map<std::string, ArgumentStruct> st_RFIDUserParam =
     {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "1"}},
     {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "9600"}},
     {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "rfidUser"}},
-    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/rfidUser/bin/Release"}}
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/rfidUser/bin/Release"}},
+    {PARAM_TIME_OUT, {PARAM_TIME_OUT, Required, Integer, true, "120000"}}
+
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_FlowmeterParam =

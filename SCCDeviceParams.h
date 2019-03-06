@@ -21,11 +21,13 @@
 
 #define PARAM_NEW_REGS_PATH     "NewRegistersPath"
 #define PARAM_HISTO_REGS_PATH   "HistoRegistersPath"
-#define PARAM_CONSE_NUM_LENGTH  "6"
+#define PARAM_CONSE_NUM_LENGTH  "RegisterNumberLength"
 #define PARAM_UPPER_REG_NUM     "UpperRegisterNumber"
 
 
-#define PARAM_BEEP_DURATION     "100"
-#define PARAM_BEEP_TIMES        "1"
+#define PARAM_BEEP_DURATION     "BeepDuration"
+#define PARAM_BEEP_TIMES        "BeepTimes"
+
+#define PARAM_TIME_OUT          "Timeout"
 
 #endif // SCCDEVICEPARAMS_H_INCLUDED

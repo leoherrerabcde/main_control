@@ -16,6 +16,7 @@ public:
     std::string getUserId() {return m_strCardSerialNum;};
 
     std::string getCmdBeepSound();
+    std::string getCmdLockReader();
 
     bool isUserDetected() {return m_bCardDetected;}
 
@@ -26,6 +27,7 @@ private:
 
     int         m_iBeepDuration;
     int         m_iBeepTimes;
+    int         m_iLockTimeout;
 };
 
 #endif // RFIDUSER_H

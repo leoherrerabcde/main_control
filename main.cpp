@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     SCCFlowmeter flowmeter(DEVICE_FLOWMETER, bShowData);
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA, bShowData);
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO, bShowData);
-    ElectroValvCtrl electroValv(DEVICE_ELECTRO_VALVE, bShowData);
+    ElectroValvCtrl electroValve(DEVICE_ELECTRO_VALVE, bShowData);
     Device guiApp(DEVICE_GUI, bShowData);
     SCCRemoteServer restApi(DEVICE_REST_SERVICE, bShowData);
 
@@ -72,8 +72,8 @@ int main(int argc, char* argv[])
     pDvc = &rfidUser;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));
 
-    pDvc = &electroValv;
-    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+    /*pDvc = &electroValve;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));*/
 
     pDvc = &guiApp;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));
@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
     flowmeter.init(mainSettings);
     rfidBoquilla.init(mainSettings);
     rfidUser.init(mainSettings);
-    electroValv.init(mainSettings);
+    electroValve.init(mainSettings);
     restApi.init(mainSettings);
     modCommGSM.init(mainSettings);
     lucesDeEstado.init(mainSettings);
@@ -124,37 +124,61 @@ int main(int argc, char* argv[])
         stateRbpi = mainState.getCurrentState();
         if (stateRbpi == MainState::State::waitForInitTransaction)
         {
-            bool bAuthorizedUser = false;
-            bool bAuthorizedVehicle = false;
+            bool bAuthorizedUser        = false;
+            bool bAuthorizedVehicle     = false;
+            //bool bInitFuelTransaction   = false;
             if (rfidUser.isUserDetected())
             {
                 bAuthorizedUser = UserList.isValidID(rfidUser.getUserId());
                 if (bAuthorizedUser)
                 {
                     sendData(UserList.getTableType(), socketMap, rfidUser.getCmdBeepSound());
+                    sendData(UserList.getTableType(), socketMap, rfidUser.getCmdLockReader());
                 }
             }
             if (rfidBoquilla.isTagDetected())
             {
                 bAuthorizedVehicle = VehicleList.isValidID(rfidBoquilla.getTagId());
             }
-            mainState.processUserAuthorization(bAuthorizedUser);
-            mainState.processVehicleAuthorization(bAuthorizedVehicle);
+            if (bAuthorizedUser || bAuthorizedVehicle)
+            {
+                fuelRegister.initTransaction(flowmeter.getAcumFlow());
+                if (bAuthorizedUser)
+                    fuelRegister.addUser(rfidUser.getUserId());
+                if (bAuthorizedVehicle)
+                    fuelRegister.addVehicle(rfidBoquilla.getUserId());
+                fuelRegister.addFlowMeterBegin(flowmeter.getAcumFlow());
+                tmrFuelTransaction = keepAlive.addTimer(150000);
+                mainState.processUserAuthorization(bAuthorizedUser);
+                mainState.processVehicleAuthorization(bAuthorizedVehicle);
+            }
         }
         else if (stateRbpi == MainState::State::RFIDBoquilla)
         {
-            fuelRegister.initTransaction(flowmeter.getAcumFlow());
-            fuelRegister.addUser(rfidUser.getUserId());
-            tmrFuelTransaction = keepAlive.addTimer(150000);
+            bool bAuthorizedUser = false;
+            if (rfidUser.isTagDetected())
+            {
+                bAuthorizedUser = UserList.isValidID(rfidUser.getTagId());
+            }
+            if (bAuthorizedUser)
+            {
+                fuelRegister.addUser(rfidUser.getUserId());
+                mainState.processVehicleAuthorization(bAuthorizedUser);
+            }
+        }
+        else if (stateRbpi == MainState::RFIDUser)
+        {
             bool bAuthorizedVehicle = false;
             if (rfidBoquilla.isTagDetected())
             {
                 bAuthorizedVehicle = VehicleList.isValidID(rfidBoquilla.getTagId());
             }
-            mainState.processVehicleAuthorization(bAuthorizedVehicle);
-        }
-        else if (stateRbpi == MainState::RFIDUser)
-        {
+            if (bAuthorizedVehicle)
+            {
+                fuelRegister.addVehicle(rfidBoquilla.getUserId());
+                mainState.processVehicleAuthorization(bAuthorizedVehicle);
+                electroValve.openValve();
+            }
         }
         else if (stateRbpi == MainState::startingTransaction)
         {

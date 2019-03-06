@@ -121,6 +121,8 @@
 		<Unit filename="lucesestado.cpp" />
 		<Unit filename="lucesestado.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main_functions.cpp" />
+		<Unit filename="main_functions.h" />
 		<Unit filename="mainstate.cpp" />
 		<Unit filename="mainstate.h" />
 		<Unit filename="rfidboquilla.cpp" />

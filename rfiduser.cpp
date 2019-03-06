@@ -23,6 +23,42 @@ int RFIDUser::init(MainCtrlSettings& settings)
     globalLog << "Initializating RFID User..." << std::endl;
 
     globalLog << "RFID User ready to use." << std::endl;
+
+    std::stringstream sService;
+    std::string pathName;
+    std::string serviceName;
+    const std::string paramPathName(PARAM_PATH_NAME);
+    const std::string paramServiceName(PARAM_SERVICE_NAME);
+
+    settings.getValue(m_DeviceName,paramPathName,pathName);
+    settings.getValue(m_DeviceName,paramServiceName,serviceName);
+
+    sService << pathName << "/" << serviceName;
+
+    std::stringstream sArgs;
+
+    int comPort, baudRate, remotePort;
+
+    settings.getValue(m_DeviceName, PARAM_COM_PORT, comPort, 0);
+    settings.getValue(m_DeviceName, PARAM_BAUD_RATE, baudRate, 0);
+    remotePort = settings.serverPort;
+
+    sArgs << comPort << " " << baudRate << " " << remotePort;
+
+    std::string strService(sService.str());
+    std::string strArgs(sArgs.str());
+
+    setServicePath(strService);
+    setServiceArgs(strArgs);
+    //int ret = launchService(strService, strArgs);
+    //int ret = 0;
+
+    //SCCLog::print("RFID Nozzle Initiated.");
+    settings.getValue(m_DeviceName, PARAM_BEEP_DURATION, m_iBeepDuration, 100);
+    settings.getValue(m_DeviceName, PARAM_BEEP_TIMES, comPort, m_iBeepTimes);
+    settings.getValue(m_DeviceName, PARAM_TIME_OUT, comPort, m_iLockTimeout);
+
+    m_bLaunchingService = true;
     return 0;
 }
 
@@ -91,3 +127,18 @@ std::string RFIDUser::getCmdBeepSound()
     return std::string(ss.str());
 }
 
+std::string RFIDUser::getCmdLockReader()
+{
+    std::stringstream ss;
+
+    ss << FRAME_START_MARK ;
+
+    ss << MSG_HEADER_TYPE << ASSIGN_CHAR << DEVICE_RFID_BOMBERO;
+
+    ss << SEPARATOR_CHAR << MSG_COMMAND_TYPE 		<< ASSIGN_CHAR << CMD_RFIDUSER_LOCKREADER;
+    ss << SEPARATOR_CHAR << PARAM_TIME_OUT 		    << ASSIGN_CHAR << m_iLockTimeOut;
+
+    ss << FRAME_STOP_MARK;
+
+    return std::string(ss.str());
+}

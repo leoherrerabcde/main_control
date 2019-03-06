@@ -10,6 +10,9 @@ public:
     ~ElectroValvCtrl();
 
     virtual int init(MainCtrlSettings& settings);
+
+    void openValve();;
+    void closeValve();
 };
 
 #endif // ELECTROVALVCTRL_H

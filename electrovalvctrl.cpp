@@ -22,3 +22,13 @@ int ElectroValvCtrl::init(MainCtrlSettings& settings)
     return 0;
 }
 
+void ElectroValvCtrl::openValve()
+{
+}
+
+void ElectroValvCtrl::closeValve()
+{
+}
+
+
+

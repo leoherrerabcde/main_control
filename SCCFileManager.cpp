@@ -209,7 +209,7 @@ bool SCCFileManager::copyFile(const std::string& fileDst)
     return copyFile(fileDst, getFileName());
 }
 
-bool SCCFileManager::copyFile(const std::string& fileSrc, const std::string& fileDst)
+bool SCCFileManager::copyFile(const std::string& fileDst, const std::string& fileSrc)
 {
     std::ifstream src(fileSrc, std::ios::binary);
     std::ofstream dst(fileDst, std::ios::binary);

@@ -64,6 +64,7 @@ std::unordered_map<std::string, ArgumentStruct> st_FuelRegisterParam =
     {PARAM_NEW_REGS_PATH,{PARAM_NEW_REGS_PATH, Required, AlphaNumeric, true, "new_registers"}},
     {PARAM_HISTO_REGS_PATH,{PARAM_HISTO_REGS_PATH, Required, AlphaNumeric, true, "histo_registers"}},
     {PARAM_UPPER_REG_NUM,{PARAM_UPPER_REG_NUM, Required, Integer, true, "999999"}},
+    {PARAM_CONSE_NUM_LENGTH,{PARAM_CONSE_NUM_LENGTH, Required, Integer, true, "6"}},
 
 };
 

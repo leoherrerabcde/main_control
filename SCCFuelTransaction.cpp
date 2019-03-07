@@ -11,6 +11,9 @@
 
 extern SCCLog globalLog;
 
+#define PRINT_DBG(v)    globalLog << __LINE__ << "\t" << v << std::endl
+
+
 SCCFuelTransaction::SCCFuelTransaction(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata)
 {
     //ctor
@@ -97,10 +100,7 @@ void SCCFuelTransaction::addFlowMeterBegin(const double dCurrentFlowAcum)
 
 void SCCFuelTransaction::addFlowMeterEnd(std::stringstream& ss, const double dCurrentFlowAcum)
 {
-    //std::stringstream ss;
     ss << SEPARATOR_CHAR << VAR_REGISTER_END_FLOW << ASSIGN_CHAR << dCurrentFlowAcum;
-
-    m_filemanRegister.appendToFile(std::string(ss.str()));
 }
 
 void SCCFuelTransaction::addTimeIni(std::stringstream& ss)
@@ -110,6 +110,7 @@ void SCCFuelTransaction::addTimeIni(std::stringstream& ss)
 
 void SCCFuelTransaction::addTimeEnd(std::stringstream& ss)
 {
+    ss << SEPARATOR_CHAR << VAR_REGISTER_TIME_END << ASSIGN_CHAR << SCCRealTime::getTimeStamp(true);
 }
 
 void SCCFuelTransaction::addRegisterNumber(std::stringstream& ss, const int regNum)
@@ -131,16 +132,23 @@ bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
         std::string strValue;
         std::stringstream ss;
         bFlowEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
+        PRINT_DBG(ss.str());
         if (!bFlowEnd)
-            addFlowMeterEnd(ss, dFlowEnd);
+            addFlowMeterEnd(ss, dCurrentFlowAcum);
+        PRINT_DBG(ss.str());
         bTimeEnd = getValueMessage(dataFile, VAR_REGISTER_TIME_END, strValue);
+        PRINT_DBG(ss.str());
         if (!bTimeEnd)
             addTimeEnd(ss);
         if (!bFlowEnd || !bTimeEnd)
             m_filemanRegister.appendToFile(std::string(ss.str()));
 
         SCCFileManager dst(m_strRegisterPath);
-        dst << m_strHistoRegsPath << "_" << regNumber2String(number) << m_strFileExtension;
+        std::string str(m_strRegisterName);
+        str += "_";
+        str += regNumber2String(number);
+        str += m_strFileExtension;
+        dst << m_strNewRegsPath << str;
         m_filemanRegister.copyFile(dst.getFileName());
         m_filemanRegister.deleteFile();
 
@@ -203,10 +211,18 @@ int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
 {
     std::string strNum;
 
-    if (strFileName.find(m_strRegisterName) != 0)
+    PRINT_DBG(strFileName);
+    std::string::size_type pos = strFileName.find(m_strRegisterName);
+    if ( pos == std::string::npos)
         return LOWER_REGISTER_NUM-1;
 
-    strNum = strFileName.substr(m_strRegisterName.length()+1, m_iConseNumLength);
+    strNum = strFileName.substr(pos + m_strRegisterName.length());
+    PRINT_DBG(strNum);
+    if (strNum.length() > m_iConseNumLength + m_strFileExtension.length())
+        strNum = strNum.substr(0, m_iConseNumLength);
+    else
+        strNum = "";
+    PRINT_DBG(strNum);
     if (strNum != "")
     {
         int num = std::stoul(strNum);

@@ -176,7 +176,9 @@ int SCCFuelTransaction::getLastRegisterNumber(const std::string& strPath)
 
     for (auto filename : fileList)
     {
-        numberList.insert(getRegisterNumber(filename));
+        int num = getRegisterNumber(filename);
+        if (num >= LOWER_REGISTER_NUM && num <= m_iUpperRegNum)
+            numberList.insert(getRegisterNumber(filename));
     }
 
     if (numberList.size())
@@ -216,16 +218,17 @@ int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
     if ( pos == std::string::npos)
         return LOWER_REGISTER_NUM-1;
 
-    strNum = strFileName.substr(pos + m_strRegisterName.length());
+    strNum = strFileName.substr(pos + m_strRegisterName.length()+1);
     PRINT_DBG(strNum);
-    if (strNum.length() > m_iConseNumLength + m_strFileExtension.length())
+    if (strNum.length() == m_iConseNumLength + m_strFileExtension.length())
         strNum = strNum.substr(0, m_iConseNumLength);
     else
         strNum = "";
     PRINT_DBG(strNum);
     if (strNum != "")
     {
-        int num = std::stoul(strNum);
+        strNum.erase(0, strNum.find_first_not_of('0'));
+        int num = std::stoi(strNum.c_str());
         if (num > m_iUpperRegNum || num < LOWER_REGISTER_NUM)
             num = LOWER_REGISTER_NUM-1;
         return num;

@@ -108,6 +108,7 @@ int main(int argc, char* argv[])
 
     fuelRegister.init(mainSettings);
     int tmrFuelTransaction = 0;
+    //int tmrServiceLaunched = 0;
 
     double dAcumFlowOld;
     std::string strTagVehicle;
@@ -128,6 +129,7 @@ int main(int argc, char* argv[])
                 //fuelTransactionTimeOut();
                 keepAlive.stopTimer(tmrFuelTransaction);
                 tmrFuelTransaction = 0;
+                mainState.processFuelingTimeOut();
             }
         }
         stateRbpi = mainState.getCurrentState();
@@ -161,7 +163,7 @@ int main(int argc, char* argv[])
                     strTagVehicle = rfidBoquilla.getTagId();
                 }
                 fuelRegister.addFlowMeterBegin(flowmeter.getAcumFlow());
-                tmrFuelTransaction = keepAlive.addTimer(150000);
+                tmrFuelTransaction = keepAlive.addTimer(30000);
                 mainState.processUserAuthorization(bAuthorizedUser);
                 mainState.processVehicleAuthorization(bAuthorizedVehicle);
             }
@@ -237,7 +239,35 @@ int main(int argc, char* argv[])
         {
         }*/
 
-        proccesNewConnection(socketServer, mainSettings, socketNewClientList);
+        if (proccesNewConnection(socketServer, mainSettings, socketNewClientList))
+        {
+            /*if (tmrServiceLaunched)
+            {
+                if (verifyDeviceService(deviceList))
+                    keepAlive.resetTimer(tmrServiceLaunched);
+            }
+        }
+        else
+        {
+            if (tmrServiceLaunched)
+            {
+                if (keepAlive.isTimerEvent(tmrServiceLaunched))
+                {
+                    if (verifyDeviceService(deviceList))
+                        keepAlive.resetTimer(tmrServiceLaunched);
+                    else
+                        keepAlive.stopTimer(tmrServiceLaunched);
+                }
+            }
+            else
+            {
+                if (deviceList.size())
+                {
+                    if (verifyDeviceService(deviceList))
+                        tmrServiceLaunched = keepAlive.addTimer(10000);
+                }
+            }*/
+        }
         processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap);
         processDataClients(socketClientList, deviceList);
 

@@ -9,6 +9,8 @@
 #define LF_CHAR     '\n'
 #define NULL_CHAR   '\0'
 
+
+
 class SCCLog : public std::ostream
 {
     public:

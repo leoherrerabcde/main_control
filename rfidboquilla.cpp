@@ -109,7 +109,8 @@ bool RFIDBoquilla::processDataReceived(const std::string& msg)
         }
         else
             m_bTagDetected = false;
-        std::cout << data << std::endl;
+        if (m_bShowData)
+            std::cout << data << std::endl;
     }
     return true;
 }

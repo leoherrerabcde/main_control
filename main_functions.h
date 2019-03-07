@@ -26,8 +26,8 @@
 #include "SCCFuelTransaction.h"
 
 
-void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList);
-void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
+bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList);
+bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
 void processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::list<CSocket*>& socketList,
                        std::unordered_map<std::string,Device*>& dvcList,

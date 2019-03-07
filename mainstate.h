@@ -30,8 +30,11 @@ public:
     void processLostVehicleTag();
     void processResumeFueling();
     void processFinishFueling();
+    void processFuelingTimeOut();
 
 private:
+
+    void printStatus();
 
     State m_LastState;
     State m_CurrentState;

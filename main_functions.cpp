@@ -3,8 +3,9 @@
 
 extern bool    gl_bVerbose;
 
-void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList)
+bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList)
 {
+    //static bool bStartUp = true;
     if (sckServer.getState() == sckHostResolved)
     {
         CSocket* newClient = sckServer.getSocket();
@@ -12,8 +13,9 @@ void proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::l
         newClient->runRcvLoop();
         socketList.push_back(newClient);
         sckServer.listen();
+        return true;
     }
-
+    return false;
 }
 
 void processDataNewClients(std::list<CSocket*>& socketNewList,
@@ -68,8 +70,8 @@ void processDataClients(std::list<CSocket*>& sockeList,
             std::string msg = itSck->getData();
             if (msg != "")
             {
-                if (gl_bVerbose)
-                    std::cout << pDevice->name() << ": " << msg << std::endl;
+                /*if (gl_bVerbose)
+                    std::cout << pDevice->name() << ": " << msg << std::endl;*/
                 pDevice->processDataReceived(msg);
             }
             /*else
@@ -120,14 +122,16 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 }
 
 
-void verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
+bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
 {
     for (auto itDvc : dvcList)
     {
         Device* pDvc = itDvc.second;
         if (pDvc->getServicePID() == 0)
             pDvc->launchService();
+        return true;
     }
+    return false;
 }
 
 void sendRequestTable(std::list<CSocket*>& socketList,

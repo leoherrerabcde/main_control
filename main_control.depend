@@ -11,7 +11,7 @@
 1551556337 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1551556315 /home/pi/Documents/source/main_control/device.h
+1552003964 /home/pi/Documents/source/main_control/device.h
 	<string>
 	"MainCtrlSettings.h"
 	"SCCLog.h"
@@ -105,7 +105,7 @@
 1551986801 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1551984605 source:/home/pi/Documents/source/main_control/main.cpp
+1552000837 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -122,6 +122,7 @@
 	"SCCCreateMessage.h"
 	"SCCFuelTransaction.h"
 	"main_functions.h"
+	"SCCDisplay.h"
 	<unistd.h>
 	<unordered_map>
 	<list>
@@ -129,7 +130,7 @@
 1551556350 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
 
-1551897381 /home/pi/Documents/source/main_control/rfiduser.h
+1552004001 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 	"../rfidUser/SCCRfidUserProtocol.h"
 
@@ -161,10 +162,11 @@
 	<queue>
 	<cstring>
 
-1551897405 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1552042813 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 	"SCCDeviceVars.h"
+	"SCCDisplay.h"
 	<iostream>
 
 1551897433 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
@@ -422,7 +424,7 @@
 	"../commPort/SCCRealTime.h"
 	<chrono>
 
-1551983848 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
+1552048245 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
 	"SCCFuelTransaction.h"
 	"SCCLog.h"
 	"../commPort/SCCRealTime.h"
@@ -459,4 +461,10 @@
 
 1551989774 source:/home/pi/Documents/source/main_control/main_functions.cpp
 	"main_functions.h"
+
+1552042617 /home/pi/Documents/source/main_control/SCCDisplay.h
+	<unordered_map>
+
+1552042769 source:/home/pi/Documents/source/main_control/SCCDisplay.cpp
+	"SCCDisplay.h"
 

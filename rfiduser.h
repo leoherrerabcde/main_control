@@ -20,6 +20,8 @@ public:
 
     bool isUserDetected() {return m_bCardDetected;}
 
+    virtual void displayDevice();
+
 private:
 
     std::string m_strCardSerialNum;

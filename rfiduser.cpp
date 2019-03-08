@@ -1,11 +1,11 @@
 #include "rfiduser.h"
 #include "SCCLog.h"
 #include "SCCDeviceVars.h"
-
+#include "SCCDisplay.h"
 
 #include <iostream>
 
-
+extern SCCDisplay glDisplay;
 extern SCCLog globalLog;
 
 RFIDUser::RFIDUser(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata), m_bCardDetected(false)
@@ -96,11 +96,20 @@ bool RFIDUser::processDataReceived(const std::string& msg)
             }
             m_strCardSerialNum = strCardSerialNum;
             setServiceAlive();
+            /*glDisplay.printLine(VAR_CARD_DETECTED, strCardDetected);
+            glDisplay.printLine(VAR_CARD_SERIALNUM, strCardSerialNum);*/
         }
         if (m_bShowData)
             std::cout << data << std::endl;
     }
     return true;
+}
+
+void RFIDUser::displayDevice()
+{
+    /*glDisplay.printLine("Device", m_DeviceName);
+    glDisplay.printLine(VAR_CARD_DETECTED, "");
+    glDisplay.printLine(VAR_CARD_SERIALNUM, "");*/
 }
 
 /*std::string RFIDUser::getUserId()

@@ -68,6 +68,7 @@ public:
     bool isFrameType(const std::string& header, const std::string& data);
 
     void setShowData() {m_bShowData = true;}
+    virtual void displayDevice() {};
 
 
 protected:

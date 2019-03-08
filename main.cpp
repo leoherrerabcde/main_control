@@ -19,6 +19,7 @@
 #include "SCCFuelTransaction.h"*/
 
 #include "main_functions.h"
+#include "SCCDisplay.h"
 
 /*#include <iostream>
 #include <unistd.h>
@@ -28,7 +29,7 @@
 using namespace std;
 
 
-
+SCCDisplay glDisplay;
 SCCLog  globalLog(std::cout);
 bool    gl_bVerbose(true);
 
@@ -110,7 +111,7 @@ int main(int argc, char* argv[])
     int tmrFuelTransaction = 0;
     //int tmrServiceLaunched = 0;
 
-    double dAcumFlowOld;
+    double dAcumFlowOld = 0.0;
     std::string strTagVehicle;
 
     globalLog << "Main Loop Started." << std::endl;

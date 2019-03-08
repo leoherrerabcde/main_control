@@ -99,6 +99,8 @@
 		<Unit filename="SCCDeviceNames.h" />
 		<Unit filename="SCCDeviceParams.h" />
 		<Unit filename="SCCDeviceVars.h" />
+		<Unit filename="SCCDisplay.cpp" />
+		<Unit filename="SCCDisplay.h" />
 		<Unit filename="SCCFileManager.cpp" />
 		<Unit filename="SCCFileManager.h" />
 		<Unit filename="SCCFlowmeter.cpp" />

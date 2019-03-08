@@ -132,12 +132,12 @@ bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
         std::string strValue;
         std::stringstream ss;
         bFlowEnd = getValueMessage(dataFile, VAR_REGISTER_END_FLOW, dFlowEnd);
-        PRINT_DBG(ss.str());
+        //PRINT_DBG(ss.str());
         if (!bFlowEnd)
             addFlowMeterEnd(ss, dCurrentFlowAcum);
-        PRINT_DBG(ss.str());
+        //PRINT_DBG(ss.str());
         bTimeEnd = getValueMessage(dataFile, VAR_REGISTER_TIME_END, strValue);
-        PRINT_DBG(ss.str());
+        //PRINT_DBG(ss.str());
         if (!bTimeEnd)
             addTimeEnd(ss);
         if (!bFlowEnd || !bTimeEnd)
@@ -213,18 +213,18 @@ int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
 {
     std::string strNum;
 
-    PRINT_DBG(strFileName);
+    //PRINT_DBG(strFileName);
     std::string::size_type pos = strFileName.find(m_strRegisterName);
     if ( pos == std::string::npos)
         return LOWER_REGISTER_NUM-1;
 
     strNum = strFileName.substr(pos + m_strRegisterName.length()+1);
-    PRINT_DBG(strNum);
+    //PRINT_DBG(strNum);
     if (strNum.length() == m_iConseNumLength + m_strFileExtension.length())
         strNum = strNum.substr(0, m_iConseNumLength);
     else
         strNum = "";
-    PRINT_DBG(strNum);
+    //PRINT_DBG(strNum);
     if (strNum != "")
     {
         strNum.erase(0, strNum.find_first_not_of('0'));

@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA, bShowData);
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO, bShowData);
     ElectroValvCtrl electroValve(DEVICE_ELECTRO_VALVE, bShowData);
-    Device guiApp(DEVICE_GUI, bShowData);
+    //Device guiApp(DEVICE_GUI, bShowData);
     SCCRemoteServer restApi(DEVICE_REST_SERVICE, bShowData);
 
     commGSM modCommGSM(DEVICE_SERVER, bShowData);
@@ -76,8 +76,8 @@ int main(int argc, char* argv[])
     /*pDvc = &electroValve;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));*/
 
-    pDvc = &guiApp;
-    deviceList.insert(std::make_pair(pDvc->name(), pDvc));
+    /*pDvc = &guiApp;
+    deviceList.insert(std::make_pair(pDvc->name(), pDvc));*/
 
     pDvc = &restApi;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));
@@ -117,6 +117,7 @@ int main(int argc, char* argv[])
     globalLog << "Main Loop Started." << std::endl;
 
     socketServer.listen();
+    //verifyDeviceService(deviceList);
 
     for(;;)
     {
@@ -242,6 +243,7 @@ int main(int argc, char* argv[])
 
         if (proccesNewConnection(socketServer, mainSettings, socketNewClientList))
         {
+            verifyDeviceService(deviceList);
             /*if (tmrServiceLaunched)
             {
                 if (verifyDeviceService(deviceList))
@@ -275,7 +277,7 @@ int main(int argc, char* argv[])
         if (keepAlive.isTimerEvent(mainTmr))
         {
             //sendAliveMessage(socketClientList, deviceList);
-            //verifyDeviceService(deviceList);
+            verifyDeviceService(deviceList);
         }
         if (keepAlive.isTimerEvent(rqtTblTmr))
         {

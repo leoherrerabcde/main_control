@@ -16,6 +16,7 @@ Device::Device(const std::string& deviceName, bool nShowdata)
     m_iAliveCounter(0),
     m_bServiceAlive(false),
     m_bLaunchingService(false),
+    m_bServiceLaunched(false),
     m_bShowData(nShowdata)
 {
 
@@ -23,9 +24,10 @@ Device::Device(const std::string& deviceName, bool nShowdata)
 
 int Device::launchService()
 {
-    if (!m_bLaunchingService)
+    if (!m_bServiceLaunched && m_bLaunchingService)
     {
-        m_bLaunchingService = true;
+        m_bLaunchingService = false;
+        m_bServiceLaunched = true;
         return launchService(m_strServicePathName, m_strServiceArgs);
     }
     return 0;

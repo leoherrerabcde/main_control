@@ -90,6 +90,7 @@ protected:
     int         m_iAliveCounter;
     bool        m_bServiceAlive;
     bool        m_bLaunchingService;
+    bool        m_bServiceLaunched;
 
     bool        m_bShowData;
 };

@@ -124,12 +124,15 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 
 bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
 {
+    //return false;
     for (auto itDvc : dvcList)
     {
         Device* pDvc = itDvc.second;
         if (pDvc->getServicePID() == 0)
+        {
             pDvc->launchService();
-        return true;
+            return true;
+        }
     }
     return false;
 }

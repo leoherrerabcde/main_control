@@ -192,26 +192,28 @@ void CSocket::addSocket(int newSocket)
 
 void CSocket::listen()
 {
-    if (m_sckState != sckClosed)
-        disconnect();
+    if (m_sckState != sckHostResolved)
+    {
+        if (m_sckState != sckClosed)
+            disconnect();
 
-    init();
+        init();
 
-    int yes = 1;
-    if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1)
-        throwError(__LINE__, SocketError::SetSockOptError, strerror(errno));
+        int yes = 1;
+        if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1)
+            throwError(__LINE__, SocketError::SetSockOptError, strerror(errno));
 
-    enableKeepAlive(sockfd);
+        enableKeepAlive(sockfd);
 
-    bzero(&serv_addr, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    serv_addr.sin_port = htons(portno);
+        bzero(&serv_addr, sizeof(serv_addr));
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+        serv_addr.sin_port = htons(portno);
 
-    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-          //perror("ERROR on binding");
-          throwError(__LINE__, SocketError::BindingSocket);
-
+        if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
+              //perror("ERROR on binding");
+              throwError(__LINE__, SocketError::BindingSocket);
+    }
     ::listen(sockfd, 5);
 
     /*std::string msg("Listening by port ");
@@ -222,9 +224,14 @@ void CSocket::listen()
     clilen = sizeof(cli_addr);
 
     //CSocket* self = this;
+    if (m_pListeningThread != NULL)
+    {
+        m_pListeningThread->join();
+        delete m_pListeningThread;
+    }
     m_pListeningThread = new std::thread(&CSocket::listening, this);
 
-    while (m_sckState == sckClosed)
+    while (m_sckState == sckClosed || m_sckState == sckHostResolved)
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 

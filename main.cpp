@@ -40,7 +40,9 @@ int main(int argc, char* argv[])
     std::unordered_map<std::string,Device*> deviceList;
     std::unordered_map<std::string,CSocket*> socketMap;
     std::vector<Device*> onTheFlyDeviceList;
+    std::list<int> portList;
 
+    Device::getComPortList(portList);
     SCCFuelTransaction fuelRegister(TABLE_REGISTERS);
     SCCFlowmeter flowmeter(DEVICE_FLOWMETER, bShowData);
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA, bShowData);
@@ -118,6 +120,7 @@ int main(int argc, char* argv[])
 
     socketServer.listen();
     //verifyDeviceService(deviceList);
+    verifyDeviceService(deviceList, portList);
 
     for(;;)
     {
@@ -243,41 +246,16 @@ int main(int argc, char* argv[])
 
         if (proccesNewConnection(socketServer, mainSettings, socketNewClientList))
         {
-            verifyDeviceService(deviceList);
-            /*if (tmrServiceLaunched)
-            {
-                if (verifyDeviceService(deviceList))
-                    keepAlive.resetTimer(tmrServiceLaunched);
-            }
         }
-        else
+        if (processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap, portList))
         {
-            if (tmrServiceLaunched)
-            {
-                if (keepAlive.isTimerEvent(tmrServiceLaunched))
-                {
-                    if (verifyDeviceService(deviceList))
-                        keepAlive.resetTimer(tmrServiceLaunched);
-                    else
-                        keepAlive.stopTimer(tmrServiceLaunched);
-                }
-            }
-            else
-            {
-                if (deviceList.size())
-                {
-                    if (verifyDeviceService(deviceList))
-                        tmrServiceLaunched = keepAlive.addTimer(10000);
-                }
-            }*/
+            verifyDeviceService(deviceList, portList);
         }
-        processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap);
         processDataClients(socketClientList, deviceList);
 
         if (keepAlive.isTimerEvent(mainTmr))
         {
             //sendAliveMessage(socketClientList, deviceList);
-            verifyDeviceService(deviceList);
         }
         if (keepAlive.isTimerEvent(rqtTblTmr))
         {

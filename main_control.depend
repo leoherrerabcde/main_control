@@ -11,8 +11,9 @@
 1551556337 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1552075581 /home/pi/Documents/source/main_control/device.h
+1552359057 /home/pi/Documents/source/main_control/device.h
 	<string>
+	<list>
 	"MainCtrlSettings.h"
 	"SCCLog.h"
 	"SCCDeviceNames.h"
@@ -26,12 +27,12 @@
 
 1551798523 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1552157411 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1552219805 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
 
-1550723659 /home/pi/Documents/source/main_control/CSocket.h
+1552219766 /home/pi/Documents/source/main_control/CSocket.h
 	<iostream>
 	<future>
 	<functional>
@@ -56,9 +57,10 @@
 	<string>
 	<ostream>
 
-1552075617 source:/home/pi/Documents/source/main_control/device.cpp
+1552360393 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
+	"SCCFileManager.h"
 	<stdlib.h>
 	<sstream>
 	<cstring>
@@ -105,7 +107,7 @@
 1551986801 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1552076252 source:/home/pi/Documents/source/main_control/main.cpp
+1552358901 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -127,10 +129,10 @@
 	<unordered_map>
 	<list>
 
-1551556350 /home/pi/Documents/source/main_control/rfidboquilla.h
+1552357833 /home/pi/Documents/source/main_control/rfidboquilla.h
 	"device.h"
 
-1552004001 /home/pi/Documents/source/main_control/rfiduser.h
+1552359726 /home/pi/Documents/source/main_control/rfiduser.h
 	"device.h"
 	"../rfidUser/SCCRfidUserProtocol.h"
 
@@ -148,14 +150,14 @@
 	"../commPort/SCCRealTime.h"
 	<unordered_map>
 
-1551986363 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1552357790 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
 	<sstream>
 	<iostream>
 
-1551106263 /home/pi/Documents/source/commPort/SCCWirelessRcvrProtocol.h
+1552218619 /home/pi/Documents/source/commPort/SCCWirelessRcvrProtocol.h
 	<vector>
 	<list>
 	<unordered_map>
@@ -224,7 +226,7 @@
 	<dirent.h>
 	<cstring>
 
-1551792750 /home/pi/Documents/source/main_control/SCCFlowmeter.h
+1552359261 /home/pi/Documents/source/main_control/SCCFlowmeter.h
 	"device.h"
 	"../flowmCom/SCCFlowProtocol.h"
 
@@ -437,7 +439,7 @@
 
 1551795446 /home/pi/Documents/source/main_control/SCCGeneralDefines.h
 
-1551981655 /home/pi/Documents/source/main_control/main_functions.h
+1552358791 /home/pi/Documents/source/main_control/main_functions.h
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -459,7 +461,7 @@
 	"SCCCreateMessage.h"
 	"SCCFuelTransaction.h"
 
-1552143970 source:/home/pi/Documents/source/main_control/main_functions.cpp
+1552359198 source:/home/pi/Documents/source/main_control/main_functions.cpp
 	"main_functions.h"
 
 1552042617 /home/pi/Documents/source/main_control/SCCDisplay.h

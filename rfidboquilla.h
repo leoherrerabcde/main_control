@@ -22,6 +22,7 @@ public:
 
     bool isTagDetected() {return m_bTagDetected;}
 
+
 private:
 
     bool            m_bBatteryAlarm;

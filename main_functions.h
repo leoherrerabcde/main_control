@@ -26,13 +26,14 @@
 #include "SCCFuelTransaction.h"
 
 
-bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList);
+bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList);
 bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
-void processDataNewClients(std::list<CSocket*>& socketNewList,
+bool processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::list<CSocket*>& socketList,
                        std::unordered_map<std::string,Device*>& dvcList,
                        std::vector<Device*>& onTheFlyDvcList,
-                       std::unordered_map<std::string,CSocket*>& socketMap);
+                       std::unordered_map<std::string,CSocket*>& socketMap,
+                       std::list<int>& portList);
 
 void processDataClients(std::list<CSocket*>& socketList,
                         std::unordered_map<std::string,Device*>& dvcList);

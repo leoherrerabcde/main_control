@@ -44,6 +44,10 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
 
     sArgs << comPort << " " << baudRate << " " << remotePort;
 
+    m_iComPort      = comPort;
+    m_iBaudRate     = baudRate;
+    m_iRemotePort   = remotePort;
+
     std::string strService(sService.str());
     std::string strArgs(sArgs.str());
 

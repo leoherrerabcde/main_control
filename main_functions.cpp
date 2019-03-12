@@ -18,12 +18,14 @@ bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::l
     return false;
 }
 
-void processDataNewClients(std::list<CSocket*>& socketNewList,
+bool processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::list<CSocket*>& socketList,
                        std::unordered_map<std::string,Device*>& dvcList,
                        std::vector<Device*>& onTheFlyDvcList,
-                       std::unordered_map<std::string,CSocket*>& socketMap)
+                       std::unordered_map<std::string,CSocket*>& socketMap,
+                       std::list<int>& portList)
 {
+    bool ret = false;
     for (auto itSck = socketNewList.begin(); itSck != socketNewList.end();)
     {
         Device pDvc;
@@ -49,13 +51,16 @@ void processDataNewClients(std::list<CSocket*>& socketNewList,
                 //std::stringstream ss;
                 globalLog << "New Device connected: " << pDvc.name() << std::endl;
                 //SCCLog::print(ss.str());
+                Device::removeComPort(portList, pDvc.getComPort());
                 socketList.push_back(*itSck);
                 itSck = socketNewList.erase(itSck);
+                ret = true;
                 continue;
             }
         }
         ++itSck;
     }
+    return ret;
 }
 
 void processDataClients(std::list<CSocket*>& sockeList,
@@ -122,7 +127,7 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 }
 
 
-bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
+bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList)
 {
     //return false;
     for (auto itDvc : dvcList)
@@ -130,7 +135,10 @@ bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList)
         Device* pDvc = itDvc.second;
         if (pDvc->getServicePID() == 0)
         {
-            pDvc->launchService();
+            if (pDvc->getComPort() != -1)
+                pDvc->launchService(portList);
+            else
+                pDvc->launchService();
             return true;
         }
     }

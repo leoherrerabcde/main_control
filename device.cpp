@@ -1,9 +1,12 @@
 #include "device.h"
 #include "SCCLog.h"
+#include "SCCFileManager.h"
+
 
 #include <stdlib.h>
 #include <sstream>
 #include <cstring>
+
 
 extern bool     gl_bVerbose;
 extern SCCLog   globalLog;
@@ -17,7 +20,8 @@ Device::Device(const std::string& deviceName, bool nShowdata)
     m_bServiceAlive(false),
     m_bLaunchingService(false),
     m_bServiceLaunched(false),
-    m_bShowData(nShowdata)
+    m_bShowData(nShowdata),
+    m_iComPort(-1)
 {
 
 }
@@ -32,6 +36,16 @@ int Device::launchService()
     }
     return 0;
 }
+
+int Device::launchService(std::list<int>& portList)
+{
+    std::stringstream sArgs;
+    sArgs << m_iComPort << " " << m_iBaudRate << " " << m_iRemotePort;
+    std::string strArgs(sArgs.str());
+    setServiceArgs(strArgs);
+    return launchService();
+}
+
 
 int Device::launchService(const std::string& servicePathName, const std::string& args)
 {
@@ -200,6 +214,9 @@ bool Device::processDataReceived(const std::string& msg)
                 if (res)
                     m_pidService = std::atoi(strValue.c_str());
                 break;
+                res = getValueMessage(data, PARAM_COM_PORT, strValue);
+                if (res)
+                    m_iComPort = std::stoi(strValue);
                 //std::stringstream ss;
                 globalLog << "Device Name: " << name() << std::endl;
                 //SCCLog::print(ss.str());
@@ -246,3 +263,27 @@ bool Device::isFrameType(const std::string& header, const std::string& data)
     return true;
 }
 
+void Device::getComPortList(std::list<int>& portList)
+{
+    for (int i=0; ;++i)
+    {
+        std::string strPort("/dev/ttyUSB");
+        strPort += std::to_string(i);
+        if (SCCFileManager::isFileExist(strPort))
+            portList.push_back(i);
+        else
+            break;
+    }
+}
+
+void Device::removeComPort(std::list<int>& portList, int port)
+{
+    for (auto it = portList.begin(); it != portList.end(); ++it)
+    {
+        if (*it == port)
+        {
+            portList.erase(it);
+            return;
+        }
+    }
+}

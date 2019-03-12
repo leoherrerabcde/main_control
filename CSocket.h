@@ -111,6 +111,7 @@ class CSocket
         std::string& receive();
 
         void runRcvLoop();
+        void setSocketName(const std::string& name) {m_strSckName=name;}
 
     protected:
 
@@ -151,6 +152,7 @@ class CSocket
         bool m_bReceiveEvent;
         std::string m_bufferIn;
         std::mutex m_RecMutex;
+        std::string m_strSckName;
 };
 
 #endif // CSOCKET_H

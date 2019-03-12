@@ -2,6 +2,8 @@
 #define DEVICE_H
 
 #include <string>
+#include <list>
+
 
 #include "MainCtrlSettings.h"
 #include "SCCLog.h"
@@ -56,6 +58,7 @@ public:
     std::string getServiceArgs() const {return m_strServiceArgs;}
 
     int launchService();
+    virtual int launchService(std::list<int>& portList);
 
     int getAliveCounter() const {return m_iAliveCounter;}
     int incAliveCounter() {return ++m_iAliveCounter;}
@@ -69,7 +72,9 @@ public:
 
     void setShowData() {m_bShowData = true;}
     virtual void displayDevice() {};
-
+    static void getComPortList(std::list<int>& portList);
+    static void removeComPort(std::list<int>& portList, int port);
+    int getComPort() {return m_iComPort;}
 
 protected:
 
@@ -93,6 +98,9 @@ protected:
     bool        m_bServiceLaunched;
 
     bool        m_bShowData;
+    int         m_iComPort;
+    int         m_iBaudRate;
+    int         m_iRemotePort;
 };
 
 #endif // DEVICE_H

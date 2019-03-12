@@ -3,6 +3,10 @@
 
 #include <vector>
 
+
+//extern std::string globalMyDeviceName;
+
+
 static std::vector<std::string> stErrorDescriptList = {
     "No Error",
     "Error opening socket",
@@ -128,6 +132,7 @@ std::string CSocket::getRemoteHost() const
 void CSocket::throwError(const int line, const SocketError& sockErrCode)
 {
     m_sckError = sockErrCode;
+    printError(errno, strerror(errno));
     printError(sockErrCode);
     throw(stErrorDescriptList[sockErrCode]);
 }
@@ -520,14 +525,14 @@ void CSocket::receivingLoop()
 
 void CSocket::printError(const SocketError& sockErrCode, const std::string& strErrorMsg)
 {
-    std::cout << "CSocket: " << stErrorDescriptList[sockErrCode] << std::endl;
+    std::cout << m_strSckName << "::CSocket: " << stErrorDescriptList[sockErrCode] << std::endl;
     if (strErrorMsg !="")
         std::cout << " " << strErrorMsg << std::endl;
 }
 
 void CSocket::printError(const int& sockErrCode, const std::string& strErrorMsg)
 {
-    std::cout << "CSocket: " << strerror(sockErrCode) << std::endl;
+    std::cout << m_strSckName << "::CSocket: " << strerror(sockErrCode) << std::endl;
     if (strErrorMsg !="")
         std::cout << " " << strErrorMsg << std::endl;
 }

@@ -75,10 +75,10 @@ public:
     static void getComPortList(std::list<int>& portList);
     static void removeComPort(std::list<int>& portList, int port);
     int getComPort() {return m_iComPort;}
+    static int launchService(const std::string& servicePathName, const std::string& args);
 
 protected:
 
-    virtual int launchService(const std::string& servicePathName, const std::string& args);
     virtual void pushData(const std::string& msg) {m_strBuffer += msg;}
     virtual std::string popFrontMessage();
     virtual bool isBufferEmpty();

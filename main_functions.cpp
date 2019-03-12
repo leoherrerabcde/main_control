@@ -50,6 +50,8 @@ bool processDataNewClients(std::list<CSocket*>& socketNewList,
                 }
                 //std::stringstream ss;
                 globalLog << "New Device connected: " << pDvc.name() << std::endl;
+                globalLog << "Com Port: " << pDvc.getComPort() << std::endl;
+                globalLog << "PID: " << pDvc.getServicePID() << std::endl;
                 //SCCLog::print(ss.str());
                 Device::removeComPort(portList, pDvc.getComPort());
                 socketList.push_back(*itSck);

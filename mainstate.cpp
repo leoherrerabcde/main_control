@@ -57,10 +57,11 @@ void MainState::processUserAuthorization(bool bAuthorized)
                 m_CurrentState = State::startingTransaction;
             else*/
                 m_CurrentState = State::RFIDUser;
+            printStatus();
         }
     }
     else if (m_CurrentState == State::RFIDBoquilla)
-    if (m_CurrentState == State::waitForInitTransaction)
+    //if (m_CurrentState == State::waitForInitTransaction)
     {
         if (bAuthorized)
         {
@@ -69,9 +70,9 @@ void MainState::processUserAuthorization(bool bAuthorized)
                 m_CurrentState = State::startingTransaction;
             else*/
                 m_CurrentState = State::chargingFuel;
+            printStatus();
         }
     }
-    printStatus();
 }
 
 void MainState::processVehicleAuthorization(bool bAuthorized)
@@ -87,30 +88,49 @@ void MainState::processVehicleAuthorization(bool bAuthorized)
                 m_CurrentState = State::startingTransaction;
             else
                 m_CurrentState = State::RFIDBoquilla;
+            printStatus();
         }
     }
-    printStatus();
+    else if (m_CurrentState == State::RFIDUser)
+    //if (m_CurrentState == State::waitForInitTransaction)
+    {
+        if (bAuthorized)
+        {
+            m_LastState = m_CurrentState;
+            /*if (m_bvehicleAuthorized.get())
+                m_CurrentState = State::startingTransaction;
+            else*/
+                m_CurrentState = State::chargingFuel;
+            printStatus();
+        }
+    }
 }
 
 void MainState::processLostVehicleTag()
 {
     if (m_CurrentState == State::chargingFuel)
+    {
         m_CurrentState = State::chargingPaused;
-    printStatus();
+        printStatus();
+    }
 }
 
 void MainState::processResumeFueling()
 {
     if (m_CurrentState == State::chargingPaused)
+    {
         m_CurrentState = State::chargingFuel;
-    printStatus();
+        printStatus();
+    }
 }
 
 void MainState::processFinishFueling()
 {
     if (m_CurrentState == chargingPaused || m_CurrentState == chargingPaused)
+    {
         m_CurrentState = State::waitForInitTransaction;
-    printStatus();
+        printStatus();
+    }
 }
 
 void MainState::processFuelingTimeOut()

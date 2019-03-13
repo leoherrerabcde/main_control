@@ -1,11 +1,20 @@
 #include "SCCRemoteServer.h"
 #include "SCCLog.h"
+#include "SCCDeviceParams.h"
 
 #include <sstream>
 
 extern SCCLog globalLog;
 
-SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData)
+static std::list<std::string> st_TableList =
+{
+    PARAM_TABLE_BOMBEROS,
+    PARAM_TABLE_CONDUCTORES,
+    PARAM_TABLE_PROPIETARIOS,
+    PARAM_TABLE_VEHICULOS,
+};
+
+SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData), m_bWaitResponse(false)
 {
     //ctor
 }
@@ -61,3 +70,24 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
     return 0;
 }
 
+void SCCRemoteServer::startConnection()
+{
+    SCCFileManager::getFileList(m_strRegisterPath, m_RegisterList);
+    m_TableList.clear();
+    for (auto table: st_TableList)
+    {
+        m_TableList.push_back(table);
+    }
+}
+
+std::string SCCRemoteServer::getNextTableRequest()
+{
+}
+
+std::string SCCRemoteServer::getNextRegisterRequest()
+{
+    if (m_RegisterList.size())
+    {
+
+    }
+}

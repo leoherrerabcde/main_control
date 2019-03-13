@@ -88,6 +88,8 @@ MainCtrlSettings::MainCtrlSettings()
     mainTimerInterval       = 5000;
     sckBufferSize           = 4096;
     requestTableTmrInterval = 300000;
+    tmrServerConnect        = (8*3600*1000);
+    tmrServerRetry          = (15*60*1000);
 }
 
 MainCtrlSettings::~MainCtrlSettings()

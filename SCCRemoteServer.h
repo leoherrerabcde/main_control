@@ -15,6 +15,13 @@ class SCCRemoteServer : public Device
         void getModifiedTable(const std::string& strIDSCC);
         void getTable(const std::string strTable);
 
+        bool isWaitingResponse() {return m_bWaitResponse;}
+        void startConnection();
+        bool isTableListEmpty() {return (m_TableList.size() == 0);}
+        void setRegisterPath(const std::string& strPath) {m_strRegisterPath = strPath;}
+        std::string getNextTableRequest();
+        std::string getNextRegisterRequest();
+
     protected:
 
     private:
@@ -24,6 +31,11 @@ class SCCRemoteServer : public Device
         std::string m_postConfirmUrl ;
         std::string m_postRegister ;
         std::string m_urlApiRest ;
+
+        bool        m_bWaitResponse;
+        std::list<std::string>  m_TableList;
+        std::list<std::string>  m_RegisterList;
+        std::string m_strRegisterPath;
 };
 
 #endif // SCCREMOTESERVER_H

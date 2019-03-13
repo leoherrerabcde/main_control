@@ -27,6 +27,9 @@ class SCCFuelTransaction : public Device
         void addTimeEnd(std::stringstream& ss);
         void addRegisterNumber(std::stringstream& ss, int regNum);
         bool finishTransaction(const double dCurrentFlowAcum);
+        std::string getRegisterPath() {return m_strRegisterPath;}
+        std::string getRegisterNewPath() {return m_strNewRegsPath;}
+        void getNewRegisterJson(std::string& strJson);
 
     protected:
 

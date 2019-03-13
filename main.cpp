@@ -95,8 +95,13 @@ int main(int argc, char* argv[])
     keepAlive.throwDisable();
     keepAlive.start(mainSettings.noResponseTimeMilli);
 
-    int mainTmr = keepAlive.addTimer(mainSettings.mainTimerInterval);
-    int rqtTblTmr = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
+    int mainTmr             = keepAlive.addTimer(mainSettings.mainTimerInterval);
+    int rqtTblTmr           = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
+    int tmrConnectServer    = keepAlive.addTimer(mainSettings.tmrServerConnect);
+    int tmrWaitServerResponse   = 0;
+    int tmrConnectRetry     = 0;
+
+    bool bConnectToServer(false);
 
     flowmeter.init(mainSettings);
     rfidBoquilla.init(mainSettings);
@@ -112,6 +117,10 @@ int main(int argc, char* argv[])
     fuelRegister.init(mainSettings);
     int tmrFuelTransaction = 0;
     //int tmrServiceLaunched = 0;
+
+    /*SCCFileManager newRegPath(fuelRegister.getRegisterPath());
+    newRegPath << fuelRegister.getRegisterNewPath();
+    restApi.setRegisterPath(std::string(newRegPath.str()));*/
 
     double dAcumFlowOld = 0.0;
     std::string strTagVehicle;
@@ -260,6 +269,18 @@ int main(int argc, char* argv[])
         if (keepAlive.isTimerEvent(rqtTblTmr))
         {
             sendRequestTable(socketClientList, deviceList);
+        }
+        if (keepAlive.isTimerEvent(tmrConnectServer))
+        {
+            bConnectToServer = true;
+            tmrConnectRetry = keepAlive.addTimer(mainSettings.tmrServerRetry);
+        }
+        if (bConnectToServer)
+        {
+            if (SCCRemoteServer.isWa)
+            if (!tmrWaitServerResponse)
+            {
+            }
         }
 
         if (bSleep == true)

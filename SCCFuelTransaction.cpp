@@ -3,7 +3,7 @@
 #include "../commPort/SCCRealTime.h"
 #include "SCCDeviceVars.h"
 #include "SCCGeneralDefines.h"
-
+#include "../jsonParser/JsonParser.h"
 
 #include <set>
 #include <list>
@@ -13,6 +13,22 @@ extern SCCLog globalLog;
 
 #define PRINT_DBG(v)    globalLog << __LINE__ << "\t" << v << std::endl
 
+
+static std::list<std::string> st_MemberList =
+{
+    VAR_REGISTER_NUMBER        ,
+    VAR_REGISTER_TIME_INIT     ,
+    VAR_REGISTER_DISPENSA_ID   ,
+    VAR_REGISTER_USER_ID       ,
+    VAR_REGISTER_CONDUCTOR_ID  ,
+    VAR_REGISTER_VEHICLE_ID    ,
+    VAR_REGISTER_ODOMETER      ,
+    VAR_REGISTER_HOROMETER     ,
+    VAR_REGISTER_TYPE          ,
+    VAR_REGISTER_INIT_FLOW     ,
+    VAR_REGISTER_END_FLOW      ,
+    VAR_REGISTER_TIME_END      ,
+};
 
 SCCFuelTransaction::SCCFuelTransaction(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata)
 {
@@ -244,4 +260,32 @@ int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
     return LOWER_REGISTER_NUM-1;
 }
 
+bool SCCFuelTransaction::getNewRegisterJson(std::string& strJson)
+{
+    std::list<std::string>  tmpFileList;
+    std::list<std::string>  registerFileList;
 
+    SCCFileManager newRegPath(m_strRegisterPath);
+    newRegPath << m_strNewRegsPath;
+    newRegPath.getFileList(tmpFileList);
+
+    if (!tmpFileList.size())
+        return false;
+
+    for (auto regFile : tmpFileList)
+    {
+        int num = getRegisterNumber(regFile);
+        if (num < LOWER_REGISTER_NUM || num > m_iUpperRegNum)
+            continue;
+        SCCFileManager tmpFile(m_strNewRegsPath);
+        tmpFile << regFile;
+        registerFileList.push_back(tmpFile.getFileName());
+    }
+
+    if (!registerFileList.size(0))
+        return false;
+
+    std::string strPlaneJson;
+
+    JsonParser::getPlaneText(registerFileList, st_MemberList, strPlaneJson);
+}

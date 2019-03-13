@@ -24,9 +24,15 @@
 #define PARAM_CONSE_NUM_LENGTH  "RegisterNumberLength"
 #define PARAM_UPPER_REG_NUM     "UpperRegisterNumber"
 
+#define PARAM_TABLE_PROPIETARIOS    "propietarios"
+#define PARAM_TABLE_VEHICULOS       "vehiculos"
+#define PARAM_TABLE_CONDUCTORES     "conductores"
+#define PARAM_TABLE_BOMBEROS        "bomberos"
 
 #define PARAM_BEEP_DURATION     "BeepDuration"
 #define PARAM_BEEP_TIMES        "BeepTimes"
+
+#define PARAM_TBL_MBER_
 
 #define PARAM_TIME_OUT          "Timeout"
 

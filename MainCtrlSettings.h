@@ -20,6 +20,8 @@ class MainCtrlSettings
         int noResponseTimeMilli;
         int mainTimerInterval;
         int requestTableTmrInterval;
+        int     tmrServerConnect;
+        int     tmrServerRetry;
         size_t sckBufferSize;
 
         bool getValue(const std::string& deviceName, const std::string& argName, int& val, const int& valDefault = 0);

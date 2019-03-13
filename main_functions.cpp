@@ -3,6 +3,14 @@
 
 extern bool    gl_bVerbose;
 
+static std::list<std::string> st_DeviceOrder =
+{
+    DEVICE_REST_SERVICE,
+    DEVICE_RFID_BOMBERO,
+    DEVICE_RFID_BOQUILLA,
+    DEVICE_FLOWMETER,
+};
+
 bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList)
 {
     //static bool bStartUp = true;
@@ -132,7 +140,23 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList)
 {
     //return false;
-    for (auto itDvc : dvcList)
+    while (!st_DeviceOrder.empty())
+    {
+        auto itDvc = dvcList.find(st_DeviceOrder.front());
+        st_DeviceOrder.pop_front();
+        if (itDvc == dvcList.end())
+            continue;
+        Device* pDvc = itDvc->second;
+        if (pDvc->getServicePID() == 0)
+        {
+            if (pDvc->getComPort() != -1)
+                pDvc->launchService(portList);
+            else
+                pDvc->launchService();
+            return true;
+        }
+    }
+    /*for (auto itDvc : dvcList)
     {
         Device* pDvc = itDvc.second;
         if (pDvc->getServicePID() == 0)
@@ -143,7 +167,7 @@ bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std:
                 pDvc->launchService();
             return true;
         }
-    }
+    }*/
     return false;
 }
 

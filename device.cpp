@@ -39,8 +39,16 @@ int Device::launchService()
 
 int Device::launchService(std::list<int>& portList)
 {
+    if (!portList.size())
+        return -1;
     std::stringstream sArgs;
-    sArgs << m_iComPort << " " << m_iBaudRate << " " << m_iRemotePort;
+    std::string strCom;
+    for (int i : portList)
+        if (strCom == "")
+            strCom = std::to_string(i);
+        else
+            strCom += std::string(",") + std::to_string(i);
+    sArgs << strCom << " " << m_iBaudRate << " " << m_iRemotePort;
     std::string strArgs(sArgs.str());
     setServiceArgs(strArgs);
     return launchService();
@@ -213,14 +221,13 @@ bool Device::processDataReceived(const std::string& msg)
                 res =  getValueMessage(data, SERVICE_PID, strValue);
                 if (res)
                     m_pidService = std::atoi(strValue.c_str());
-                break;
                 res = getValueMessage(data, PARAM_COM_PORT, strValue);
                 if (res)
                     m_iComPort = std::stoi(strValue);
                 //std::stringstream ss;
                 globalLog << "Device Name: " << name() << std::endl;
                 //SCCLog::print(ss.str());
-
+                break;
             }
         }
         else

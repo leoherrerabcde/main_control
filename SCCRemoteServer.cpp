@@ -75,10 +75,16 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
     return 0;
 }
 
-void SCCRemoteServer::startConnection()
+void SCCRemoteServer::startConnection(const std::list<std::string>& strMemberList)
 {
-    SCCFileManager::getFileList(m_strRegisterPath, m_RegisterList);
+    //SCCFileManager::getFileList(m_strRegisterPath, m_RegisterList);
     m_TableList.clear();
+    m_MemberList.clear ();
+    //m_MemberList.insert(strMemberList.begin(), strMemberList.end());
+    for (auto member: strMemberList)
+    {
+        m_MemberList.push_back(member);
+    }
     for (auto table: st_TableList)
     {
         m_TableList.push_back(table);
@@ -106,7 +112,7 @@ bool SCCRemoteServer::getNextRegisterRequest(std::string& strBody)
         auto itLast = m_RegisterList.begin();
         std::advance(itLast, pos);
         registerToSent.insert(registerToSent.begin(), m_RegisterList.begin(), itLast);
-        return JsonParser::getPlaneText(registerToSent, st_MemberList, strBody);
+        return JsonParser::getPlaneText(registerToSent, m_MemberList, strBody);
     }
     return false;
 }
@@ -155,7 +161,11 @@ void SCCRemoteServer::removeRegisters()
     if (m_iNumRegisterSent > m_RegisterList.size())
         m_RegisterList.clear();
     else
-        m_RegisterList.erase(m_RegisterList.begin(), m_RegisterList.begin()+m_iNumRegisterSent);
+    {
+        auto itLast = m_RegisterList.begin();
+        std::advance(itLast, m_iNumRegisterSent);
+        m_RegisterList.erase(m_RegisterList.begin(), itLast);
+    }
 }
 
 

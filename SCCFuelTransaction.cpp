@@ -40,6 +40,11 @@ SCCFuelTransaction::~SCCFuelTransaction()
     //dtor
 }
 
+std::list<std::string>& SCCFuelTransaction::getMemberList()
+{
+    return st_MemberList;
+}
+
 int SCCFuelTransaction::init(MainCtrlSettings& settings)
 {
     globalLog << "Initializating Register Class ..." << std::endl;
@@ -260,11 +265,13 @@ int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
     return LOWER_REGISTER_NUM-1;
 }
 
-bool SCCFuelTransaction::getNewRegisterJson(std::string& strJson)
+bool SCCFuelTransaction::getRegisterList(std::list<std::string>& regList)
+//bool SCCFuelTransaction::getNewRegisterJson(std::string& strJson)
 {
     std::list<std::string>  tmpFileList;
     std::list<std::string>  registerFileList;
 
+    regList.clear();
     SCCFileManager newRegPath(m_strRegisterPath);
     newRegPath << m_strNewRegsPath;
     newRegPath.getFileList(tmpFileList);
@@ -279,14 +286,14 @@ bool SCCFuelTransaction::getNewRegisterJson(std::string& strJson)
             continue;
         SCCFileManager tmpFile(m_strNewRegsPath);
         tmpFile << regFile;
-        registerFileList.push_back(tmpFile.getFileName());
+        regList.push_back(tmpFile.getFileName());
     }
 
-    if (!registerFileList.size(0))
+    if (!regList.size())
         return false;
 
-    std::string strPlaneJson;
+    /*std::string strPlaneJson;
 
-    JsonParser::getPlaneText(registerFileList, st_MemberList, strPlaneJson);
+    JsonParser::getPlaneText(registerFileList, st_MemberList, strPlaneJson);*/
     return true;
 }

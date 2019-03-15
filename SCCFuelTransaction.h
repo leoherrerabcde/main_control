@@ -6,6 +6,7 @@
 #include "../commPort/SCCRealTime.h"
 
 #include <chrono>
+#include <list>
 
 #define INVALID_REGISTER_NUM    -1
 #define LOWER_REGISTER_NUM      1
@@ -30,6 +31,8 @@ class SCCFuelTransaction : public Device
         std::string getRegisterPath() {return m_strRegisterPath;}
         std::string getRegisterNewPath() {return m_strNewRegsPath;}
         void getNewRegisterJson(std::string& strJson);
+        bool getRegisterList(std::list<std::string>& regList);
+        std::list<std::string>& getMemberList();
 
     protected:
 

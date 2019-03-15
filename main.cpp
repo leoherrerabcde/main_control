@@ -274,6 +274,8 @@ int main(int argc, char* argv[])
         {
             bConnectToServer = true;
             tmrConnectRetry = keepAlive.addTimer(mainSettings.tmrServerRetry);
+            fuelRegister.getRegisterList(restApi.getRegisterList());
+            restApi.startConnection(fuelRegister.getMemberList());
         }
         if (bConnectToServer)
         {
@@ -293,7 +295,7 @@ int main(int argc, char* argv[])
                     sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
                     std::string msg = sccPostMsg.makeMessage();
                     CSocket* pSck = itSck->second;
-                    pSck->send(msg);
+                    pSck->sendData(msg);
                     restApi.setWaitingResponse();
                 }
                 else if (!restApi.isTableListEmpty())
@@ -308,7 +310,7 @@ int main(int argc, char* argv[])
                     sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
                     std::string msg = sccPostMsg.makeMessage();
                     CSocket* pSck = itSck->second;
-                    pSck->send(msg);
+                    pSck->sendData(msg);
                     restApi.setWaitingResponse();
                 }
                 else

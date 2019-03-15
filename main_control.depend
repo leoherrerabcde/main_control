@@ -107,7 +107,7 @@
 1551986801 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1552616262 source:/home/pi/Documents/source/main_control/main.cpp
+1552652094 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -182,13 +182,17 @@
 
 1552616347 /home/pi/Documents/source/main_control/SCCDeviceParams.h
 
-1552616439 /home/pi/Documents/source/main_control/SCCRemoteServer.h
+1552651601 /home/pi/Documents/source/main_control/SCCRemoteServer.h
 	"device.h"
 	"SCCDeviceParams.h"
+	<list>
 
-1551556677 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
+1552651911 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
 	"SCCRemoteServer.h"
 	"SCCLog.h"
+	"SCCDeviceParams.h"
+	"SCCFileManager.h"
+	"../jsonParser/JsonParser.h"
 	<sstream>
 
 1550751021 source:/home/pi/Documents/source/main_control/SCCCreateMessage.cpp
@@ -421,18 +425,20 @@
 1551712608 /home/pi/Documents/source/commPort/SCCRealTime.h
 	<iostream>
 
-1552505496 /home/pi/Documents/source/main_control/SCCFuelTransaction.h
+1552651235 /home/pi/Documents/source/main_control/SCCFuelTransaction.h
 	"device.h"
 	"SCCFileManager.h"
 	"../commPort/SCCRealTime.h"
 	<chrono>
+	<list>
 
-1552048245 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
+1552652012 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
 	"SCCFuelTransaction.h"
 	"SCCLog.h"
 	"../commPort/SCCRealTime.h"
 	"SCCDeviceVars.h"
 	"SCCGeneralDefines.h"
+	"../jsonParser/JsonParser.h"
 	<set>
 	<list>
 

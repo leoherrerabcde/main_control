@@ -288,4 +288,5 @@ bool SCCFuelTransaction::getNewRegisterJson(std::string& strJson)
     std::string strPlaneJson;
 
     JsonParser::getPlaneText(registerFileList, st_MemberList, strPlaneJson);
+    return true;
 }

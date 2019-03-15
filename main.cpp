@@ -277,7 +277,46 @@ int main(int argc, char* argv[])
         }
         if (bConnectToServer)
         {
-            if (SCCRemoteServer.isWa)
+            if (!restApi.isWaitingResponse())
+            {
+                keepAlive.resetTimer(tmrConnectRetry);
+                std::string strBody;
+                if (!restApi.isRegisterListEmpty())
+                {
+                    restApi.getNextRegisterRequest(strBody);
+                    auto itSck = socketMap.find(restApi.name());
+                    if (itSck == socketMap.end())
+                        break;
+                    SCCCreateMessage sccPostMsg;
+                    sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
+                    sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_POST);
+                    sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
+                    std::string msg = sccPostMsg.makeMessage();
+                    CSocket* pSck = itSck->second;
+                    pSck->send(msg);
+                    restApi.setWaitingResponse();
+                }
+                else if (!restApi.isTableListEmpty())
+                {
+                    restApi.getNextTableRequest(strBody);
+                    auto itSck = socketMap.find(restApi.name());
+                    if (itSck == socketMap.end())
+                        break;
+                    SCCCreateMessage sccPostMsg;
+                    sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
+                    sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_GET);
+                    sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
+                    std::string msg = sccPostMsg.makeMessage();
+                    CSocket* pSck = itSck->second;
+                    pSck->send(msg);
+                    restApi.setWaitingResponse();
+                }
+                else
+                {
+                    bConnectToServer = false;
+                    keepAlive.stopTimer(tmrConnectRetry);
+                }
+            }
             if (!tmrWaitServerResponse)
             {
             }

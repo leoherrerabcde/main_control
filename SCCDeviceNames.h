@@ -24,8 +24,12 @@
 
 #define MSG_SERV_ALIVE_HEADER   "AliveMessage"
 #define MSG_SERV_ALIVE_COUNT    "AliveCounter"
-
+#define MSG_SERV_METHOD_HEADER  "method"
+#define MSG_SERV_BODY_HEADER    "body"
 #define MSG_COMMAND_TYPE        "Command"
+
+#define MSG_SERV_METHOD_POST    "post"
+#define MSG_SERV_METHOD_GET     "get"
 
 #define FRAME_START_MARK        '<'
 #define FRAME_STOP_MARK         '>'

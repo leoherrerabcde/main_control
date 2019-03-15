@@ -39,7 +39,8 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
     {PARAM_POST_REGISTS,{PARAM_POST_REGISTS, Required, AlphaNumeric, true, "api/transaccion"}},
     {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "http://localhost:3000"}},
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "remote_server.py"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}}
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}},
+    {PARAM_NUM_REGIST_SENT,{PARAM_NUM_REGIST_SENT, Required, Integer, true, "100"}},
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =

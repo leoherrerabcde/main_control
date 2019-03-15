@@ -16,13 +16,20 @@ class SCCRemoteServer : public Device
         void getTable(const std::string strTable);
 
         bool isWaitingResponse() {return m_bWaitResponse;}
+        void setWaitingResponse() {m_bWaitResponse = true;}
+        void clearWaitingResponse() {m_bWaitResponse=false;}
         void startConnection();
         bool isTableListEmpty() {return (m_TableList.size() == 0);}
+        bool isRegisterListEmpty() {return (m_RegisterList.size() == 0);}
         void setRegisterPath(const std::string& strPath) {m_strRegisterPath = strPath;}
-        std::string getNextTableRequest();
-        std::string getNextRegisterRequest();
+        bool getNextTableRequest(std::string& strBody);
+        bool getNextRegisterRequest(std::string& strBody);
+
+        virtual bool processDataReceived(const std::string& msg = "");
 
     protected:
+
+        void removeRegisters();
 
     private:
 
@@ -36,6 +43,7 @@ class SCCRemoteServer : public Device
         std::list<std::string>  m_TableList;
         std::list<std::string>  m_RegisterList;
         std::string m_strRegisterPath;
+        int         m_iNumRegisterSent;
 };
 
 #endif // SCCREMOTESERVER_H

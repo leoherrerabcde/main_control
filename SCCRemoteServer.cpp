@@ -1,8 +1,12 @@
 #include "SCCRemoteServer.h"
 #include "SCCLog.h"
 #include "SCCDeviceParams.h"
+#include "SCCFileManager.h"
+#include "../jsonParser/JsonParser.h"
+
 
 #include <sstream>
+
 
 extern SCCLog globalLog;
 
@@ -35,6 +39,7 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,PARAM_POST_CONFIRM, m_postConfirmUrl);
     settings.getValue(m_DeviceName,PARAM_POST_REGISTS, m_postRegister);
     settings.getValue(m_DeviceName,PARAM_URL_API_REST, m_urlApiRest);
+    settings.getValue(m_DeviceName,PARAM_NUM_REGIST_SENT, m_iNumRegisterSent);
 
     std::stringstream sService;
 
@@ -80,14 +85,77 @@ void SCCRemoteServer::startConnection()
     }
 }
 
-std::string SCCRemoteServer::getNextTableRequest()
+bool SCCRemoteServer::getNextTableRequest(std::string& strBody)
 {
-}
-
-std::string SCCRemoteServer::getNextRegisterRequest()
-{
-    if (m_RegisterList.size())
+    if (!m_TableList.size())
     {
-
+        strBody = m_TableList.front();
+        return true;
     }
+    return false;
 }
+
+bool SCCRemoteServer::getNextRegisterRequest(std::string& strBody)
+{
+    if (!m_RegisterList.size())
+    {
+        std::list<std::string> registerToSent;
+        size_t pos = m_iNumRegisterSent;
+        if (m_RegisterList.size() < pos)
+            pos = m_RegisterList.size();
+        auto itLast = m_RegisterList.begin();
+        std::advance(itLast, pos);
+        registerToSent.insert(registerToSent.begin(), m_RegisterList.begin(), itLast);
+        return JsonParser::getPlaneText(registerToSent, st_MemberList, strBody);
+    }
+    return false;
+}
+
+bool SCCRemoteServer::processDataReceived(const std::string& msg)
+{
+    pushData(msg);
+
+    while (!isBufferEmpty())
+    {
+        std::string data;
+        data = popFrontMessage();
+
+        if (isAliveMessage(data))
+            continue;
+        if (!isFrameType(DEVICE_REST_SERVICE, data))
+            continue;
+
+        std::string strMethod;
+        std::string strBody;
+
+        bool res = true;
+        res = res && getValueMessage(data, MSG_SERV_METHOD_HEADER       , strMethod);
+        res = res && getValueMessage(data, MSG_SERV_BODY_HEADER         , strBody);
+
+        if (res)
+        {
+            clearWaitingResponse();
+            if (strMethod == MSG_SERV_METHOD_POST)
+            {
+                removeRegisters();
+            }
+            else if (strMethod == MSG_SERV_METHOD_GET)
+            {
+                m_TableList.erase(m_TableList.begin());
+            }
+        }
+        if (m_bShowData)
+            std::cout << data << std::endl;
+    }
+    return true;
+}
+
+void SCCRemoteServer::removeRegisters()
+{
+    if (m_iNumRegisterSent > m_RegisterList.size())
+        m_RegisterList.clear();
+    else
+        m_RegisterList.erase(m_RegisterList.begin(), m_RegisterList.begin()+m_iNumRegisterSent);
+}
+
+

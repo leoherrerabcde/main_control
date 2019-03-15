@@ -34,6 +34,8 @@
 
 #define PARAM_TBL_MBER_
 
+#define PARAM_NUM_REGIST_SENT   "NumRegisterToSent"
+
 #define PARAM_TIME_OUT          "Timeout"
 
 #endif // SCCDEVICEPARAMS_H_INCLUDED

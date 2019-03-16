@@ -38,4 +38,6 @@
 
 #define PARAM_TIME_OUT          "Timeout"
 
+#define PARAM_ID_SURTIDOR       "ID_Surtidor"
+
 #endif // SCCDEVICEPARAMS_H_INCLUDED

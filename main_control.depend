@@ -18,7 +18,7 @@
 	"SCCLog.h"
 	"SCCDeviceNames.h"
 
-1552500254 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1552687315 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
 	<unordered_map>
 	"SCCDeviceNames.h"
@@ -141,7 +141,7 @@
 	<thread>
 	<vector>
 
-1552616365 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1552687354 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1552449131 source:/home/pi/Documents/source/main_control/mainstate.cpp
@@ -180,7 +180,7 @@
 	"SCCLog.h"
 	<iostream>
 
-1552616347 /home/pi/Documents/source/main_control/SCCDeviceParams.h
+1552687444 /home/pi/Documents/source/main_control/SCCDeviceParams.h
 
 1552651601 /home/pi/Documents/source/main_control/SCCRemoteServer.h
 	"device.h"
@@ -259,7 +259,7 @@
 	<iomanip>
 	<locale>
 
-1552616079 /home/pi/Documents/source/jsonParser/JsonParser.h
+1552708079 /home/pi/Documents/source/jsonParser/JsonParser.h
 	"rapidjson/document.h"
 	"rapidjson/writer.h"
 	"rapidjson/stringbuffer.h"

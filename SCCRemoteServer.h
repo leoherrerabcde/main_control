@@ -48,6 +48,7 @@ class SCCRemoteServer : public Device
         std::list<std::string>  m_MemberList;
         std::string m_strRegisterPath;
         int         m_iNumRegisterSent;
+        std::string m_strIDDevice;
 };
 
 #endif // SCCREMOTESERVER_H

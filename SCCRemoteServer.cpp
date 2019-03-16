@@ -57,7 +57,8 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
 
     int remotePort;
 
-    remotePort = settings.serverPort;
+    remotePort      = settings.serverPort;
+    m_strIDDevice   = settings.m_strMyName;
 
     sArgs << " --remote_port " << remotePort;
 
@@ -112,7 +113,7 @@ bool SCCRemoteServer::getNextRegisterRequest(std::string& strBody)
         auto itLast = m_RegisterList.begin();
         std::advance(itLast, pos);
         registerToSent.insert(registerToSent.begin(), m_RegisterList.begin(), itLast);
-        return JsonParser::getPlaneText(registerToSent, m_MemberList, strBody);
+        return JsonParser::getPlaneText(PARAM_ID_SURTIDOR, m_strIDDevice, registerToSent, m_MemberList, strBody);
     }
     return false;
 }
@@ -158,7 +159,7 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
 
 void SCCRemoteServer::removeRegisters()
 {
-    if (m_iNumRegisterSent > m_RegisterList.size())
+    if ((unsigned int)m_iNumRegisterSent > m_RegisterList.size())
         m_RegisterList.clear();
     else
     {

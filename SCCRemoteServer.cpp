@@ -94,7 +94,7 @@ void SCCRemoteServer::startConnection(const std::list<std::string>& strMemberLis
 
 bool SCCRemoteServer::getNextTableRequest(std::string& strBody)
 {
-    if (!m_TableList.size())
+    if (m_TableList.size())
     {
         strBody = m_TableList.front();
         return true;
@@ -104,7 +104,7 @@ bool SCCRemoteServer::getNextTableRequest(std::string& strBody)
 
 bool SCCRemoteServer::getNextRegisterRequest(std::string& strBody)
 {
-    if (!m_RegisterList.size())
+    if (m_RegisterList.size())
     {
         std::list<std::string> registerToSent;
         size_t pos = m_iNumRegisterSent;

@@ -10,7 +10,7 @@
 #define VAR_REGISTER_VEHICLE_ID     "VehicleID"
 #define VAR_REGISTER_ODOMETER       "Odometro"
 #define VAR_REGISTER_HOROMETER      "Horometro"
-#define VAR_REGISTER_TYPE           "Tipe"
+#define VAR_REGISTER_TYPE           "Type"
 #define VAR_REGISTER_INIT_FLOW      "StartAcumFlow"
 #define VAR_REGISTER_END_FLOW       "EndAcumFlow"
 #define VAR_REGISTER_TIME_END       "EndTime"

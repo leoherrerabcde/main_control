@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
     int mainTmr             = keepAlive.addTimer(mainSettings.mainTimerInterval);
     int rqtTblTmr           = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
     int tmrConnectServer    = keepAlive.addTimer(mainSettings.tmrServerConnect);
-    int tmrWaitServerResponse   = 0;
+    //int tmrWaitServerResponse   = 0;
     int tmrConnectRetry     = 0;
 
     bool bConnectToServer(false);
@@ -286,6 +286,7 @@ int main(int argc, char* argv[])
                 if (!restApi.isRegisterListEmpty())
                 {
                     restApi.getNextRegisterRequest(strBody);
+                    SCCFileManager::writeFile(fuelRegister.getRegisterPath(), "registers.json", strBody);
                     auto itSck = socketMap.find(restApi.name());
                     if (itSck == socketMap.end())
                         break;
@@ -319,9 +320,13 @@ int main(int argc, char* argv[])
                     keepAlive.stopTimer(tmrConnectRetry);
                 }
             }
-            if (!tmrWaitServerResponse)
+            else
             {
+                restApi.clearWaitingResponse();
             }
+            /*if (!tmrWaitServerResponse)
+            {
+            }*/
         }
 
         if (bSleep == true)

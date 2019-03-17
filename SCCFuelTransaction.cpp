@@ -18,12 +18,12 @@ static std::list<std::string> st_MemberList =
 {
     VAR_REGISTER_NUMBER        ,
     VAR_REGISTER_TIME_INIT     ,
-    VAR_REGISTER_DISPENSA_ID   ,
+    //VAR_REGISTER_DISPENSA_ID   ,
     VAR_REGISTER_USER_ID       ,
-    VAR_REGISTER_CONDUCTOR_ID  ,
+    //VAR_REGISTER_CONDUCTOR_ID  ,
     VAR_REGISTER_VEHICLE_ID    ,
-    VAR_REGISTER_ODOMETER      ,
-    VAR_REGISTER_HOROMETER     ,
+    //VAR_REGISTER_ODOMETER      ,
+    //VAR_REGISTER_HOROMETER     ,
     VAR_REGISTER_TYPE          ,
     VAR_REGISTER_INIT_FLOW     ,
     VAR_REGISTER_END_FLOW      ,
@@ -279,12 +279,15 @@ bool SCCFuelTransaction::getRegisterList(std::list<std::string>& regList)
     if (!tmpFileList.size())
         return false;
 
+    tmpFileList.sort();
+
     for (auto regFile : tmpFileList)
     {
         int num = getRegisterNumber(regFile);
         if (num < LOWER_REGISTER_NUM || num > m_iUpperRegNum)
             continue;
-        SCCFileManager tmpFile(m_strNewRegsPath);
+        SCCFileManager tmpFile(m_strRegisterPath);
+        tmpFile << m_strNewRegsPath;
         tmpFile << regFile;
         regList.push_back(tmpFile.getFileName());
     }

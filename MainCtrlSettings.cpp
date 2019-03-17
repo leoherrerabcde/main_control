@@ -89,8 +89,8 @@ MainCtrlSettings::MainCtrlSettings()
     mainTimerInterval       = 5000;
     sckBufferSize           = 4096;
     requestTableTmrInterval = 300000;
-    tmrServerConnect        = 30000;//*/(8*3600*1000);
-    tmrServerRetry          = 15000;//(15*60*1000);
+    tmrServerConnect        = 15000;//*/(8*3600*1000);
+    tmrServerRetry          =  5000;//(15*60*1000);
     m_strMyName             = "CamionSurtidor001";
 }
 

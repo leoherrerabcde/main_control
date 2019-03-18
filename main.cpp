@@ -128,8 +128,9 @@ int main(int argc, char* argv[])
     globalLog << "Main Loop Started." << std::endl;
 
     socketServer.listen();
+    bool bFirstTime = false;
     //verifyDeviceService(deviceList);
-    verifyDeviceService(deviceList, portList);
+    //verifyDeviceService(deviceList, portList);
 
     for(;;)
     {
@@ -258,6 +259,7 @@ int main(int argc, char* argv[])
         }
         if (processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap, portList))
         {
+            bFirstTime = false;
             verifyDeviceService(deviceList, portList);
         }
         processDataClients(socketClientList, deviceList);
@@ -270,10 +272,12 @@ int main(int argc, char* argv[])
         {
             sendRequestTable(socketClientList, deviceList);
         }
-        if (keepAlive.isTimerEvent(tmrConnectServer))
+        if (restApi.getServicePID() && (keepAlive.isTimerEvent(tmrConnectServer) || !bFirstTime))
         {
-            bConnectToServer = true;
-            tmrConnectRetry = keepAlive.addTimer(mainSettings.tmrServerRetry);
+            bFirstTime          = true;
+            bConnectToServer    = true;
+            restApi.clearWaitingResponse();
+            tmrConnectRetry     = keepAlive.addTimer(mainSettings.tmrServerRetry);
             fuelRegister.getRegisterList(restApi.getRegisterList());
             restApi.startConnection(fuelRegister.getMemberList());
         }
@@ -320,13 +324,13 @@ int main(int argc, char* argv[])
                     keepAlive.stopTimer(tmrConnectRetry);
                 }
             }
-            else
+            /*else
+            {
+            }*/
+            if (tmrConnectRetry && keepAlive.isTimerEvent(tmrConnectRetry))
             {
                 restApi.clearWaitingResponse();
             }
-            /*if (!tmrWaitServerResponse)
-            {
-            }*/
         }
 
         if (bSleep == true)

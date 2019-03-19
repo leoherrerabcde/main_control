@@ -296,6 +296,7 @@ int main(int argc, char* argv[])
                         break;
                     SCCCreateMessage sccPostMsg;
                     sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
+                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlPostMethod());
                     sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_POST);
                     sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
                     std::string msg = sccPostMsg.makeMessage();
@@ -311,6 +312,7 @@ int main(int argc, char* argv[])
                         break;
                     SCCCreateMessage sccPostMsg;
                     sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
+                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlGetMethod());
                     sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_GET);
                     sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
                     std::string msg = sccPostMsg.makeMessage();

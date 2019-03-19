@@ -28,6 +28,24 @@ SCCRemoteServer::~SCCRemoteServer()
     //dtor
 }
 
+std::string SCCRemoteServer::getUrlPostMethod()
+{
+    std::string url(m_urlApiRest);
+
+    url += "/";
+    url += m_postRegister;
+    return url;
+}
+
+std::string SCCRemoteServer::getUrlGetMethod()
+{
+    std::string url(m_urlApiRest);
+
+    url += "/";
+    url += m_getTableUrl;
+    return url;
+}
+
 int SCCRemoteServer::init(MainCtrlSettings& settings)
 {
     globalLog << "Initializating Api Rest Service..." << std::endl;

@@ -27,6 +27,7 @@
 #define MSG_SERV_METHOD_HEADER  "method"
 #define MSG_SERV_BODY_HEADER    "body"
 #define MSG_COMMAND_TYPE        "Command"
+#define MSG_SERV_URL_HEADER     "url"
 
 #define MSG_SERV_METHOD_POST    "post"
 #define MSG_SERV_METHOD_GET     "get"

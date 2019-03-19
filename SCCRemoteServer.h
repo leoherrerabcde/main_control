@@ -29,6 +29,8 @@ class SCCRemoteServer : public Device
         std::list<std::string>& getRegisterList() {return m_RegisterList;}
 
         virtual bool processDataReceived(const std::string& msg = "");
+        std::string getUrlPostMethod();
+        std::string getUrlGetMethod();
 
     protected:
 

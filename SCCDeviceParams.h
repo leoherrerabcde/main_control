@@ -9,7 +9,8 @@
 #define PARAM_FILE_EXTENSION "FileExtension"
 
 #define PARAM_GET_MODIFIED  "GettModifiedUrlApi"
-#define PARAM_GET_TABLE     "GetTableUrlApi"
+#define PARAM_GET_TABLE_VEHI "GetTableVehiUrlApi"
+#define PARAM_GET_TABLE_USER "GetTableUserUrlApi"
 #define PARAM_POST_CONFIRM  "PostConfirmTransaction"
 #define PARAM_POST_REGISTS  "PostRegisters"
 #define PARAM_URL_API_REST  "URLApiRest"

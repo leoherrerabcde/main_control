@@ -12,13 +12,13 @@ extern SCCLog globalLog;
 
 static std::list<std::string> st_TableList =
 {
-    PARAM_TABLE_BOMBEROS,
-    PARAM_TABLE_CONDUCTORES,
-    PARAM_TABLE_PROPIETARIOS,
     PARAM_TABLE_VEHICULOS,
+    PARAM_TABLE_BOMBEROS,
+    //PARAM_TABLE_CONDUCTORES,
+    //PARAM_TABLE_PROPIETARIOS,
 };
 
-SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData), m_bWaitResponse(false)
+SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData), m_bWaitResponse(false), m_TableIndex(0)
 {
     //ctor
 }
@@ -37,12 +37,12 @@ std::string SCCRemoteServer::getUrlPostMethod()
     return url;
 }
 
-std::string SCCRemoteServer::getUrlGetMethod()
+std::string SCCRemoteServer::getUrlGetMethod(int index)
 {
     std::string url(m_urlApiRest);
 
     url += "/";
-    url += m_getTableUrl;
+    url += m_getTableUrl[index];
     return url;
 }
 
@@ -52,8 +52,12 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
 
     /* Launch Service*/
 
+    std::string strUrl;
     settings.getValue(m_DeviceName,PARAM_GET_MODIFIED, m_getModifiedUrl);
-    settings.getValue(m_DeviceName,PARAM_GET_TABLE   , m_getTableUrl);
+    settings.getValue(m_DeviceName,PARAM_GET_TABLE_VEHI, strUrl);
+    m_getTableUrl.push_back(strUrl);
+    settings.getValue(m_DeviceName,PARAM_GET_TABLE_USER, strUrl);
+    m_getTableUrl.push_back(strUrl);
     settings.getValue(m_DeviceName,PARAM_POST_CONFIRM, m_postConfirmUrl);
     settings.getValue(m_DeviceName,PARAM_POST_REGISTS, m_postRegister);
     settings.getValue(m_DeviceName,PARAM_URL_API_REST, m_urlApiRest);
@@ -99,6 +103,8 @@ void SCCRemoteServer::startConnection(const std::list<std::string>& strMemberLis
     //SCCFileManager::getFileList(m_strRegisterPath, m_RegisterList);
     m_TableList.clear();
     m_MemberList.clear ();
+    m_TableBody.clear();
+    m_TableIndex = 0;
     //m_MemberList.insert(strMemberList.begin(), strMemberList.end());
     for (auto member: strMemberList)
     {
@@ -115,6 +121,7 @@ bool SCCRemoteServer::getNextTableRequest(std::string& strBody)
     if (m_TableList.size())
     {
         strBody = m_TableList.front();
+        ++m_TableIndex;
         return true;
     }
     return false;
@@ -155,7 +162,7 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
 
         bool res = true;
         res = res && getValueMessage(data, MSG_SERV_METHOD_HEADER       , strMethod);
-        res = res && getValueMessage(data, MSG_SERV_BODY_HEADER         , strBody);
+        res = res && getBodyMessage(data, MSG_SERV_BODY_HEADER         , strBody);
 
         if (res)
         {
@@ -166,6 +173,7 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
             }
             else if (strMethod == MSG_SERV_METHOD_GET)
             {
+                m_TableBody.push_back(strBody);
                 m_TableList.erase(m_TableList.begin());
             }
         }

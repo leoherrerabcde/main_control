@@ -173,6 +173,36 @@ bool Device::getValueMessage(const std::string& msg, const std::string& valueNam
     return true;
 }
 
+bool Device::getBodyMessage(const std::string& msg, const std::string& valueName, std::string& value)
+{
+    std::string::size_type pos_ini = msg.find(valueName);
+
+    if (pos_ini == std::string::npos)
+        return false;
+
+    pos_ini += valueName.length()+1;
+
+    if (pos_ini >= msg.length())
+        return false;
+
+    pos_ini = msg.find('|', pos_ini);
+    if (pos_ini == std::string::npos || pos_ini >= msg.length())
+        return false;
+
+    ++pos_ini;
+    std::string::size_type pos_end = msg.find('|', pos_ini);
+
+    if (pos_end == std::string::npos)
+        pos_end = msg.length();
+
+    if (pos_end <= pos_ini)
+        return false;
+
+    value = msg.substr(pos_ini, pos_end - pos_ini);
+
+    return true;
+}
+
 bool Device::isBufferEmpty()
 {
     std::string::size_type pos = m_strBuffer.find(FRAME_START_MARK);

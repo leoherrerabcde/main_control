@@ -67,7 +67,14 @@ bool IDList::writeTable(const std::string& strData)
 
     fileman << fileman.getTempFileName();
 
-    return fileman.writeFile(strData);
+    fileman.writeFile(strData);
+
+    SCCFileManager fileDest(m_strTablePath);
+    fileDest << m_strTableName;
+
+    fileman.moveFile(fileDest.getFileName());
+
+    m_strData = strData;
 }
 
 

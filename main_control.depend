@@ -11,7 +11,7 @@
 1551556337 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1552398303 /home/pi/Documents/source/main_control/device.h
+1555114381 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
@@ -57,7 +57,7 @@
 	<string>
 	<ostream>
 
-1552448341 source:/home/pi/Documents/source/main_control/device.cpp
+1555115434 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"
@@ -187,7 +187,7 @@
 	"SCCDeviceParams.h"
 	<list>
 
-1552960916 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
+1555114338 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
 	"SCCRemoteServer.h"
 	"SCCLog.h"
 	"SCCDeviceParams.h"

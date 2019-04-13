@@ -312,7 +312,7 @@ int main(int argc, char* argv[])
                         break;
                     SCCCreateMessage sccPostMsg;
                     sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
-                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlGetMethod());
+                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlGetMethod(restApi.getCurrentTableIndex()));
                     sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_GET);
                     sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
                     std::string msg = sccPostMsg.makeMessage();
@@ -322,6 +322,11 @@ int main(int argc, char* argv[])
                 }
                 else
                 {
+                    if (restApi.isTableBody())
+                    {
+                        VehicleList.writeTable(restApi.getBodyFromTable(0));
+                        UserList.writeTable(restApi.getBodyFromTable(1))
+                    }
                     bConnectToServer = false;
                     keepAlive.stopTimer(tmrConnectRetry);
                 }

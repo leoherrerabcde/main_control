@@ -34,7 +34,8 @@ std::unordered_map<std::string, ArgumentStruct> st_FlowmeterParam =
 std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
 {
     {PARAM_GET_MODIFIED,{PARAM_GET_MODIFIED, Required, AlphaNumeric, true, "api/modificadas"}},
-    {PARAM_GET_TABLE   ,{PARAM_GET_TABLE   , Required, AlphaNumeric, true, "api/listavehiculos/0"}},
+    {PARAM_GET_TABLE_VEHI,{PARAM_GET_TABLE_VEHI, Required, AlphaNumeric, true, "api/listavehiculos/0"}},
+    {PARAM_GET_TABLE_USER,{PARAM_GET_TABLE_USER, Required, AlphaNumeric, true, "api/personal/0"}},
     {PARAM_POST_CONFIRM,{PARAM_POST_CONFIRM, Required, AlphaNumeric, true, "api/modificadas/cierre"}},
     {PARAM_POST_REGISTS,{PARAM_POST_REGISTS, Required, AlphaNumeric, true, "api/control"}},
     {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "http://157.230.225.248:3000"}},

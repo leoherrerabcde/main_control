@@ -30,7 +30,12 @@ class SCCRemoteServer : public Device
 
         virtual bool processDataReceived(const std::string& msg = "");
         std::string getUrlPostMethod();
-        std::string getUrlGetMethod();
+        std::string getUrlGetMethod(int index);
+        int getCurrentTableIndex() {return m_TableIndex;}
+
+        bool isTableBody() {return !m_TableBody.empty();}
+        std::string& getBodyFromTable(int index) {return m_TableBody[index];}
+        void clearTableBody() {m_TableBody.clear()}
 
     protected:
 
@@ -39,7 +44,7 @@ class SCCRemoteServer : public Device
     private:
 
         std::string m_getModifiedUrl ;
-        std::string m_getTableUrl ;
+        std::vector<std::string> m_getTableUrl ;
         std::string m_postConfirmUrl ;
         std::string m_postRegister ;
         std::string m_urlApiRest ;
@@ -50,7 +55,9 @@ class SCCRemoteServer : public Device
         std::list<std::string>  m_MemberList;
         std::string m_strRegisterPath;
         int         m_iNumRegisterSent;
+        int         m_TableIndex;
         std::string m_strIDDevice;
+        std::vector<std::string> m_TableBody;
 };
 
 #endif // SCCREMOTESERVER_H

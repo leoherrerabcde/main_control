@@ -39,6 +39,7 @@ public:
     virtual void setDeviceName(const std::string& strName) {m_DeviceName = strName;}
     virtual std::string name() {return m_DeviceName;}
 
+    virtual bool getBodyMessage (const std::string& msg, const std::string& valueName, std::string& value);
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, std::string& value);
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, double& value);
     virtual bool getValueMessage(const std::string& msg, const std::string& valueName, float& value);

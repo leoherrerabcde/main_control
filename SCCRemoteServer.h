@@ -5,6 +5,7 @@
 #include "SCCDeviceParams.h"
 
 #include <list>
+#include <vector>
 
 class SCCRemoteServer : public Device
 {
@@ -35,7 +36,7 @@ class SCCRemoteServer : public Device
 
         bool isTableBody() {return !m_TableBody.empty();}
         std::string& getBodyFromTable(int index) {return m_TableBody[index];}
-        void clearTableBody() {m_TableBody.clear()}
+        void clearTableBody() {m_TableBody.clear();}
 
     protected:
 

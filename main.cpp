@@ -325,7 +325,7 @@ int main(int argc, char* argv[])
                     if (restApi.isTableBody())
                     {
                         VehicleList.writeTable(restApi.getBodyFromTable(0));
-                        UserList.writeTable(restApi.getBodyFromTable(1))
+                        UserList.writeTable(restApi.getBodyFromTable(1));
                     }
                     bConnectToServer = false;
                     keepAlive.stopTimer(tmrConnectRetry);
@@ -336,7 +336,7 @@ int main(int argc, char* argv[])
             }*/
             if (tmrConnectRetry && keepAlive.isTimerEvent(tmrConnectRetry))
             {
-                restApi.clearWaitingResponse();
+                //restApi.clearWaitingResponse();
             }
         }
 

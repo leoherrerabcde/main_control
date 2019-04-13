@@ -32,6 +32,11 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
     /*std::string errMsg;
     errMsg += m_strTableType;
     errMsg += */
+    parseTable();
+}
+
+bool IDList::parseTable()
+{
     m_jsonParser.setIdKeyLabel(m_strIdKeyLabel);
 
     if (!m_bTableReady)
@@ -47,6 +52,8 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
 
     if (!m_jsonParser.isMapIDReady())
         throw("Table was not created.\nThe application can not continue working and it will be closed.\n");
+
+    return true;
 }
 
 bool IDList::readTable()
@@ -72,9 +79,11 @@ bool IDList::writeTable(const std::string& strData)
     SCCFileManager fileDest(m_strTablePath);
     fileDest << m_strTableName;
 
-    fileman.moveFile(fileDest.getFileName());
+    bool ret = fileman.moveFile(fileDest.getFileName());
 
     m_strData = strData;
+
+    return ret & parseTable();
 }
 
 

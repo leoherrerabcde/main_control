@@ -121,7 +121,7 @@ bool SCCRemoteServer::getNextTableRequest(std::string& strBody)
     if (m_TableList.size())
     {
         strBody = m_TableList.front();
-        ++m_TableIndex;
+        //++m_TableIndex;
         return true;
     }
     return false;
@@ -175,6 +175,7 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
             {
                 m_TableBody.push_back(strBody);
                 m_TableList.erase(m_TableList.begin());
+                ++m_TableIndex;
             }
         }
         if (m_bShowData)

@@ -39,6 +39,8 @@ class IDList
 
     protected:
 
+        bool            parseTable();
+
         std::string     m_strTablePath;
         std::string     m_strTableName;
         std::string     m_strTableTemp;

@@ -2,18 +2,18 @@
 #define SCCDEVICEVARS_H_INCLUDED
 
 /* Fuel Register */
-#define VAR_REGISTER_NUMBER         "RegisterNumber"
-#define VAR_REGISTER_TIME_INIT      "StartTime"
-#define VAR_REGISTER_DISPENSA_ID    "DispensadorID"
-#define VAR_REGISTER_USER_ID        "UserID"
-#define VAR_REGISTER_CONDUCTOR_ID   "ConductorID"
-#define VAR_REGISTER_VEHICLE_ID     "VehicleID"
-#define VAR_REGISTER_ODOMETER       "Odometro"
-#define VAR_REGISTER_HOROMETER      "Horometro"
-#define VAR_REGISTER_TYPE           "Type"
-#define VAR_REGISTER_INIT_FLOW      "StartAcumFlow"
-#define VAR_REGISTER_END_FLOW       "EndAcumFlow"
-#define VAR_REGISTER_TIME_END       "EndTime"
+#define VAR_REGISTER_NUMBER         "numero_registro"
+#define VAR_REGISTER_TIME_INIT      "fec_init_transac"
+#define VAR_REGISTER_DISPENSA_ID    "id_dispensador"
+#define VAR_REGISTER_USER_ID        "id_bombero"
+#define VAR_REGISTER_CONDUCTOR_ID   "id_receptor"
+#define VAR_REGISTER_VEHICLE_ID     "rfid_veh_receptor"
+#define VAR_REGISTER_ODOMETER       "valor_odometro"
+#define VAR_REGISTER_HOROMETER      "valor_horometro"
+#define VAR_REGISTER_TYPE           "tipo_transac"
+#define VAR_REGISTER_INIT_FLOW      "flujometro_ini"
+#define VAR_REGISTER_END_FLOW       "flujometro_fin"
+#define VAR_REGISTER_TIME_END       "fec_fin_transac"
 //#define VAR_REGISTER_
 
 

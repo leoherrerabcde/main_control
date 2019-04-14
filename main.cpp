@@ -287,7 +287,7 @@ int main(int argc, char* argv[])
             {
                 keepAlive.resetTimer(tmrConnectRetry);
                 std::string strBody;
-                if (!restApi.isRegisterListEmpty() && false)
+                if (!restApi.isRegisterListEmpty())
                 {
                     restApi.getNextRegisterRequest(strBody);
                     SCCFileManager::writeFile(fuelRegister.getRegisterPath(), "registers.json", strBody);

@@ -27,7 +27,7 @@
 
 1552961051 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1552219805 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1555688197 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
@@ -72,11 +72,12 @@
 1551843940 /home/pi/Documents/source/main_control/electrovalvctrl.h
 	"device.h"
 
-1555131282 source:/home/pi/Documents/source/main_control/IDList.cpp
+1555684305 source:/home/pi/Documents/source/main_control/IDList.cpp
 	"IDList.h"
 	"SCCFileManager.h"
+	"SCCLog.h"
 
-1555131182 /home/pi/Documents/source/main_control/IDList.h
+1555682011 /home/pi/Documents/source/main_control/IDList.h
 	"MainCtrlSettings.h"
 	"../jsonParser/JsonParser.h"
 	<map>
@@ -107,7 +108,7 @@
 1551986801 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1555130457 source:/home/pi/Documents/source/main_control/main.cpp
+1555693687 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -141,7 +142,7 @@
 	<thread>
 	<vector>
 
-1555131911 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1555695669 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1552449131 source:/home/pi/Documents/source/main_control/mainstate.cpp
@@ -414,7 +415,7 @@
 1548958426 source:/home/pi/Documents/source/jsonParser/rapidjsonTest.cpp
 	"JsonParser.h"
 
-1552855465 source:/home/pi/Documents/source/jsonParser/JsonParser.cpp
+1555696816 source:/home/pi/Documents/source/jsonParser/JsonParser.cpp
 	"JsonParser.h"
 	"SCCFileManager.h"
 	"device.h"
@@ -436,7 +437,7 @@
 	<chrono>
 	<list>
 
-1552842932 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
+1555693878 source:/home/pi/Documents/source/main_control/SCCFuelTransaction.cpp
 	"SCCFuelTransaction.h"
 	"SCCLog.h"
 	"../commPort/SCCRealTime.h"
@@ -446,7 +447,7 @@
 	<set>
 	<list>
 
-1555205190 /home/pi/Documents/source/main_control/SCCDeviceVars.h
+1555693868 /home/pi/Documents/source/main_control/SCCDeviceVars.h
 
 1551795446 /home/pi/Documents/source/main_control/SCCGeneralDefines.h
 

@@ -219,6 +219,10 @@ void CSocket::listen()
               //perror("ERROR on binding");
               throwError(__LINE__, SocketError::BindingSocket);
     }
+    else
+    {
+        m_sckState = sckClosed;
+    }
     ::listen(sockfd, 5);
 
     /*std::string msg("Listening by port ");
@@ -236,7 +240,7 @@ void CSocket::listen()
     }
     m_pListeningThread = new std::thread(&CSocket::listening, this);
 
-    while (m_sckState == sckClosed || m_sckState == sckHostResolved)
+    while (m_sckState == sckClosed /*|| m_sckState == sckHostResolved*/)
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
 }
 

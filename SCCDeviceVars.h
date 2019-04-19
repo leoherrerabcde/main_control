@@ -14,6 +14,7 @@
 #define VAR_REGISTER_INIT_FLOW      "flujometro_ini"
 #define VAR_REGISTER_END_FLOW       "flujometro_fin"
 #define VAR_REGISTER_TIME_END       "fec_fin_transac"
+#define VAR_REGISTER_LITERS         "litros"
 //#define VAR_REGISTER_
 
 

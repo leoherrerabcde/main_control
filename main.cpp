@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
 
     socketServer.listen();
     bool bFirstTime = false;
-    //verifyDeviceService(deviceList);
+
     //verifyDeviceService(deviceList, portList);
 
     for(;;)
@@ -259,7 +259,7 @@ int main(int argc, char* argv[])
         }
         if (processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap, portList))
         {
-            bFirstTime = false;
+            //bFirstTime = false;
             verifyDeviceService(deviceList, portList);
         }
         processDataClients(socketClientList, deviceList);
@@ -336,7 +336,7 @@ int main(int argc, char* argv[])
             }*/
             if (tmrConnectRetry && keepAlive.isTimerEvent(tmrConnectRetry))
             {
-                //restApi.clearWaitingResponse();
+                restApi.clearWaitingResponse();
             }
         }
 

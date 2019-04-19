@@ -40,6 +40,7 @@ class IDList
     protected:
 
         bool            parseTable();
+        bool            parseTable(const std::string& strData);
 
         std::string     m_strTablePath;
         std::string     m_strTableName;

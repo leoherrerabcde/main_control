@@ -5,6 +5,9 @@ ArgumentStruct stBaudRate = {PARAM_BAUD_RATE, Required, Integer, true, "115200"}
 ArgumentStruct stServName = {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "commPort"};
 ArgumentStruct stPathName = {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/commPort/bin/Release"};*/
 
+//#define URL_HOST        "http://157.230.225.248"
+#define URL_HOST        "192.168.43.161"
+
 std::unordered_map<std::string, ArgumentStruct> st_RFIDParam =
 {
     {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "2"}},
@@ -38,7 +41,7 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
     {PARAM_GET_TABLE_USER,{PARAM_GET_TABLE_USER, Required, AlphaNumeric, true, "api/personal/0"}},
     {PARAM_POST_CONFIRM,{PARAM_POST_CONFIRM, Required, AlphaNumeric, true, "api/modificadas/cierre"}},
     {PARAM_POST_REGISTS,{PARAM_POST_REGISTS, Required, AlphaNumeric, true, "api/control"}},
-    {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "http://157.230.225.248:3000"}},
+    {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "192.168.43.161:3000"}},
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "remote_server.py"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}},
     {PARAM_NUM_REGIST_SENT,{PARAM_NUM_REGIST_SENT, Required, Integer, true, "100"}},
@@ -48,7 +51,7 @@ std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =
 {
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "users.json"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
-    {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "NFICHA"}},
+    {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "idpersonal"}},
     //{PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "id_user"}},
 };
 
@@ -92,7 +95,7 @@ MainCtrlSettings::MainCtrlSettings()
     mainTimerInterval       = 5000;
     sckBufferSize           = 4096;
     requestTableTmrInterval = 300000;
-    tmrServerConnect        = 60000;//*/(8*3600*1000);
+    tmrServerConnect        = 300000;//*/(8*3600*1000);
     tmrServerRetry          = 15000;//(15*60*1000);
     m_strMyName             = "CamionSurtidor001";
 }

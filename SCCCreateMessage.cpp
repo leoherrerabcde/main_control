@@ -36,6 +36,14 @@ void SCCCreateMessage::addParam(const std::string& param, const std::string& val
     m_paramList.push_back(std::make_pair(param, value));
 }
 
+void SCCCreateMessage::addBody(const std::string& param, const std::string& value)
+{
+    std::string strBody("|");
+    strBody += value;
+    strBody += "|";
+    m_paramList.push_back(std::make_pair(param, strBody));
+}
+
 std::string SCCCreateMessage::makeMessage()
 {
     std::stringstream ss;

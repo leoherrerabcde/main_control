@@ -15,6 +15,7 @@ class SCCCreateMessage
         static std::string makeMessage(const std::list<ArgumentStruct>& paramList);
         std::string makeMessage();
         void addParam(const std::string& param, const std::string& value);
+        void addBody(const std::string& param, const std::string& value);
 
     protected:
 

@@ -41,7 +41,7 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
     {PARAM_GET_TABLE_USER,{PARAM_GET_TABLE_USER, Required, AlphaNumeric, true, "api/personal/0"}},
     {PARAM_POST_CONFIRM,{PARAM_POST_CONFIRM, Required, AlphaNumeric, true, "api/modificadas/cierre"}},
     {PARAM_POST_REGISTS,{PARAM_POST_REGISTS, Required, AlphaNumeric, true, "api/control"}},
-    {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "192.168.43.161:3000"}},
+    {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "http://157.230.225.248:3000"}},
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "remote_server.py"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}},
     {PARAM_NUM_REGIST_SENT,{PARAM_NUM_REGIST_SENT, Required, Integer, true, "100"}},
@@ -96,7 +96,7 @@ MainCtrlSettings::MainCtrlSettings()
     sckBufferSize           = 4096;
     requestTableTmrInterval = 300000;
     tmrServerConnect        = 300000;//*/(8*3600*1000);
-    tmrServerRetry          = 15000;//(15*60*1000);
+    tmrServerRetry          = 60000;//(15*60*1000);
     m_strMyName             = "CamionSurtidor001";
 }
 

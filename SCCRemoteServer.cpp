@@ -169,7 +169,12 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
             clearWaitingResponse();
             if (strMethod == MSG_SERV_METHOD_POST)
             {
-                removeRegisters();
+                JsonParser jsonDoc;
+                jsonDoc.loadPlaneText(strBody);
+                if (jsonDoc.isDocJsonReady() && jsonDoc.getValue("message") == "ok")
+                {
+                    removeRegisters();
+                }
             }
             else if (strMethod == MSG_SERV_METHOD_GET)
             {
@@ -186,6 +191,7 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
 
 void SCCRemoteServer::removeRegisters()
 {
+    moveRegisterListToHistoryFolder();
     if ((unsigned int)m_iNumRegisterSent > m_RegisterList.size())
         m_RegisterList.clear();
     else
@@ -196,4 +202,19 @@ void SCCRemoteServer::removeRegisters()
     }
 }
 
+void SCCRemoteServer::moveRegisterListToHistoryFolder()
+{
+    for (auto strRegFile : m_RegisterList)
+    {
+        moveFileToHistoFolder(strRegFile);
+    }
+}
 
+void SCCRemoteServer::moveFileToHistoFolder(const std::string& strFile)
+{
+    if (m_registerDestination == "")
+        return;
+    SCCFileManager fileRegister(strFile);
+    fileRegister.moveTo(m_registerDestination);
+
+}

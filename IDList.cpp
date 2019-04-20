@@ -132,12 +132,12 @@ bool IDList::writeTable(const std::string& strData)
     fileDest << m_strTableName;
 
     // Moving Source to Dest
-    bool ret = fileman.moveFile(fileDest.getFileName());
+    bool ret = fileman.moveFile(fileDest.getAbsFileName());
 
     // If file dest could not be created
     if (!ret)
     {
-        globalLog << "File '" << fileDest.getFileName() << "' could not be created" << std::endl;
+        globalLog << "File '" << fileDest.getAbsFileName() << "' could not be created" << std::endl;
         return false;
     }
 

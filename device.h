@@ -77,6 +77,8 @@ public:
     static void removeComPort(std::list<int>& portList, int port);
     int getComPort() {return m_iComPort;}
     static int launchService(const std::string& servicePathName, const std::string& args);
+    bool killService();
+    std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList);
 
 protected:
 

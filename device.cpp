@@ -324,3 +324,12 @@ void Device::removeComPort(std::list<int>& portList, int port)
         }
     }
 }
+
+bool Device::killService()
+{
+}
+
+std::string Device::popenQuickService(const std::string& quickService, const std::list<std::string>argList)
+{
+}
+

@@ -34,12 +34,16 @@ class SCCFileManager
         bool moveFile(const std::string& fileDst);
         static bool moveFile(const std::string& fileSrc, const std::string& fileDst);
 
+        bool moveTo(const std::string& pathDst) {return moveTo(getAbsFileName(),pathDst);};
+        static bool moveTo(const std::string& fileSrc, const std::string& pathDst);
+
         bool isFileExist();
         static bool isFileExist(const std::string& filename);
         bool isFolder();
         static bool isFolder(const std::string& filename);
 
-        std::string getFileName() {return std::string(m_ssFile.str());}
+        std::string getAbsFileName() {return std::string(m_ssFile.str());}
+        std::string fileName();
 
         std::string getTempFileName();
 

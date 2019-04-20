@@ -33,6 +33,7 @@ class SCCFuelTransaction : public Device
         void getNewRegisterJson(std::string& strJson);
         bool getRegisterList(std::list<std::string>& regList);
         std::list<std::string>& getMemberList();
+        std::string getRegHistoPath();
 
     protected:
 

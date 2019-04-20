@@ -171,7 +171,7 @@ bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
         str += regNumber2String(number);
         str += m_strFileExtension;
         dst << m_strNewRegsPath << str;
-        m_filemanRegister.copyFile(dst.getFileName());
+        m_filemanRegister.copyFile(dst.getAbsFileName());
         m_filemanRegister.deleteFile();
 
         return true;
@@ -216,19 +216,26 @@ int SCCFuelTransaction::getLastRegisterNumber()
     std::string strLastFile;
 
     if (m_filemanRegister.isFileExist())
-        return getRegisterNumber(m_filemanRegister.getFileName());
+        return getRegisterNumber(m_filemanRegister.getAbsFileName());
 
     SCCFileManager newRegsPath(m_strRegisterPath);
     newRegsPath << m_strNewRegsPath;
-    int num = getLastRegisterNumber(newRegsPath.getFileName());
+    int num = getLastRegisterNumber(newRegsPath.getAbsFileName());
     if (num >= LOWER_REGISTER_NUM)
         return num;
 
     SCCFileManager histoRegsPath(m_strRegisterPath);
     histoRegsPath << m_strHistoRegsPath;
-    num = getLastRegisterNumber(histoRegsPath.getFileName());
+    num = getLastRegisterNumber(histoRegsPath.getAbsFileName());
 
     return num;
+}
+
+std::string SCCFuelTransaction::getRegHistoPath()
+{
+    SCCFileManager histoRegsPath(m_strRegisterPath);
+    histoRegsPath << m_strHistoRegsPath;
+    return histoRegsPath.getAbsFileName();
 }
 
 int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
@@ -290,7 +297,7 @@ bool SCCFuelTransaction::getRegisterList(std::list<std::string>& regList)
         SCCFileManager tmpFile(m_strRegisterPath);
         tmpFile << m_strNewRegsPath;
         tmpFile << regFile;
-        regList.push_back(tmpFile.getFileName());
+        regList.push_back(tmpFile.getAbsFileName());
     }
 
     if (!regList.size())

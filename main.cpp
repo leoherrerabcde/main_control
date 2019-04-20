@@ -121,6 +121,7 @@ int main(int argc, char* argv[])
     /*SCCFileManager newRegPath(fuelRegister.getRegisterPath());
     newRegPath << fuelRegister.getRegisterNewPath();
     restApi.setRegisterPath(std::string(newRegPath.str()));*/
+    restApi.setDestinationPath(fuelRegister.getRegHistoPath());
 
     double dAcumFlowOld = 0.0;
     std::string strTagVehicle;
@@ -130,7 +131,7 @@ int main(int argc, char* argv[])
     socketServer.listen();
     bool bFirstTime = false;
 
-    //verifyDeviceService(deviceList, portList);
+    verifyDeviceService(deviceList, portList);
 
     for(;;)
     {

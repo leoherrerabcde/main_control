@@ -38,6 +38,10 @@ class SCCRemoteServer : public Device
         std::string& getBodyFromTable(int index) {return m_TableBody[index];}
         void clearTableBody() {m_TableBody.clear();}
 
+        void moveRegisterListToHistoryFolder();
+        void moveFileToHistoFolder(const std::string& strFile);
+        void setDestinationPath(const std::string& destPath) {m_registerDestination = destPath;}
+
     protected:
 
         void removeRegisters();
@@ -59,6 +63,7 @@ class SCCRemoteServer : public Device
         int         m_TableIndex;
         std::string m_strIDDevice;
         std::vector<std::string> m_TableBody;
+        std::string m_registerDestination;
 };
 
 #endif // SCCREMOTESERVER_H

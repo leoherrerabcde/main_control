@@ -64,7 +64,7 @@ bool SCCFileManager::readFile(const std::string& filename, std::string& containe
 
 bool SCCFileManager::readFile(std::string& container)
 {
-    bool res = readFile(getFileName(), container);
+    bool res = readFile(getAbsFileName(), container);
 
     return res;
 }
@@ -177,6 +177,27 @@ bool SCCFileManager::moveFile(const std::string& fileSrc, const std::string& fil
     return (res == 0);
 }
 
+bool SCCFileManager::moveTo(const std::string& fileSrc, const std::string& pathDst)
+{
+    SCCFileManager fileDest(pathDst);
+    SCCFileManager src(fileSrc);
+
+    fileDest << src.fileName();
+
+    int res = rename(fileSrc.c_str(), fileDest.getAbsFileName().c_str());
+    return (res == 0);
+}
+
+std::string SCCFileManager::fileName()
+{
+    std::string::size_type pos_ini = getAbsFileName().rfind("/");
+    std::string::size_type pos_end = getAbsFileName().length();
+    if (pos_ini == std::string::npos)
+        pos_ini = 0;
+    std::string ret(getAbsFileName().substr(pos_ini, pos_end - pos_ini));
+    return ret;
+}
+
 void SCCFileManager::getFileList(std::list<std::string>& listFile)
 {
     std::string strFile(m_ssFile.str());
@@ -206,7 +227,7 @@ void SCCFileManager::getFileList(const std::string& path, std::list<std::string>
 
 bool SCCFileManager::copyFile(const std::string& fileDst)
 {
-    return copyFile(fileDst, getFileName());
+    return copyFile(fileDst, getAbsFileName());
 }
 
 bool SCCFileManager::copyFile(const std::string& fileDst, const std::string& fileSrc)
@@ -219,7 +240,7 @@ bool SCCFileManager::copyFile(const std::string& fileDst, const std::string& fil
 
 bool SCCFileManager::deleteFile()
 {
-    return deleteFile(getFileName());
+    return deleteFile(getAbsFileName());
 }
 
 bool SCCFileManager::deleteFile(const std::string& filename)

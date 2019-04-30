@@ -137,10 +137,10 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 }
 
 
-bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList)
+bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable)
 {
     //return false;
-    while (!st_DeviceOrder.empty())
+    while (!st_DeviceOrder.empty() && !bDisable)
     {
         auto itDvc = dvcList.find(st_DeviceOrder.front());
         st_DeviceOrder.pop_front();

@@ -78,7 +78,7 @@ public:
     int getComPort() {return m_iComPort;}
     static int launchService(const std::string& servicePathName, const std::string& args);
     bool killService();
-    std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList);
+    std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList = std::list<std::string>());
 
 protected:
 

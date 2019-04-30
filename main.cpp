@@ -36,6 +36,17 @@ bool    gl_bVerbose(true);
 int main(int argc, char* argv[])
 {
     bool bShowData(false);
+    bool bLaunchDisable(false);
+
+    if (argc > 1)
+    {
+        for (int i = 1; i<argc;)
+        {
+            std::string strArg(argv[i++]);
+            if (strArg == "--launch_disable")
+                bLaunchDisable = true;
+        }
+    }
 
     std::unordered_map<std::string,Device*> deviceList;
     std::unordered_map<std::string,CSocket*> socketMap;
@@ -131,7 +142,7 @@ int main(int argc, char* argv[])
     socketServer.listen();
     bool bFirstTime = false;
 
-    verifyDeviceService(deviceList, portList);
+    verifyDeviceService(deviceList, portList, bLaunchDisable);
 
     for(;;)
     {
@@ -261,7 +272,7 @@ int main(int argc, char* argv[])
         if (processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap, portList))
         {
             //bFirstTime = false;
-            verifyDeviceService(deviceList, portList);
+            verifyDeviceService(deviceList, portList, bLaunchDisable);
         }
         processDataClients(socketClientList, deviceList);
 

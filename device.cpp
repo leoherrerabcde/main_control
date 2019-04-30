@@ -327,9 +327,22 @@ void Device::removeComPort(std::list<int>& portList, int port)
 
 bool Device::killService()
 {
+    // Getting subprocess
+    std::string strPgrep("pgrep -P ");
+    strPgrep += std::to_string(m_pidService);
+    std::string strAllPid;
+    strAllPid = popenQuickService(strPgrep);
+    popenQuickService("kill -9 ");
+    return true;
 }
 
 std::string Device::popenQuickService(const std::string& quickService, const std::list<std::string>argList)
 {
+    char buf[1024];
+    buf[0] = '\0';
+    FILE *cmd_pipe = popen(quickService.c_str(),"r");
+    fgets(buf, 1024, cmd_pipe);
+    pclose(cmd_pipe);
+    return std::string(buf);
 }
 

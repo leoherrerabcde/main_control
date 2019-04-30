@@ -257,6 +257,8 @@ int SCCFuelTransaction::getRegisterNumber(const std::string& strFileName)
     if (strNum != "")
     {
         strNum.erase(0, strNum.find_first_not_of('0'));
+        if (strNum.length() == 0)
+            return LOWER_REGISTER_NUM-1;
         int num = std::stoi(strNum.c_str());
         if (num > m_iUpperRegNum || num < LOWER_REGISTER_NUM)
             num = LOWER_REGISTER_NUM-1;

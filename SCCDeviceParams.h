@@ -41,4 +41,7 @@
 
 #define PARAM_ID_SURTIDOR       "ID_Surtidor"
 
+#define PARAM_FIREFIGHTER_COD   "4"
+#define PARAM_DRIVER_COD        "99"
+
 #endif // SCCDEVICEPARAMS_H_INCLUDED

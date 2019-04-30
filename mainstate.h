@@ -13,19 +13,21 @@ public:
     {
         waitForInitTransaction = 0,
         RFIDUser = 1,
-        RFIDBoquilla = 2,
-        startingTransaction = 4,
-        chargingFuel = 8,
-        chargingPaused = 16,
-        finishingTransaction = 32,
-        waitForFinishTransaction = 64
+        RFIDDriver = 2,
+        RFIDBoquilla = 4,
+        startingTransaction = 8,
+        chargingFuel = 16,
+        chargingPaused = 32,
+        finishingTransaction = 64,
+        waitForFinishTransaction = 128
     };
 
-    State getLastState();
+    int getLastState();
     int getLastIDTransaction();
-    State getCurrentState();
+    int getCurrentState();
 
     void processUserAuthorization(bool bAuthorized);
+    void processDriverAuthorization(bool bAuthorized);
     void processVehicleAuthorization(bool bAuthorized);
     void processLostVehicleTag();
     void processResumeFueling();
@@ -34,13 +36,23 @@ public:
 
 private:
 
+    /*int operator |=(MainState::State lVal, const MainState::State& rVal)
+    {
+        int iResult = (int)lVal | (int)rVal;
+        //MainState::State lNewVal = (MainState::State)iResult ;
+
+        return iResult;
+    }*/
+
     void printStatus();
 
-    State m_LastState;
-    State m_CurrentState;
+    int m_LastState;
+    int m_CurrentState;
 
     SCCStateVar m_bUserAuthorized;
+    SCCStateVar m_bDriverAuthorized;
     SCCStateVar m_bvehicleAuthorized;
 };
+
 
 #endif // MAINSTATE_H

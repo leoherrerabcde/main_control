@@ -22,6 +22,7 @@ class MainCtrlSettings
         int requestTableTmrInterval;
         int     tmrServerConnect;
         int     tmrServerRetry;
+        std::string     m_strIdDispensador;
         size_t sckBufferSize;
         std::string m_strMyName;
 

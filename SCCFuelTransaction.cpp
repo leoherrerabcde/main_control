@@ -61,6 +61,8 @@ int SCCFuelTransaction::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,PARAM_CONSE_NUM_LENGTH,m_iConseNumLength);
     settings.getValue(m_DeviceName,PARAM_UPPER_REG_NUM,m_iUpperRegNum);
 
+    setIdDispensador(settings.m_strIdDispensador);
+
     sService << m_strRegisterPath << "/" << m_strRegisterName << m_strFileExtension;
 
     std::string strService(sService.str());
@@ -87,6 +89,7 @@ bool SCCFuelTransaction::initTransaction(const double dCurrentFlowAcum)
     ss << MSG_HEADER_TYPE << ASSIGN_CHAR << HEADER_REGISTER;
     addRegisterNumber(ss, regNum);
     addTimeIni(ss);
+    addDispensadorId(ss);
 
     m_filemanRegister.appendToFile(std::string(ss.str()));
     return true;
@@ -96,6 +99,16 @@ bool SCCFuelTransaction::addUser(const std::string& strID)
 {
     std::stringstream ss;
     ss << SEPARATOR_CHAR << VAR_REGISTER_USER_ID << ASSIGN_CHAR << strID;
+
+    m_filemanRegister.appendToFile(std::string(ss.str()));
+
+    return true;
+}
+
+bool SCCFuelTransaction::addDriver(const std::string& strID)
+{
+    std::stringstream ss;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_CONDUCTOR_ID << ASSIGN_CHAR << strID;
 
     m_filemanRegister.appendToFile(std::string(ss.str()));
 
@@ -123,6 +136,12 @@ void SCCFuelTransaction::addFlowMeterBegin(const double dCurrentFlowAcum)
 void SCCFuelTransaction::addFlowMeterEnd(std::stringstream& ss, const double dCurrentFlowAcum)
 {
     ss << SEPARATOR_CHAR << VAR_REGISTER_END_FLOW << ASSIGN_CHAR << dCurrentFlowAcum;
+    ss << SEPARATOR_CHAR << VAR_REGISTER_LITERS << ASSIGN_CHAR << 0;
+}
+
+void SCCFuelTransaction::addDispensadorId(std::stringstream& ss)
+{
+    ss << SEPARATOR_CHAR << VAR_REGISTER_DISPENSA_ID << ASSIGN_CHAR << getIdDispensador();
 }
 
 void SCCFuelTransaction::addTimeIni(std::stringstream& ss)
@@ -138,6 +157,16 @@ void SCCFuelTransaction::addTimeEnd(std::stringstream& ss)
 void SCCFuelTransaction::addRegisterNumber(std::stringstream& ss, const int regNum)
 {
     ss << SEPARATOR_CHAR << VAR_REGISTER_NUMBER << ASSIGN_CHAR << regNum;
+}
+
+void SCCFuelTransaction::addOdometer(std::stringstream& ss)
+{
+    ss << SEPARATOR_CHAR << VAR_REGISTER_NUMBER << ASSIGN_CHAR << getOdometer();
+}
+
+void SCCFuelTransaction::addHorometer(std::stringstream& ss)
+{
+    ss << SEPARATOR_CHAR << VAR_REGISTER_NUMBER << ASSIGN_CHAR << getHorometer();
 }
 
 bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
@@ -158,6 +187,9 @@ bool SCCFuelTransaction::finishTransaction(const double dCurrentFlowAcum)
         if (!bFlowEnd)
             addFlowMeterEnd(ss, dCurrentFlowAcum);
         //PRINT_DBG(ss.str());
+        addOdometer(ss);
+        addHorometer(ss);
+
         bTimeEnd = getValueMessage(dataFile, VAR_REGISTER_TIME_END, strValue);
         //PRINT_DBG(ss.str());
         if (!bTimeEnd)

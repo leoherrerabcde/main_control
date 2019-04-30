@@ -20,6 +20,7 @@
 
 #include "main_functions.h"
 #include "SCCDisplay.h"
+#include "SCCDeviceParams.h"
 
 /*#include <iostream>
 #include <unistd.h>
@@ -98,7 +99,7 @@ int main(int argc, char* argv[])
     pDvc = &flowmeter;
     deviceList.insert(std::make_pair(pDvc->name(), pDvc));
 
-    MainState::State stateRbpi;
+    int stateRbpi;
 
     stateRbpi = mainState.getLastState();
 
@@ -164,21 +165,29 @@ int main(int argc, char* argv[])
         {
             bool bAuthorizedUser        = false;
             bool bAuthorizedVehicle     = false;
+            bool bAuthorizedDriver      = false;
             //bool bInitFuelTransaction   = false;
             if (rfidUser.isUserDetected())
             {
-                bAuthorizedUser = UserList.isValidID(rfidUser.getUserId());
-                if (bAuthorizedUser)
+                std::string strType = UserList.getAtributeValue(rfidUser.getUserId());
+                //bAuthorizedUser = UserList.isValidID(rfidUser.getUserId());
+                if (strType == PARAM_FIREFIGHTER_COD)
                 {
+                    bAuthorizedUser = true;
                     sendData(UserList.getTableType(), socketMap, rfidUser.getCmdBeepSound());
-                    sendData(UserList.getTableType(), socketMap, rfidUser.getCmdLockReader());
+                }
+                if (strType == PARAM_DRIVER_COD)
+                {
+                    bAuthorizedDriver = true;
+                    sendData(UserList.getTableType(), socketMap, rfidUser.getCmdBeepSound());
+                    //sendData(UserList.getTableType(), socketMap, rfidUser.getCmdLockReader());
                 }
             }
             if (rfidBoquilla.isTagDetected())
             {
                 bAuthorizedVehicle = VehicleList.isValidID(rfidBoquilla.getTagId());
             }
-            if (bAuthorizedUser || bAuthorizedVehicle)
+            if (bAuthorizedUser || bAuthorizedVehicle || bAuthorizedDriver)
             {
                 dAcumFlowOld = flowmeter.getAcumFlow();
                 fuelRegister.initTransaction(flowmeter.getAcumFlow());

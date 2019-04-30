@@ -30,7 +30,7 @@ class IDList
         virtual bool writeTable(const std::string& strData);
         //virtual int setFileName(const std::string& fileName);
 
-        virtual std::string getAtributeValue(const std::string& strID, const std::string strAtribute);
+        virtual std::string getAtributeValue(const std::string& strID, const std::string strAtribute = "");
         virtual void setAtributeValue(const std::string& strID, const std::string strAtribute, const std::string& strValue);
 
         virtual bool isValidID(const std::string& strId);

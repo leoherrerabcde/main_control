@@ -35,12 +35,12 @@ int MainState::getLastIDTransaction()
     return 0;
 }
 
-MainState::State MainState::getLastState()
+int MainState::getLastState()
 {
     return m_LastState;
 }
 
-MainState::State MainState::getCurrentState()
+int MainState::getCurrentState()
 {
     return m_CurrentState;
 }
@@ -48,28 +48,39 @@ MainState::State MainState::getCurrentState()
 void MainState::processUserAuthorization(bool bAuthorized)
 {
     m_bUserAuthorized.setVarState(bAuthorized);
-    if (m_CurrentState == State::waitForInitTransaction)
+    if (bAuthorized)
     {
-        if (bAuthorized)
+        if ((m_CurrentState == State::waitForInitTransaction) || (m_CurrentState & State::RFIDBoquilla) || (m_CurrentState & State::RFIDDriver))
         {
             m_LastState = m_CurrentState;
-            /*if (m_bvehicleAuthorized.get())
-                m_CurrentState = State::startingTransaction;
-            else*/
-                m_CurrentState = State::RFIDUser;
-            printStatus();
+            m_CurrentState |= State::RFIDUser;
         }
-    }
-    else if (m_CurrentState == State::RFIDBoquilla)
-    //if (m_CurrentState == State::waitForInitTransaction)
-    {
-        if (bAuthorized)
+        /*else if ((m_CurrentState || State::RFIDBoquilla) || (m_CurrentState || State::RFIDDriver))
         {
             m_LastState = m_CurrentState;
-            /*if (m_bvehicleAuthorized.get())
-                m_CurrentState = State::startingTransaction;
-            else*/
-                m_CurrentState = State::chargingFuel;
+            m_CurrentState |= State::RFIDUser;
+        }*/
+        if (m_CurrentState == (State::RFIDBoquilla | State::RFIDUser | State::RFIDDriver))
+        {
+            m_CurrentState = State::chargingFuel;
+        }
+        printStatus();
+    }
+}
+
+void MainState::processDriverAuthorization(bool bAuthorized)
+{
+    m_bDriverAuthorized.setVarState(bAuthorized);
+    if (bAuthorized)
+    {
+        if ((m_CurrentState == State::waitForInitTransaction) || (m_CurrentState & State::RFIDBoquilla) || (m_CurrentState & State::RFIDUser))
+        {
+            m_LastState = m_CurrentState;
+            m_CurrentState |= State::RFIDDriver;
+        }
+        if (m_CurrentState == (State::RFIDBoquilla | State::RFIDUser | State::RFIDDriver))
+        {
+            m_CurrentState = State::chargingFuel;
             printStatus();
         }
     }
@@ -77,30 +88,17 @@ void MainState::processUserAuthorization(bool bAuthorized)
 
 void MainState::processVehicleAuthorization(bool bAuthorized)
 {
-    //m_bVehicleAuthorized.setVarState(bAuthorized);
     m_bvehicleAuthorized.setVarState(bAuthorized);
-    if (m_CurrentState == State::waitForInitTransaction)
+    if (bAuthorized)
     {
-        if (bAuthorized)
+        if ((m_CurrentState == State::waitForInitTransaction) || (m_CurrentState & State::RFIDUser) || (m_CurrentState & State::RFIDUser))
         {
             m_LastState = m_CurrentState;
-            if (m_bUserAuthorized.get())
-                m_CurrentState = State::startingTransaction;
-            else
-                m_CurrentState = State::RFIDBoquilla;
-            printStatus();
+            m_CurrentState |= State::RFIDBoquilla;
         }
-    }
-    else if (m_CurrentState == State::RFIDUser)
-    //if (m_CurrentState == State::waitForInitTransaction)
-    {
-        if (bAuthorized)
+        if (m_CurrentState == (State::RFIDBoquilla | State::RFIDUser | State::RFIDDriver))
         {
-            m_LastState = m_CurrentState;
-            /*if (m_bvehicleAuthorized.get())
-                m_CurrentState = State::startingTransaction;
-            else*/
-                m_CurrentState = State::chargingFuel;
+            m_CurrentState = State::chargingFuel;
             printStatus();
         }
     }

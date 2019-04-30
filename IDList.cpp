@@ -163,6 +163,10 @@ bool IDList::isValidID(const std::string& strId)
 
 std::string IDList::getAtributeValue(const std::string& strID, const std::string strAtribute)
 {
+    if (isValidID(strID))
+    {
+        return m_jsonParser.getValue(strID);
+    }
     return "";
 }
 

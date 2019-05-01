@@ -56,6 +56,7 @@ class IDList
         //std::unordered_map<unsigned long, IDElement> m_IDElementList;
         JsonParser      m_jsonParser;
         std::string     m_strIdKeyLabel;
+        std::string     m_strValueKeyLabel;
 };
 
 #endif // IDLIST_H

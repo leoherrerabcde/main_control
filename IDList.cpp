@@ -28,7 +28,7 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
     settings.getValue(m_strTableType,PARAM_PATH_NAME    ,m_strTablePath);
     settings.getValue(m_strTableType,PARAM_SERVICE_NAME ,m_strTableName);
     settings.getValue(m_strTableType,PARAM_TBL_ID_KEY   ,m_strIdKeyLabel);
-
+    settings.getValue(m_strTableType,PARAM_TBL_VALUE_KEY,m_strValueKeyLabel);
 
     std::cout << m_strTableType << " -> Reading Table from disk." << std::endl;
     readTable();
@@ -41,6 +41,7 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
 bool IDList::parseTable()
 {
     m_jsonParser.setIdKeyLabel(m_strIdKeyLabel);
+    m_jsonParser.setValueKeyLabel(m_strValueKeyLabel);
 
     if (!m_bTableReady)
     {
@@ -56,9 +57,12 @@ bool IDList::parseTable()
     }
 
     std::cout << m_strTableType << " -> Creating Id Table." << std::endl;
-    m_jsonParser.createIdTable();
+    if (m_strValueKeyLabel == "")
+        m_jsonParser.createIdTable();
+    else
+        m_jsonParser.createIdValueMap();
 
-    if (!m_jsonParser.isMapIDReady())
+    if (!m_jsonParser.isMapIDReady() && !m_jsonParser.isMapIdValueReady())
     {
         globalLog << "Table was not created.\nThe application can not continue working and it will be closed.\n";
         return false;
@@ -163,11 +167,11 @@ bool IDList::isValidID(const std::string& strId)
 
 std::string IDList::getAtributeValue(const std::string& strID, const std::string strAtribute)
 {
-    if (isValidID(strID))
-    {
+    /*if (isValidID(strID))
+    {*/
         return m_jsonParser.getValue(strID);
-    }
-    return "";
+    /*}
+    return "";*/
 }
 
 void IDList::setAtributeValue(const std::string& strID, const std::string strAtribute, const std::string& strValue)

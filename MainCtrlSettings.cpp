@@ -52,6 +52,7 @@ std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "users.json"}},
     {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
     {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "idpersonal"}},
+    {PARAM_TBL_VALUE_KEY,{PARAM_TBL_VALUE_KEY  , Optional, AlphaNumeric, true, "tipo_usuario"}},
     //{PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "id_user"}},
 };
 

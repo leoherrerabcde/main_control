@@ -19,6 +19,7 @@
 #define PARAM_TABLE_VEHICLE "TablaVehiculos"
 
 #define PARAM_TBL_ID_KEY    "TablaIDKey"
+#define PARAM_TBL_VALUE_KEY "TablaValueKey"
 
 #define PARAM_NEW_REGS_PATH     "NewRegistersPath"
 #define PARAM_HISTO_REGS_PATH   "HistoRegistersPath"

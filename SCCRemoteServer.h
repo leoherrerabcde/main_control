@@ -42,6 +42,9 @@ class SCCRemoteServer : public Device
         void moveFileToHistoFolder(const std::string& strFile);
         void setDestinationPath(const std::string& destPath) {m_registerDestination = destPath;}
 
+        void setNumRegisterSent(int numRegs) {m_iNumRegisterSent = numRegs;}
+        int getNumRegisterSent() {return m_iNumRegisterSent;}
+
     protected:
 
         void removeRegisters();

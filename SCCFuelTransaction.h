@@ -23,6 +23,9 @@ class SCCFuelTransaction : public Device
         bool addUser(const std::string& strID);
         bool addDriver(const std::string& strID);
         bool addVehicle(const std::string& strID);
+        void addUser(std::stringstream& ss, const std::string& strID);
+        void addDriver(std::stringstream& ss, const std::string& strID);
+        void addVehicle(std::stringstream& ss, const std::string& strID);
         void addDispensadorId(std::stringstream& ss);
         void addFlowMeterBegin(const double dCurrentFlowAcum);
         void addFlowMeterEnd(std::stringstream& ss, const double dCurrentFlowAcum);
@@ -30,6 +33,8 @@ class SCCFuelTransaction : public Device
         void addTimeEnd(std::stringstream& ss);
         void addOdometer(std::stringstream& ss);
         void addHorometer(std::stringstream& ss);
+        void addTransactionType(std::stringstream& ss);
+        void addLiters(std::stringstream& ss);
         void addRegisterNumber(std::stringstream& ss, int regNum);
         bool finishTransaction(const double dCurrentFlowAcum);
         std::string getRegisterPath() {return m_strRegisterPath;}
@@ -47,6 +52,9 @@ class SCCFuelTransaction : public Device
 
         void setHorometer(const std::string& strValue) {m_strHorometer=strValue;}
         std::string getHorometer() {return m_strHorometer;}
+
+        std::string  getTransactionType() {return m_strTransactionType;}
+        std::string  getLiters() {return m_strLiters;}
 
     protected:
 
@@ -73,7 +81,8 @@ class SCCFuelTransaction : public Device
         std::string     m_ID_Dispensador;
         std::string     m_strOdometer;
         std::string     m_strHorometer;
-
+        std::string     m_strTransactionType;
+        std::string     m_strLiters;
 };
 
 #endif // SCCFUELTRANSACTION_H

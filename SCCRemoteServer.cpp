@@ -171,7 +171,7 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
             {
                 JsonParser jsonDoc;
                 jsonDoc.loadPlaneText(strBody);
-                if (jsonDoc.isDocJsonReady() && jsonDoc.getValue("message") == "ok")
+                if (jsonDoc.isDocJsonReady() && jsonDoc.getDocJsonValue("message") == "ok")
                 {
                     removeRegisters();
                 }

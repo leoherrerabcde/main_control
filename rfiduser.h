@@ -17,6 +17,7 @@ public:
 
     std::string getCmdBeepSound();
     std::string getCmdLockReader();
+    std::string getCmdUnLockReader();
 
     bool isUserDetected() {return m_bCardDetected;}
 

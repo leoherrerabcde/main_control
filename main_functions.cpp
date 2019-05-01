@@ -82,6 +82,11 @@ void processDataClients(std::list<CSocket*>& sockeList,
         if (it != dvcList.end())
         {
             Device* pDevice = it->second;
+            if (itSck->getSocketState() == SocketState::sckDisconnected)
+            {
+                pDevice->disconnect();
+                continue;
+            }
             std::string msg = itSck->getData();
             if (msg != "")
             {
@@ -176,8 +181,27 @@ void sendRequestTable(std::list<CSocket*>& socketList,
 {
 }
 
-void sendData(const std::string& strDvc, std::unordered_map<std::string,CSocket*>& socketMap, const std::string& msg)
+void sendData(const std::string& strDvc,
+    std::unordered_map<std::string,
+    CSocket*>& socketMap, std::unordered_map<std::string,Device*>& dvcList,
+    const std::string& msg)
 {
+    auto it = socketMap.find(strDvc);
+    if (it == socketMap.end())
+        return;
+    CSocket* pSck = it->second;
+    if (pSck->getSocketState() == SocketState::sckConnected)
+        pSck->sendData(msg);
+    else if (pSck->getSocketState() == SocketState::sckClosed)
+    {
+        socketMap.erase(it);
+        auto itDev = dvcList.find(strDvc);
+        if (itDev != dvcList.end())
+        {
+            Device* pDvc = itDev->second;
+            pDvc->disconnect();
+        }
+    }
 }
 
 void fuelTransactionTimeOut()

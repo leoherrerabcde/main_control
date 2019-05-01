@@ -33,6 +33,7 @@ public:
     void processResumeFueling();
     void processFinishFueling();
     void processFuelingTimeOut();
+    void processFuelingCancel();
 
 private:
 

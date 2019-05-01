@@ -15,7 +15,8 @@ std::unordered_map<int, std::string> stStateToStringMap =
     {MainState::State::finishingTransaction, "Finished Transaction"},
     {MainState::State::RFIDBoquilla, "Vahicle Tag Detected"},
     {MainState::State::RFIDUser, "User Detected"},
-    {MainState::State::startingTransaction, "Statrting Fuel Register"},
+    {MainState::State::RFIDDriver, "Driver Detected"},
+    {MainState::State::startingTransaction, "Starting Fuel Register"},
     {MainState::State::waitForFinishTransaction, "Waiting for Finish Fueling"},
     {MainState::State::waitForInitTransaction, "Waiting for Init Fueling"},
 };
@@ -81,8 +82,8 @@ void MainState::processDriverAuthorization(bool bAuthorized)
         if (m_CurrentState == (State::RFIDBoquilla | State::RFIDUser | State::RFIDDriver))
         {
             m_CurrentState = State::chargingFuel;
-            printStatus();
         }
+        printStatus();
     }
 }
 
@@ -99,8 +100,8 @@ void MainState::processVehicleAuthorization(bool bAuthorized)
         if (m_CurrentState == (State::RFIDBoquilla | State::RFIDUser | State::RFIDDriver))
         {
             m_CurrentState = State::chargingFuel;
-            printStatus();
         }
+        printStatus();
     }
 }
 
@@ -137,7 +138,29 @@ void MainState::processFuelingTimeOut()
     printStatus();
 }
 
+void MainState::processFuelingCancel()
+{
+    m_CurrentState = State::waitForInitTransaction;
+    printStatus();
+}
+
 void MainState::printStatus()
 {
-    globalLog << SCCRealTime::getTimeStamp() << "\tCurrent Status:\t" << stStateToStringMap[getCurrentState()] << std::endl;
+    if (getCurrentState()&(State::RFIDBoquilla | State::RFIDDriver | State::RFIDUser))
+    {
+        int iBoquilla   = getCurrentState() & State::RFIDBoquilla;
+        int iUser       = getCurrentState() & State::RFIDUser;
+        int iDriver     = getCurrentState() & State::RFIDDriver;
+
+        globalLog << SCCRealTime::getTimeStamp() << "\tCurrent Status:\t";
+        if (iBoquilla)
+            globalLog << stStateToStringMap[iBoquilla] << "\t";
+        if (iUser)
+            globalLog << stStateToStringMap[iUser] << "\t";
+        if (iDriver)
+            globalLog << stStateToStringMap[iDriver] << "\t";
+        globalLog << std::endl;
+    }
+    else
+        globalLog << SCCRealTime::getTimeStamp() << "\tCurrent Status:\t" << stStateToStringMap[getCurrentState()] << std::endl;
 }

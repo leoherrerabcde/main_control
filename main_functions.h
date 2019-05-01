@@ -42,7 +42,10 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 void sendRequestTable(std::list<CSocket*>& socketList,
                         std::unordered_map<std::string,Device*>& dvcList);
 
-void sendData(const std::string& strDvc, std::unordered_map<std::string,CSocket*>& socketMap, const std::string& msg);
+void sendData(const std::string& strDvc,
+                std::unordered_map<std::string,CSocket*>& socketMap,
+                std::unordered_map<std::string,Device*>& dvcList,
+                const std::string& msg);
 
 void fuelTransactionTimeOut();
 

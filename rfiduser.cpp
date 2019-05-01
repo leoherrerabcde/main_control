@@ -155,3 +155,19 @@ std::string RFIDUser::getCmdLockReader()
 
     return std::string(ss.str());
 }
+
+std::string RFIDUser::getCmdUnLockReader()
+{
+    std::stringstream ss;
+
+    ss << FRAME_START_MARK ;
+
+    ss << MSG_HEADER_TYPE << ASSIGN_CHAR << DEVICE_RFID_BOMBERO;
+
+    ss << SEPARATOR_CHAR << MSG_COMMAND_TYPE 		<< ASSIGN_CHAR << CMD_RFIDUSER_UNLOCKREADER;
+    ss << SEPARATOR_CHAR << PARAM_TIME_OUT 		    << ASSIGN_CHAR << m_iLockTimeOut;
+
+    ss << FRAME_STOP_MARK;
+
+    return std::string(ss.str());
+}

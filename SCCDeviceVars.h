@@ -20,6 +20,7 @@
 
 #define CMD_RFIDUSER_BEEPSOUND      "BeepSound"
 #define CMD_RFIDUSER_LOCKREADER     "LockReader"
+#define CMD_RFIDUSER_UNLOCKREADER   "UnLockReader"
 
 
 #endif // SCCDEVICEVARS_H_INCLUDED

@@ -26,7 +26,7 @@ public:
     //Device(const Device&) = default;
     virtual ~Device() {};
 
-    virtual int init(MainCtrlSettings& settings) { return 0;};
+    virtual int init(MainCtrlSettings& settings);
     virtual bool is_data_received() {return false;};
     virtual void send_data(std::string& data, int len = 0) {};
     virtual void send_data(unsigned char* data, int len = 0) {};
@@ -79,6 +79,7 @@ public:
     static int launchService(const std::string& servicePathName, const std::string& args);
     bool killService();
     std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList = std::list<std::string>());
+    bool searchPIDService(std::list<int>& pidList);
 
 protected:
 
@@ -94,6 +95,7 @@ protected:
     //bool        m_bDeviceMatched;
     std::string m_strServicePathName;
     std::string m_strServiceArgs;
+    std::string m_strServiceName;
 
     int         m_iAliveCounter;
     bool        m_bServiceAlive;

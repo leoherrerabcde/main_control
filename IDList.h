@@ -42,6 +42,7 @@ class IDList
         bool            parseTable();
         bool            parseTable(const std::string& strData);
 
+        std::string     m_strErrorPath;
         std::string     m_strTablePath;
         std::string     m_strTableName;
         std::string     m_strTableTemp;

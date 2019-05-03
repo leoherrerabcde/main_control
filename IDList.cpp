@@ -25,6 +25,7 @@ void IDList::init(MainCtrlSettings& settings, const std::string& typeTable)
     //const std::string paramPathName(PARAM_PATH_NAME);
     //const std::string paramServiceName(PARAM_SERVICE_NAME);
 
+    settings.getValue(m_strTableType,PARAM_PATH_ERROR   ,m_strErrorPath);
     settings.getValue(m_strTableType,PARAM_PATH_NAME    ,m_strTablePath);
     settings.getValue(m_strTableType,PARAM_SERVICE_NAME ,m_strTableName);
     settings.getValue(m_strTableType,PARAM_TBL_ID_KEY   ,m_strIdKeyLabel);
@@ -76,7 +77,7 @@ bool IDList::parseTable(const std::string& strData)
     JsonParser jsonParser;
 
     jsonParser.setIdKeyLabel(m_strIdKeyLabel);
-
+    m_jsonParser.setValueKeyLabel(m_strValueKeyLabel);
     /*if (!m_bTableReady)
         globalLog << "JSON File cannot be read from disk.\nThe application can not continue working and it will be closed.\n";*/
 
@@ -92,7 +93,7 @@ bool IDList::parseTable(const std::string& strData)
     std::cout << m_strTableType << " -> Creating Id Table." << std::endl;
     jsonParser.createIdTable();
 
-    if (!jsonParser.isMapIDReady())
+    if (!jsonParser.isMapIDReady() && !m_jsonParser.isMapIdValueReady())
     {
         globalLog << "Table was not created.\nThe application can not continue working and it will be closed.\n";
         return false;
@@ -126,7 +127,11 @@ bool IDList::writeTable(const std::string& strData)
     bool bValid = parseTable(strData);
     if (!bValid)
     {
+        SCCFileManager fileJsonError(m_strErrorPath);
+        fileJsonError << (m_strTableName + "error.txt");
+        fileJsonError.writeFile(strData);
         globalLog << "Parse Error in Json Data" << std::endl;
+        globalLog << "The file '" << fileJsonError.getAbsFileName() << "' contains Json data with problems" << std::endl;
         return false;
     }
 

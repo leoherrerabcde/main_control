@@ -32,6 +32,8 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,paramPathName,pathName);
     settings.getValue(m_DeviceName,paramServiceName,serviceName);
 
+    m_strServiceName = serviceName;
+
     sService << pathName << "/" << serviceName;
 
     std::stringstream sArgs;
@@ -57,6 +59,7 @@ int RFIDBoquilla::init(MainCtrlSettings& settings)
     //int ret = 0;
 
     //SCCLog::print("RFID Nozzle Initiated.");
+    killService();
     m_bLaunchingService = true;
     return 0;
 }

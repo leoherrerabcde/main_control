@@ -4,6 +4,7 @@
 
 #define PARAM_SERVICE_NAME  "ServiceName"
 #define PARAM_PATH_NAME     "PathName"
+#define PARAM_PATH_ERROR    "PathError"
 #define PARAM_COM_PORT      "COM"
 #define PARAM_BAUD_RATE     "BaudRate"
 #define PARAM_FILE_EXTENSION "FileExtension"

@@ -73,6 +73,8 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,paramPathName,pathName);
     settings.getValue(m_DeviceName,paramServiceName,serviceName);
 
+    m_strServiceName = serviceName;
+
     sService << "python " << pathName << "/" << serviceName;
 
     std::stringstream sArgs;
@@ -95,6 +97,7 @@ int SCCRemoteServer::init(MainCtrlSettings& settings)
 
     //SCCLog::print("RFID Nozzle Initiated.");
     m_bLaunchingService = true;
+    killService();
     return 0;
 }
 

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include <cstring>
-
+#include <vector>
 
 extern bool     gl_bVerbose;
 extern SCCLog   globalLog;
@@ -24,6 +24,11 @@ Device::Device(const std::string& deviceName, bool nShowdata)
     m_iComPort(-1)
 {
 
+}
+
+int Device::init(MainCtrlSettings& settings)
+{
+    return 0;
 }
 
 int Device::launchService()
@@ -325,14 +330,73 @@ void Device::removeComPort(std::list<int>& portList, int port)
     }
 }
 
+bool Device::searchPIDService(std::list<int>& pidList)
+{
+	//std::list<int> pidList;
+	//char buf[512];
+    //buf[0] = '\0';
+    std::string cmd(std::string("pidof ")+m_strServiceName);
+	std::string strPid = popenQuickService(cmd);
+
+	//std::string str = ";UNO;DOS;TRES;";
+	std::vector<std::string> listStr;
+	size_t pos_ini = 0, pos;
+
+	while (pos_ini != std::string::npos && pos_ini < strPid.size())
+	{
+		pos = strPid.find(' ', pos_ini);
+		if (pos != std::string::npos)
+		{
+			listStr.push_back(strPid.substr(pos_ini, pos - pos_ini));
+			++pos;
+		}
+		else
+			listStr.push_back(strPid.substr(pos_ini));
+		pos_ini = pos;
+	}
+
+    pidList.clear();
+	for (auto str : listStr)
+        pidList.push_back(atoi(str.c_str()));
+
+	return (!pidList.empty());
+
+}
+
 bool Device::killService()
 {
+    std::list<int> pidList;
+    searchPIDService(pidList);
+
+    if (m_pidService)
+        pidList.push_back(m_pidService);
     // Getting subprocess
-    std::string strPgrep("pgrep -P ");
-    strPgrep += std::to_string(m_pidService);
-    std::string strAllPid;
-    strAllPid = popenQuickService(strPgrep);
-    popenQuickService("kill -9 ");
+    std::list<int> subPidList;
+    for (int subProcPID : pidList)
+    {
+        while (subProcPID)
+        {
+            subPidList.push_back(subProcPID);
+            std::string strPgrep("pgrep -P ");
+            strPgrep += std::to_string(subProcPID);
+            std::string strAllPid;
+            strAllPid = popenQuickService(strPgrep);
+            if (strAllPid.length())
+                subProcPID = std::stoi(strAllPid);
+            else
+            {
+                subProcPID = 0;
+                break;
+            }
+        }
+    }
+
+    for (auto iPid : subPidList)
+    {
+        std::string strKillCmd("kill -9 ");
+        strKillCmd += std::to_string(iPid);
+        popenQuickService(strKillCmd);
+    }
     return true;
 }
 

@@ -11,7 +11,7 @@
 1556588184 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1556588186 /home/pi/Documents/source/main_control/device.h
+1556852199 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
@@ -57,13 +57,14 @@
 	<string>
 	<ostream>
 
-1556588186 source:/home/pi/Documents/source/main_control/device.cpp
+1556853826 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"
 	<stdlib.h>
 	<sstream>
 	<cstring>
+	<vector>
 
 1556588186 source:/home/pi/Documents/source/main_control/electrovalvctrl.cpp
 	"electrovalvctrl.h"
@@ -72,12 +73,12 @@
 1556588186 /home/pi/Documents/source/main_control/electrovalvctrl.h
 	"device.h"
 
-1556682420 source:/home/pi/Documents/source/main_control/IDList.cpp
+1556856318 source:/home/pi/Documents/source/main_control/IDList.cpp
 	"IDList.h"
 	"SCCFileManager.h"
 	"SCCLog.h"
 
-1556679098 /home/pi/Documents/source/main_control/IDList.h
+1556855036 /home/pi/Documents/source/main_control/IDList.h
 	"MainCtrlSettings.h"
 	"../jsonParser/JsonParser.h"
 	<map>
@@ -143,7 +144,7 @@
 	<thread>
 	<vector>
 
-1556679282 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1556855198 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1556727617 source:/home/pi/Documents/source/main_control/mainstate.cpp
@@ -152,7 +153,7 @@
 	"../commPort/SCCRealTime.h"
 	<unordered_map>
 
-1556588187 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
+1556850265 source:/home/pi/Documents/source/main_control/rfidboquilla.cpp
 	"rfidboquilla.h"
 	"SCCLog.h"
 	"../commPort/SCCWirelessRcvrProtocol.h"
@@ -166,7 +167,7 @@
 	<queue>
 	<cstring>
 
-1556729081 source:/home/pi/Documents/source/main_control/rfiduser.cpp
+1556850280 source:/home/pi/Documents/source/main_control/rfiduser.cpp
 	"rfiduser.h"
 	"SCCLog.h"
 	"SCCDeviceVars.h"
@@ -182,7 +183,7 @@
 	"SCCLog.h"
 	<iostream>
 
-1556679188 /home/pi/Documents/source/main_control/SCCDeviceParams.h
+1556854962 /home/pi/Documents/source/main_control/SCCDeviceParams.h
 
 1556741801 /home/pi/Documents/source/main_control/SCCRemoteServer.h
 	"device.h"
@@ -190,7 +191,7 @@
 	<list>
 	<vector>
 
-1556746841 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
+1556850308 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
 	"SCCRemoteServer.h"
 	"SCCLog.h"
 	"SCCDeviceParams.h"
@@ -237,7 +238,7 @@
 	"device.h"
 	"../flowmCom/SCCFlowProtocol.h"
 
-1556588188 source:/home/pi/Documents/source/main_control/SCCFlowmeter.cpp
+1556850296 source:/home/pi/Documents/source/main_control/SCCFlowmeter.cpp
 	"SCCFlowmeter.h"
 	<sstream>
 	<iostream>

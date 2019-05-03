@@ -33,6 +33,8 @@ int RFIDUser::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,paramPathName,pathName);
     settings.getValue(m_DeviceName,paramServiceName,serviceName);
 
+    m_strServiceName = serviceName;
+
     sService << pathName << "/" << serviceName;
 
     std::stringstream sArgs;
@@ -63,6 +65,7 @@ int RFIDUser::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName, PARAM_TIME_OUT, comPort, m_iLockTimeOut);
 
     m_bLaunchingService = true;
+    killService();
     return 0;
 }
 

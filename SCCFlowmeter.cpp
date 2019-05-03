@@ -29,6 +29,8 @@ int SCCFlowmeter::init(MainCtrlSettings& settings)
     settings.getValue(m_DeviceName,paramPathName,pathName);
     settings.getValue(m_DeviceName,paramServiceName,serviceName);
 
+    m_strServiceName = serviceName;
+
     sService << pathName << "/" << serviceName;
 
     std::stringstream sArgs;
@@ -55,6 +57,7 @@ int SCCFlowmeter::init(MainCtrlSettings& settings)
 
     //SCCLog::print("RFID Nozzle Initiated.");
     m_bLaunchingService = true;
+    killService();
     return 0;
 }
 

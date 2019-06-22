@@ -4,6 +4,7 @@
 #define DEVICE_RFID_BOQUILLA    "RFID_Boquilla"
 #define DEVICE_RFID_BOMBERO     "RFID_Bombero"
 #define DEVICE_ELECTRO_VALVE    "ElectroValvula"
+#define DEVICE_OVALGEARFLOWM    "OvalGearFlowMeter"
 #define DEVICE_FLOWMETER        "Flujometro"
 #define DEVICE_STATUS_LIGHTS    "LucesStatus"
 #define DEVICE_SERVER           "Servidor"

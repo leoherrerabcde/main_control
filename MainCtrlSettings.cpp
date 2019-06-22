@@ -100,6 +100,7 @@ MainCtrlSettings::MainCtrlSettings()
     requestTableTmrInterval = 300000;
     tmrServerConnect        = 300000;//*/(8*3600*1000);
     tmrServerRetry          = 60000;//(15*60*1000);
+    tmrDeviceTimeOut        = 5000;
     m_strMyName             = "CamionSurtidor001";
     m_strIdDispensador      = "01";
 }

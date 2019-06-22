@@ -74,7 +74,8 @@ bool processDataNewClients(std::list<CSocket*>& socketNewList,
 }
 
 void processDataClients(std::list<CSocket*>& sockeList,
-                        std::unordered_map<std::string,Device*>& dvcList)
+                        std::unordered_map<std::string,Device*>& dvcList,
+                        SCCAlive& keepAlive)
 {
     for (auto itSck : sockeList)
     {
@@ -207,3 +208,36 @@ void sendData(const std::string& strDvc,
 void fuelTransactionTimeOut()
 {
 }
+
+bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::string,Device*> & dvcList, SCCAlive& keepAlive)
+{
+    for (auto it = socketList.begin(); it != socketList.end();)
+    {
+        CSocket* itSck = *it;
+        auto itDvc = dvcList.find(itSck->getIDClient());
+        if (itDvc != dvcList.end())
+        {
+            Device* pDevice = itDvc->second;
+            int tmrDvc = pDevice->getTimerHandler();
+            if (tmrDvc)
+            {
+                if (keepAlive.isTimerEvent(pDvc->getTimerHandler()))
+                {
+                    pDevice->disconnect();
+                    itSck->disconnect();
+                    it = socketList.erase(it);
+                    continue;
+                }
+            }
+            else
+            {
+                /* Socket connected but no device detected */
+                itSck->disconnect();
+                it = socketList.erase(it);
+                continue;
+            }
+        }
+        ++it;
+    }
+}
+

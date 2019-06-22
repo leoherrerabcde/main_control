@@ -128,6 +128,12 @@ int main(int argc, char* argv[])
     modCommGSM.init(mainSettings);
     lucesDeEstado.init(mainSettings);
 
+    flowmeter.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    rfidBoquilla.init(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    rfidUser.init(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    electroValve.init(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+
+
     UserList.init(mainSettings);
     VehicleList.init(mainSettings);
 
@@ -429,6 +435,7 @@ int main(int argc, char* argv[])
             verifyDeviceService(deviceList, portList, bLaunchDisable);
         }
         processDataClients(socketClientList, deviceList);
+        verifyDeviceTimer(deviceList, portList, bLaunchDisable);
 
         if (keepAlive.isTimerEvent(mainTmr))
         {

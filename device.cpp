@@ -21,7 +21,8 @@ Device::Device(const std::string& deviceName, bool nShowdata)
     m_bLaunchingService(false),
     m_bServiceLaunched(false),
     m_bShowData(nShowdata),
-    m_iComPort(-1)
+    m_iComPort(-1),
+    m_TimerHnd(0)
 {
 
 }

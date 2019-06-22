@@ -66,6 +66,9 @@ public:
     bool isServiceAlive() {bool res(m_bServiceAlive); m_bServiceAlive=false;return res;}
     void setServiceAlive() {m_bServiceAlive = true;}
 
+    int getTimerHandler() {return m_TimerHnd;}
+    void setTimerHandler(cont int tmr) {m_TimerHnd=tmr;}
+
     void disconnect() {setDeviceName("");setServicePID(0);}
 
     bool isAliveMessage(const std::string& data);
@@ -80,6 +83,7 @@ public:
     bool killService();
     std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList = std::list<std::string>());
     bool searchPIDService(std::list<int>& pidList);
+    int m_TimerHnd;
 
 protected:
 

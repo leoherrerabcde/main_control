@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     flowmeter.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
     rfidBoquilla.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
     rfidUser.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
-    electroValve.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    //restApi.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
 
 
     UserList.init(mainSettings);

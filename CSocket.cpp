@@ -145,7 +145,8 @@ void CSocket::throwError(const int line, const int sockErrCode)
 
         printError(sockErrCode);
         //SCCLog.print("");
-        throw(strerror(sockErrCode));
+        //throw(strerror(sockErrCode));
+        disconnect();
     }
 }
 

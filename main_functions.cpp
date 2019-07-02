@@ -219,26 +219,35 @@ bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::
         if (itDvc != dvcList.end())
         {
             Device* pDevice = itDvc->second;
-            int tmrDvc = pDevice->getTimerHandler();
-            if (tmrDvc)
+            if (!itSck->isConnected())
             {
-                if (keepAlive.isTimerEvent(pDevice->getTimerHandler()))
-                {
-                    pDevice->disconnect();
-                    itSck->disconnect();
-                    it = socketList.erase(it);
-                    continue;
-                }
-            }
-            else
-            {
-                /* Socket connected but no device detected */
+                pDevice->disconnect();
                 itSck->disconnect();
                 it = socketList.erase(it);
                 continue;
             }
+            else
+            {
+                int tmrDvc = pDevice->getTimerHandler();
+                if (tmrDvc)
+                {
+                    if (keepAlive.isTimerEvent(pDevice->getTimerHandler()))
+                    {
+                        pDevice->disconnect();
+                        itSck->disconnect();
+                        it = socketList.erase(it);
+                        continue;
+                    }
+                }
+            }
+            ++it;
         }
-        ++it;
+        else
+        {
+            if (itSck->isConnected())
+                itSck->disconnect();
+            it = socketList.erase(it);
+        }
     }
     return false;
 }

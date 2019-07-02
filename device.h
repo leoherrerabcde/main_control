@@ -67,7 +67,7 @@ public:
     void setServiceAlive() {m_bServiceAlive = true;}
 
     int getTimerHandler() {return m_TimerHnd;}
-    void setTimerHandler(cont int tmr) {m_TimerHnd=tmr;}
+    void setTimerHandler(const int tmr) {m_TimerHnd=tmr;}
 
     void disconnect() {setDeviceName("");setServicePID(0);}
 
@@ -83,7 +83,6 @@ public:
     bool killService();
     std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList = std::list<std::string>());
     bool searchPIDService(std::list<int>& pidList);
-    int m_TimerHnd;
 
 protected:
 
@@ -110,6 +109,7 @@ protected:
     int         m_iComPort;
     int         m_iBaudRate;
     int         m_iRemotePort;
+    int         m_TimerHnd;
 };
 
 #endif // DEVICE_H

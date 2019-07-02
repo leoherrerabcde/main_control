@@ -129,9 +129,9 @@ int main(int argc, char* argv[])
     lucesDeEstado.init(mainSettings);
 
     flowmeter.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
-    rfidBoquilla.init(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
-    rfidUser.init(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
-    electroValve.init(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    rfidBoquilla.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    rfidUser.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    electroValve.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
 
 
     UserList.init(mainSettings);
@@ -434,8 +434,8 @@ int main(int argc, char* argv[])
             //bFirstTime = false;
             verifyDeviceService(deviceList, portList, bLaunchDisable);
         }
-        processDataClients(socketClientList, deviceList);
-        verifyDeviceTimer(deviceList, portList, bLaunchDisable);
+        processDataClients(socketClientList, deviceList, keepAlive);
+        verifyDeviceTimer(socketClientList, deviceList, keepAlive);
 
         if (keepAlive.isTimerEvent(mainTmr))
         {

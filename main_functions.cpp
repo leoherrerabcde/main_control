@@ -93,6 +93,7 @@ void processDataClients(std::list<CSocket*>& sockeList,
             {
                 /*if (gl_bVerbose)
                     std::cout << pDevice->name() << ": " << msg << std::endl;*/
+                keepAlive.resetTimer(pDevice->getTimerHandler());
                 pDevice->processDataReceived(msg);
             }
             /*else
@@ -221,7 +222,7 @@ bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::
             int tmrDvc = pDevice->getTimerHandler();
             if (tmrDvc)
             {
-                if (keepAlive.isTimerEvent(pDvc->getTimerHandler()))
+                if (keepAlive.isTimerEvent(pDevice->getTimerHandler()))
                 {
                     pDevice->disconnect();
                     itSck->disconnect();
@@ -239,5 +240,6 @@ bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::
         }
         ++it;
     }
+    return false;
 }
 

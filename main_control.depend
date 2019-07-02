@@ -11,21 +11,21 @@
 1556588184 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1556852199 /home/pi/Documents/source/main_control/device.h
+1561657444 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
 	"SCCLog.h"
 	"SCCDeviceNames.h"
 
-1556597202 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1561220624 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
 	<unordered_map>
 	"SCCDeviceNames.h"
 	"SCCDeviceParams.h"
 	"../commPort/SCCArgumentParser.h"
 
-1556588188 /home/pi/Documents/source/main_control/SCCDeviceNames.h
+1557284937 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
 1556588184 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
@@ -57,7 +57,7 @@
 	<string>
 	<ostream>
 
-1556853826 source:/home/pi/Documents/source/main_control/device.cpp
+1561220431 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"
@@ -144,7 +144,7 @@
 	<thread>
 	<vector>
 
-1556855198 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1561220677 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1556727617 source:/home/pi/Documents/source/main_control/mainstate.cpp
@@ -253,7 +253,7 @@
 	<iomanip>
 	<locale>
 
-1551468903 /home/pi/Documents/source/rfidUser/SCCRfidUserProtocol.h
+1557457754 /home/pi/Documents/source/rfidUser/SCCRfidUserProtocol.h
 	<vector>
 	<list>
 	<unordered_map>
@@ -453,7 +453,7 @@
 
 1556588188 /home/pi/Documents/source/main_control/SCCGeneralDefines.h
 
-1556736509 /home/pi/Documents/source/main_control/main_functions.h
+1561222847 /home/pi/Documents/source/main_control/main_functions.h
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -475,7 +475,7 @@
 	"SCCCreateMessage.h"
 	"SCCFuelTransaction.h"
 
-1556738813 source:/home/pi/Documents/source/main_control/main_functions.cpp
+1561662264 source:/home/pi/Documents/source/main_control/main_functions.cpp
 	"main_functions.h"
 
 1556588188 /home/pi/Documents/source/main_control/SCCDisplay.h
@@ -483,4 +483,13 @@
 
 1556588188 source:/home/pi/Documents/source/main_control/SCCDisplay.cpp
 	"SCCDisplay.h"
+
+1561662283 source:/home/pi/Documents/source/main_control/SCCKeyboard.cpp
+	<unistd.h>
+	<termios.h>
+	"SCCKeyboard.h"
+
+1557206456 /home/pi/Documents/source/main_control/SCCKeyboard.h
+	<thread>
+	<mutex>
 

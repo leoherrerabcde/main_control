@@ -144,7 +144,7 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 }
 
 
-bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable)
+std::string verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable)
 {
     //return false;
     while (!st_DeviceOrder.empty() && !bDisable)
@@ -160,7 +160,7 @@ bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std:
                 pDvc->launchService(portList);
             else
                 pDvc->launchService();
-            return true;
+            return pDvc->name();
         }
     }
     /*for (auto itDvc : dvcList)
@@ -175,7 +175,7 @@ bool verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std:
             return true;
         }
     }*/
-    return false;
+    return "";
 }
 
 void sendRequestTable(std::list<CSocket*>& socketList,
@@ -252,3 +252,26 @@ bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::
     return false;
 }
 
+std::string aliveMsg(std::unordered_map<std::string,Device*> & dvcList, std::unordered_map<std::string, CSocket*>& socketMap)
+{
+    std::stringstream ss;
+    bool bAddLf(false);
+
+    for (auto itDvc : dvcList)
+    {
+        Device* pDevice = itDvc.second;
+        if (bAddLf)
+            ss << std::endl;
+        ss << "Device: " << pDevice->name() << "\n\tService PID: " << pDevice->getServicePID() << "\n\tSocket State: ";
+        auto itSck = socketMap.find(pDevice->name());
+        if (itSck == socketMap.end())
+            ss << "No socket";
+        else
+        {
+            CSocket* pSck = itSck->second;
+            ss << pSck->getStateDescript();
+        }
+        bAddLf = true;
+    }
+    return std::string(ss.str());
+}

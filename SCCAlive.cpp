@@ -35,26 +35,27 @@ void SCCAlive::run()
 {
     while(m_bStarted == true)
     {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
         auto clkNow = std::chrono::steady_clock::now();
-        std::chrono::duration<double> diff = clkNow - m_clkLast;
-
-        if (diff > m_dMaxDiffTime)
         {
-            std::cout << "Main Loop was stopped long time" << std::endl;
-            m_clkLast = clkNow;
-            if (m_bThrowEnable)
-                throw("Rutine is not Alive.");
-        }
+            std::chrono::duration<double> diff = clkNow - m_clkLast;
 
+            if (diff > m_dMaxDiffTime)
+            {
+                std::cout << "Main Loop was stopped long time" << std::endl;
+                m_clkLast = clkNow;
+                if (m_bThrowEnable)
+                    throw("Rutine is not Alive.");
+            }
+        }
         for (unsigned int i = 0; i < m_TimerList.size(); ++i)
         {
             if (m_TimerList[i].m_bEnable == true)
             {
-                std::chrono::duration<double> diff = clkNow - m_TimerList[i].m_clkLast;
+                std::chrono::duration<double> diffTmr = clkNow - m_TimerList[i].m_clkLast;
                 //std::chrono::milliseconds diff = clkNow - m_TimerList[i].m_clkLast;
-                if (diff >= m_TimerList[i].m_dInterval)
+                if (diffTmr >= m_TimerList[i].m_dInterval)
                 {
                     m_TimerList[i].m_clkLast = clkNow;
                     m_TimerList[i].m_bTimerEvent = true;
@@ -126,7 +127,10 @@ bool SCCAlive::isTimerEvent(const int tmrHdl)
             globalLog << "Timer Handler out of scope." << std::endl;
     }
     else
-        globalLog << "Timer Handler out of scope." << std::endl;
+    {
+        if (tmrHdl != nullTimer())
+            globalLog << "Timer Handler out of scope." << std::endl;
+    }
     return false;
 }
 

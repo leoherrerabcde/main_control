@@ -30,8 +30,9 @@ std::unordered_map<std::string, ArgumentStruct> st_FlowmeterParam =
 {
     {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "1"}},
     {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "9600"}},
-    {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "flowmCom"}},
-    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/flowmCom/bin/Release"}}
+    {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "ovalgearFlowm"}},
+    //{PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/flowmCom/bin/Release"}}
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/ovalgearFlowm/bin/Release"}}
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
@@ -101,6 +102,7 @@ MainCtrlSettings::MainCtrlSettings()
     tmrServerConnect        = 300000;//*/(8*3600*1000);
     tmrServerRetry          = 60000;//(15*60*1000);
     tmrDeviceTimeOut        = 30000;
+    tmrLaunchService        = 5000;
     m_strMyName             = "CamionSurtidor001";
     m_strIdDispensador      = "01";
 }

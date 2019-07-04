@@ -22,7 +22,7 @@ Device::Device(const std::string& deviceName, bool nShowdata)
     m_bServiceLaunched(false),
     m_bShowData(nShowdata),
     m_iComPort(-1),
-    m_TimerHnd(0)
+    m_TimerHnd(-1)
 {
 
 }
@@ -329,6 +329,14 @@ void Device::removeComPort(std::list<int>& portList, int port)
             return;
         }
     }
+}
+
+bool Device::isServiceRunning()
+{
+    std::string cmd(std::string("pidof ")+m_strServiceName);
+	std::string strPid = popenQuickService(cmd);
+
+	return (strPid != "");
 }
 
 bool Device::searchPIDService(std::list<int>& pidList)

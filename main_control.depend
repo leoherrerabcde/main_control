@@ -11,14 +11,14 @@
 1556588184 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1562034303 /home/pi/Documents/source/main_control/device.h
+1562212693 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
 	"SCCLog.h"
 	"SCCDeviceNames.h"
 
-1561220624 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1562210372 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
 	<unordered_map>
 	"SCCDeviceNames.h"
@@ -32,7 +32,7 @@
 	"SCCLog.h"
 	<vector>
 
-1556588185 /home/pi/Documents/source/main_control/CSocket.h
+1562208046 /home/pi/Documents/source/main_control/CSocket.h
 	<iostream>
 	<future>
 	<functional>
@@ -57,7 +57,7 @@
 	<string>
 	<ostream>
 
-1561220431 source:/home/pi/Documents/source/main_control/device.cpp
+1562212894 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"
@@ -109,7 +109,7 @@
 1556724624 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1562035377 source:/home/pi/Documents/source/main_control/main.cpp
+1562215582 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -128,6 +128,7 @@
 	"main_functions.h"
 	"SCCDisplay.h"
 	"SCCDeviceParams.h"
+	"../commPort/SCCRealTime.h"
 	<unistd.h>
 	<unordered_map>
 	<list>
@@ -139,12 +140,12 @@
 	"device.h"
 	"../rfidUser/SCCRfidUserProtocol.h"
 
-1556588188 /home/pi/Documents/source/main_control/SCCAlive.h
+1562215405 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
 	<thread>
 	<vector>
 
-1562037670 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1562211477 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1556727617 source:/home/pi/Documents/source/main_control/mainstate.cpp
@@ -174,7 +175,7 @@
 	"SCCDisplay.h"
 	<iostream>
 
-1556588188 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1562216505 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>
@@ -453,7 +454,7 @@
 
 1556588188 /home/pi/Documents/source/main_control/SCCGeneralDefines.h
 
-1561222847 /home/pi/Documents/source/main_control/main_functions.h
+1562212147 /home/pi/Documents/source/main_control/main_functions.h
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -475,7 +476,7 @@
 	"SCCCreateMessage.h"
 	"SCCFuelTransaction.h"
 
-1562038936 source:/home/pi/Documents/source/main_control/main_functions.cpp
+1562212196 source:/home/pi/Documents/source/main_control/main_functions.cpp
 	"main_functions.h"
 
 1556588188 /home/pi/Documents/source/main_control/SCCDisplay.h

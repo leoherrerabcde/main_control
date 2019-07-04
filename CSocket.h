@@ -113,6 +113,8 @@ class CSocket
         void runRcvLoop();
         void setSocketName(const std::string& name) {m_strSckName=name;}
 
+        std::string getStateDescript();
+
     protected:
 
         void receivingLoop();
@@ -127,7 +129,6 @@ class CSocket
     private:
 
         int enableKeepAlive(const int sock);
-        std::string getStateDescript();
         void clearBuffer();
 
         std::thread* m_pListeningThread;

@@ -21,7 +21,7 @@ struct SCCTimer
     bool m_bTimerEvent;
 
     bool isTimerEvent() {bool res(m_bTimerEvent); m_bTimerEvent = false; return res;}
-    void resetTimer() {m_clkLast = std::chrono::steady_clock::now();m_bTimerEvent=false;}
+    void resetTimer() {m_clkLast = std::chrono::steady_clock::now();m_bTimerEvent=false; m_bEnable = true;}
 };
 
 class SCCAlive
@@ -44,6 +44,8 @@ class SCCAlive
     protected:
 
     private:
+
+    const int nullTimer() {return -1;};
 
     std::chrono::time_point<std::chrono::steady_clock> m_clkLast;
     std::thread* m_pThreadAlive;

@@ -83,6 +83,7 @@ public:
     bool killService();
     std::string popenQuickService(const std::string& quickService, const std::list<std::string>argList = std::list<std::string>());
     bool searchPIDService(std::list<int>& pidList);
+    bool isServiceRunning();
 
 protected:
 

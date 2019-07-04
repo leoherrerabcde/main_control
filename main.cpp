@@ -21,6 +21,7 @@
 #include "main_functions.h"
 #include "SCCDisplay.h"
 #include "SCCDeviceParams.h"
+#include "../commPort/SCCRealTime.h"
 
 /*#include <iostream>
 #include <unistd.h>
@@ -116,7 +117,7 @@ int main(int argc, char* argv[])
     int rqtTblTmr           = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
     int tmrConnectServer    = keepAlive.addTimer(mainSettings.tmrServerConnect);
     //int tmrWaitServerResponse   = 0;
-    int tmrConnectRetry     = 0;
+    int tmrConnectRetry     = keepAlive.addTimer(mainSettings.tmrServerRetry);
 
     bool bConnectToServer(false);
 
@@ -138,8 +139,9 @@ int main(int argc, char* argv[])
     VehicleList.init(mainSettings);
 
     fuelRegister.init(mainSettings);
-    int tmrFuelTransaction = 0;
-    int tmrAuthorizedVehicle = 0;
+    int tmrFuelTransaction = keepAlive.addTimer(30000);
+    int tmrAuthorizedVehicle = keepAlive.addTimer(10000);
+    keepAlive.stopTimer(tmrAuthorizedVehicle);
     //int tmrServiceLaunched = 0;
 
     /*SCCFileManager newRegPath(fuelRegister.getRegisterPath());
@@ -166,22 +168,19 @@ int main(int argc, char* argv[])
     bool bFirstTime = false;
     //bool bWaitingConnection = true;
 
-    verifyDeviceService(deviceList, portList, bLaunchDisable);
+    std::string strDeviceLaunched = verifyDeviceService(deviceList, portList, bLaunchDisable);
+    int tmrLaunchService = keepAlive.addTimer(mainSettings.tmrLaunchService);
 
     for(;;)
     {
         bool bSleep = true;
-        if (tmrFuelTransaction)
+        if (keepAlive.isTimerEvent(tmrFuelTransaction))
         {
-            if (keepAlive.isTimerEvent(tmrFuelTransaction))
-            {
-                electroValve.closeValve();
-                fuelRegister.finishTransaction(flowmeter.getAcumFlow());
-                //fuelTransactionTimeOut();
-                keepAlive.stopTimer(tmrFuelTransaction);
-                tmrFuelTransaction = 0;
-                mainState.processFuelingTimeOut();
-            }
+            electroValve.closeValve();
+            fuelRegister.finishTransaction(flowmeter.getAcumFlow());
+            //fuelTransactionTimeOut();
+            keepAlive.stopTimer(tmrFuelTransaction);
+            mainState.processFuelingTimeOut();
         }
         stateRbpi = mainState.getCurrentState();
         if (stateRbpi == MainState::State::waitForInitTransaction)
@@ -225,7 +224,8 @@ int main(int argc, char* argv[])
                 if (bAuthorizedVehicle)
                 {
                     strTagVehicle = strTag;
-                    tmrAuthorizedVehicle = keepAlive.addTimer(10000);
+                    //tmrAuthorizedVehicle = keepAlive.addTimer(10000);
+                    keepAlive.resetTimer(tmrAuthorizedVehicle);
                     mainState.processVehicleAuthorization(bAuthorizedVehicle);
                 }
             }
@@ -241,7 +241,7 @@ int main(int argc, char* argv[])
                     fuelRegister.addVehicle(strTagVehicle);
 
                 fuelRegister.addFlowMeterBegin(flowmeter.getAcumFlow());
-                tmrFuelTransaction = keepAlive.addTimer(30000);
+                keepAlive.resetTimer(tmrFuelTransaction);
                 bStateChange = true;
             }
         }
@@ -318,7 +318,8 @@ int main(int argc, char* argv[])
                         fuelRegister.addVehicle(strTagVehicle);
                         mainState.processVehicleAuthorization(bAuthorizedVehicle);
                         keepAlive.resetTimer(tmrFuelTransaction);
-                        tmrAuthorizedVehicle = keepAlive.addTimer(10000);
+                        //tmrAuthorizedVehicle = keepAlive.addTimer(10000);
+                        keepAlive.resetTimer(tmrAuthorizedVehicle);
                         //dAcumFlowOld = flowmeter.getAcumFlow();
                         //electroValve.openValve();
                     }
@@ -342,7 +343,6 @@ int main(int argc, char* argv[])
                 if (keepAlive.isTimerEvent(tmrAuthorizedVehicle))
                 {
                     keepAlive.stopTimer(tmrAuthorizedVehicle);
-                    tmrAuthorizedVehicle = 0;
                     mainState.processLostVehicleTag();
                     bCancelTransaction = true;
                 }
@@ -389,7 +389,6 @@ int main(int argc, char* argv[])
                     mainState.processLostVehicleTag();
                     electroValve.closeValve();
                     keepAlive.stopTimer(tmrAuthorizedVehicle);
-                    tmrAuthorizedVehicle = 0;
                 }
             }
             else
@@ -418,7 +417,6 @@ int main(int argc, char* argv[])
             fuelRegister.finishTransaction(flowmeter.getAcumFlow());
             //fuelTransactionTimeOut();
             keepAlive.stopTimer(tmrFuelTransaction);
-            tmrFuelTransaction = 0;
             mainState.processFuelingTimeOut();
             bCancelTransaction = false;
         }
@@ -432,7 +430,35 @@ int main(int argc, char* argv[])
         if (processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap, portList))
         {
             //bFirstTime = false;
-            verifyDeviceService(deviceList, portList, bLaunchDisable);
+            //tmrLaunchService
+            keepAlive.resetTimer(tmrLaunchService);
+            strDeviceLaunched = verifyDeviceService(deviceList, portList, bLaunchDisable);
+            if (strDeviceLaunched == "")
+            {
+                keepAlive.stopTimer(tmrLaunchService);
+            }
+        }
+        if (keepAlive.isTimerEvent(tmrLaunchService))
+        {
+            bool bLaunchService(true);
+            if (strDeviceLaunched != "")
+            {
+                auto itDvc = deviceList.find(strDeviceLaunched);
+                if (itDvc != deviceList.end())
+                {
+                    Device* pDvc = itDvc->second;
+                    if (pDvc->isServiceRunning())
+                    bLaunchService = false;
+                }
+            }
+            if (bLaunchService)
+            {
+                strDeviceLaunched = verifyDeviceService(deviceList, portList, bLaunchDisable);
+                if (strDeviceLaunched == "")
+                {
+                    keepAlive.stopTimer(tmrLaunchService);
+                }
+            }
         }
         processDataClients(socketClientList, deviceList, keepAlive);
         verifyDeviceTimer(socketClientList, deviceList, keepAlive);
@@ -440,6 +466,11 @@ int main(int argc, char* argv[])
         if (keepAlive.isTimerEvent(mainTmr))
         {
             //sendAliveMessage(socketClientList, deviceList);
+            std::string msg;
+            msg = aliveMsg(deviceList, socketMap);
+            globalLog << SCCRealTime::getTimeStamp() << std::endl;
+            globalLog << msg << "\n\n";
+            //globalLog << std::endl();
         }
         if (keepAlive.isTimerEvent(rqtTblTmr))
         {
@@ -452,7 +483,7 @@ int main(int argc, char* argv[])
             bFirstTime          = true;
             bConnectToServer    = true;
             restApi.clearWaitingResponse();
-            tmrConnectRetry     = keepAlive.addTimer(mainSettings.tmrServerRetry);
+            keepAlive.resetTimer(mainSettings.tmrServerRetry);
             fuelRegister.getRegisterList(restApi.getRegisterList());
             restApi.startConnection(fuelRegister.getMemberList());
         }
@@ -509,7 +540,7 @@ int main(int argc, char* argv[])
             /*else
             {
             }*/
-            if (tmrConnectRetry && keepAlive.isTimerEvent(tmrConnectRetry))
+            if (keepAlive.isTimerEvent(tmrConnectRetry))
             {
                 restApi.clearWaitingResponse();
             }

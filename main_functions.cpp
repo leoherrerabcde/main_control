@@ -8,7 +8,7 @@ static std::list<std::string> st_DeviceOrder =
     DEVICE_REST_SERVICE,
     DEVICE_RFID_BOMBERO,
     DEVICE_RFID_BOQUILLA,
-    DEVICE_FLOWMETER,
+    DEVICE_OVALGEARFLOWM,
 };
 
 bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList)
@@ -144,13 +144,13 @@ void sendAliveMessage(std::list<CSocket*>& socketList,
 }
 
 
-std::string verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable)
+std::string verifyDeviceService(std::list<std::string>& deviceList, std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable)
 {
     //return false;
-    while (!st_DeviceOrder.empty() && !bDisable)
+    while (!deviceList.empty() && !bDisable)
     {
-        auto itDvc = dvcList.find(st_DeviceOrder.front());
-        st_DeviceOrder.pop_front();
+        auto itDvc = dvcList.find(deviceList.front());
+        deviceList.pop_front();
         if (itDvc == dvcList.end())
             continue;
         Device* pDvc = itDvc->second;
@@ -210,7 +210,7 @@ void fuelTransactionTimeOut()
 {
 }
 
-bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::string,Device*> & dvcList, SCCAlive& keepAlive)
+bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::string,Device*> & dvcList, std::list<std::string>& deviceList, SCCAlive& keepAlive)
 {
     for (auto it = socketList.begin(); it != socketList.end();)
     {
@@ -224,20 +224,19 @@ bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::
                 pDevice->disconnect();
                 itSck->disconnect();
                 it = socketList.erase(it);
+                deviceList.push_back(pDevice->name());
                 continue;
             }
             else
             {
                 int tmrDvc = pDevice->getTimerHandler();
-                if (tmrDvc)
+                if (keepAlive.isTimerEvent(pDevice->getTimerHandler()))
                 {
-                    if (keepAlive.isTimerEvent(pDevice->getTimerHandler()))
-                    {
-                        pDevice->disconnect();
-                        itSck->disconnect();
-                        it = socketList.erase(it);
-                        continue;
-                    }
+                    pDevice->disconnect();
+                    itSck->disconnect();
+                    it = socketList.erase(it);
+                    deviceList.push_back(pDevice->name());
+                    continue;
                 }
             }
             ++it;

@@ -56,13 +56,14 @@ int main(int argc, char* argv[])
     }
 
     std::unordered_map<std::string,Device*> deviceList;
+    std::unordered_map<int,Device*> timerDeviceMap;
     std::unordered_map<std::string,CSocket*> socketMap;
     std::vector<Device*> onTheFlyDeviceList;
     std::list<int> portList;
 
     Device::getComPortList(portList);
     SCCFuelTransaction fuelRegister(TABLE_REGISTERS);
-    SCCFlowmeter flowmeter(DEVICE_FLOWMETER, bShowData);
+    SCCFlowmeter flowmeter(DEVICE_OVALGEARFLOWM, bShowData);
     RFIDBoquilla rfidBoquilla(DEVICE_RFID_BOQUILLA, bShowData);
     RFIDUser rfidUser(DEVICE_RFID_BOMBERO, bShowData);
     ElectroValvCtrl electroValve(DEVICE_ELECTRO_VALVE, bShowData);
@@ -133,6 +134,9 @@ int main(int argc, char* argv[])
     rfidBoquilla.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
     rfidUser.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
     //restApi.setTimerHandler(keepAlive.addTimer(mainSettings.tmrDeviceTimeOut));
+    timerDeviceMap.insert(std::make_pair(flowmeter.getTimerHandler(), &flowmeter));
+    timerDeviceMap.insert(std::make_pair(rfidBoquilla.getTimerHandler(), &rfidBoquilla));
+    timerDeviceMap.insert(std::make_pair(rfidUser.getTimerHandler(), &rfidUser));
 
 
     UserList.init(mainSettings);
@@ -168,7 +172,17 @@ int main(int argc, char* argv[])
     bool bFirstTime = false;
     //bool bWaitingConnection = true;
 
-    std::string strDeviceLaunched = verifyDeviceService(deviceList, portList, bLaunchDisable);
+    std::list<std::string> DeviceToLaunchList =
+    {
+        DEVICE_REST_SERVICE,
+        DEVICE_RFID_BOMBERO,
+        DEVICE_RFID_BOQUILLA,
+        DEVICE_OVALGEARFLOWM,
+    };
+
+    std::list<std::string> DevicePendingToLaunchList;
+
+    std::string strDeviceLaunched = verifyDeviceService(DeviceToLaunchList, deviceList, portList, bLaunchDisable);
     int tmrLaunchService = keepAlive.addTimer(mainSettings.tmrLaunchService);
 
     for(;;)
@@ -432,10 +446,16 @@ int main(int argc, char* argv[])
             //bFirstTime = false;
             //tmrLaunchService
             keepAlive.resetTimer(tmrLaunchService);
-            strDeviceLaunched = verifyDeviceService(deviceList, portList, bLaunchDisable);
+            strDeviceLaunched = verifyDeviceService(DeviceToLaunchList, deviceList, portList, bLaunchDisable);
             if (strDeviceLaunched == "")
             {
-                keepAlive.stopTimer(tmrLaunchService);
+                if (DevicePendingToLaunchList.empty())
+                    keepAlive.stopTimer(tmrLaunchService);
+                else
+                {
+                    DeviceToLaunchList.insert(DeviceToLaunchList.end(), DevicePendingToLaunchList.begin(), DevicePendingToLaunchList.end());
+                    DevicePendingToLaunchList.clear();
+                }
             }
         }
         if (keepAlive.isTimerEvent(tmrLaunchService))
@@ -448,20 +468,32 @@ int main(int argc, char* argv[])
                 {
                     Device* pDvc = itDvc->second;
                     if (pDvc->isServiceRunning())
-                    bLaunchService = false;
+                    {
+                        bLaunchService = false;
+                    }
+                    else
+                    {
+                        DevicePendingToLaunchList.push_back(strDeviceLaunched);
+                    }
                 }
             }
             if (bLaunchService)
             {
-                strDeviceLaunched = verifyDeviceService(deviceList, portList, bLaunchDisable);
+                strDeviceLaunched = verifyDeviceService(DeviceToLaunchList, deviceList, portList, bLaunchDisable);
                 if (strDeviceLaunched == "")
                 {
-                    keepAlive.stopTimer(tmrLaunchService);
+                    if (DevicePendingToLaunchList.empty())
+                        keepAlive.stopTimer(tmrLaunchService);
+                    else
+                    {
+                        DeviceToLaunchList.insert(DeviceToLaunchList.end(), DevicePendingToLaunchList.begin(), DevicePendingToLaunchList.end());
+                        DevicePendingToLaunchList.clear();
+                    }
                 }
             }
         }
         processDataClients(socketClientList, deviceList, keepAlive);
-        verifyDeviceTimer(socketClientList, deviceList, keepAlive);
+        verifyDeviceTimer(socketClientList, deviceList, DeviceToLaunchList, keepAlive);
 
         if (keepAlive.isTimerEvent(mainTmr))
         {
@@ -483,7 +515,7 @@ int main(int argc, char* argv[])
             bFirstTime          = true;
             bConnectToServer    = true;
             restApi.clearWaitingResponse();
-            keepAlive.resetTimer(mainSettings.tmrServerRetry);
+            keepAlive.resetTimer(tmrConnectRetry);
             fuelRegister.getRegisterList(restApi.getRegisterList());
             restApi.startConnection(fuelRegister.getMemberList());
         }

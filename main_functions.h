@@ -26,8 +26,8 @@
 #include "SCCFuelTransaction.h"
 
 
-std::string verifyDeviceService(std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable = false);
-bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::string,Device*> & dvcList, SCCAlive& keepAlive);
+std::string verifyDeviceService(std::list<std::string>& deviceList, std::unordered_map<std::string,Device*> & dvcList, std::list<int>& portList, bool bDisable = false);
+bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::string,Device*> & dvcList, std::list<std::string>& deviceList, SCCAlive& keepAlive);
 bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList);
 bool processDataNewClients(std::list<CSocket*>& socketNewList,
                        std::list<CSocket*>& socketList,

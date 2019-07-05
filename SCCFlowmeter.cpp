@@ -72,7 +72,7 @@ bool SCCFlowmeter::processDataReceived(const std::string& msg)
 
         if (isAliveMessage(data))
             continue;
-        if (!isFrameType(DEVICE_FLOWMETER, data))
+        if (!isFrameType(DEVICE_OVALGEARFLOWM, data))
             continue;
 
         std::string strValue;
@@ -81,13 +81,9 @@ bool SCCFlowmeter::processDataReceived(const std::string& msg)
         FlowRegisters reg;
 
         bool res = true;
-        res = res && getValueMessage(data, VAR_INSTANTFLOWRATE          , reg.m_dInstantFlowRate);
-        res = res && getValueMessage(data, VAR_FLUIDSPEED               , reg.m_dFluidSpeed);
-        res = res && getValueMessage(data, VAR_MEASUREFLUIDSOUNDSPEED   , reg.m_dMeasureFluidSoundSpeed);
+        res = res && getValueMessage(data, VAR_INSTANTFLOWRATE          , reg.m_lInstantFlowRate);
         res = res && getValueMessage(data, VAR_POSACUMFLOWRATE          , reg.m_lPosAcumFlowRate);
         res = res && getValueMessage(data, VAR_POSACUMFLOWRATEDECPART   , reg.m_dPosAcumFlowRateDecPart);
-        res = res && getValueMessage(data, VAR_NEGACUMFLOWRATE          , reg.m_lNegAcumFlowRate);
-        res = res && getValueMessage(data, VAR_NEGACUMFLOWRATEDECPART   , reg.m_dNegAcumFlowRateDecPart);
         res = res && getValueMessage(data, VAR_NETACUMFLOWRATE          , reg.m_lNetAcumFlowRate);
         res = res && getValueMessage(data, VAR_NETACUMFLOWRATEDECPART   , reg.m_dNetAcumFlowRateDecPart);
 

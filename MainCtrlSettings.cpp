@@ -84,7 +84,7 @@ std::unordered_map<std::string, std::unordered_map<std::string, ArgumentStruct>*
 {
     {DEVICE_RFID_BOQUILLA, &st_RFIDParam},
     {DEVICE_RFID_BOMBERO , &st_RFIDUserParam},
-    {DEVICE_FLOWMETER    , &st_FlowmeterParam},
+    {DEVICE_OVALGEARFLOWM, &st_FlowmeterParam},
     {DEVICE_REST_SERVICE , &st_RestApiParam},
     {TABLE_USERS         , &st_TableUserParam},
     {TABLE_VEHICLES      , &st_TableVehicleParam},

@@ -59,9 +59,9 @@ void SCCAlive::run()
                 {
                     m_TimerList[i].m_clkLast = clkNow;
                     m_TimerList[i].m_bTimerEvent = true;
-                    std::string tmrMsg("Timer ");
+                    /*std::string tmrMsg("Timer ");
                     tmrMsg += std::to_string(i) + " event.";
-                    std::cout << tmrMsg << std::endl;
+                    std::cout << tmrMsg << std::endl;*/
                     //globalLog << tmrMsg;
                     //globalLog << std::endl;
                 }
@@ -112,7 +112,8 @@ void SCCAlive::stopTimer(int timerHdl)
             globalLog << "Timer Handler out of scope." << std::endl;
     }
     else
-        globalLog << "Timer Handler out of scope." << std::endl;
+        if (timerHdl != nullTimer())
+            globalLog << "Timer Handler out of scope." << std::endl;
 }
 
 bool SCCAlive::isTimerEvent(const int tmrHdl)
@@ -146,7 +147,8 @@ void SCCAlive::resetTimer(const int timerHdl)
             globalLog << "Timer Handler out of scope." << std::endl;
     }
     else
-        globalLog << "Timer Handler out of scope." << std::endl;
+        if (timerHdl != nullTimer())
+            globalLog << "Timer Handler out of scope." << std::endl;
 }
 
 

@@ -10,18 +10,26 @@ struct SCCTimer
     SCCTimer(int interval)
     {
         m_dInterval = std::chrono::milliseconds(interval);
+        m_dDiffTime = m_dInterval;
         m_clkLast = std::chrono::steady_clock::now();
         m_bEnable = true;
         m_bTimerEvent = false;
     }
     //std::chrono::duration<double> m_dInterval;
     std::chrono::milliseconds m_dInterval;
+    std::chrono::milliseconds m_dDiffTime;
     std::chrono::time_point<std::chrono::steady_clock> m_clkLast;
     bool m_bEnable;
     bool m_bTimerEvent;
 
     bool isTimerEvent() {bool res(m_bTimerEvent); m_bTimerEvent = false; return res;}
     void resetTimer() {m_clkLast = std::chrono::steady_clock::now();m_bTimerEvent=false; m_bEnable = true;}
+    int getUpdate()
+    {
+        if (m_dDiffTime < m_dInterval)
+            return (m_dInterval - m_dDiffTime).count();
+        return 0;
+    }
 };
 
 class SCCAlive
@@ -38,9 +46,11 @@ class SCCAlive
         void stopTimer(int timerHdl);
         void resetTimer(int timerHdl);
         bool isTimerEvent(const int tmrHdl);
-        int getUpdate(const int tmrHdl);
+        int getUpdate(const int timerHdl);
 
         void throwDisable() {m_bThrowEnable = false;}
+
+        static std::string millisecondsToMMSS(int msec);
 
     protected:
 

@@ -3,6 +3,7 @@
 #include "SCCLog.h"
 
 #include <iostream>
+#include <iomanip>
 
 extern SCCLog globalLog;
 
@@ -65,6 +66,8 @@ void SCCAlive::run()
                     //globalLog << tmrMsg;
                     //globalLog << std::endl;
                 }
+                else
+                    m_TimerList[i].m_dDiffTime = std::chrono::duration_cast<std::chrono::milliseconds>(diffTmr);
             }
         }
     }
@@ -151,4 +154,41 @@ void SCCAlive::resetTimer(const int timerHdl)
             globalLog << "Timer Handler out of scope." << std::endl;
 }
 
+int SCCAlive::getUpdate(const int timerHdl)
+{
+    if (timerHdl >= 0)
+    {
+        if ((unsigned int)timerHdl < m_TimerList.size())
+        {
+            return m_TimerList[timerHdl].getUpdate();
+        }
+        else
+            globalLog << "Timer Handler out of scope." << std::endl;
+    }
+    else
+        if (timerHdl != nullTimer())
+            globalLog << "Timer Handler out of scope." << std::endl;
+    return 0;
+}
 
+std::string SCCAlive::millisecondsToMMSS(int msec)
+{
+    int sec = msec / 1000;
+    int hh = sec / 3600;
+    std::stringstream ss;
+
+    if (hh)
+    {
+        sec -= (hh*3600);
+        ss << std::setfill('0') << std::setw(2) << hh << ":";
+    }
+    int mm = sec / 60;
+    if (mm)
+        sec -= (mm*60);
+    if (hh | mm)
+    {
+        ss << std::setfill('0') << std::setw(2) << mm << ":";
+    }
+    ss << std::setfill('0') << std::setw(2) << sec;
+    return std::string(ss.str());
+}

@@ -109,7 +109,7 @@
 1556724624 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1562296839 source:/home/pi/Documents/source/main_control/main.cpp
+1563247503 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -129,6 +129,7 @@
 	"SCCDisplay.h"
 	"SCCDeviceParams.h"
 	"../commPort/SCCRealTime.h"
+	"main_fuel_manage.h"
 	<unistd.h>
 	<unordered_map>
 	<list>
@@ -140,7 +141,7 @@
 	"device.h"
 	"../rfidUser/SCCRfidUserProtocol.h"
 
-1562215405 /home/pi/Documents/source/main_control/SCCAlive.h
+1563246647 /home/pi/Documents/source/main_control/SCCAlive.h
 	<chrono>
 	<thread>
 	<vector>
@@ -175,10 +176,11 @@
 	"SCCDisplay.h"
 	<iostream>
 
-1562286496 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1563247448 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>
+	<iomanip>
 
 1556588188 source:/home/pi/Documents/source/main_control/SCCLog.cpp
 	"SCCLog.h"
@@ -493,4 +495,24 @@
 1557206456 /home/pi/Documents/source/main_control/SCCKeyboard.h
 	<thread>
 	<mutex>
+
+1563239670 /home/pi/Documents/source/main_control/main_fuel_manage.h
+	"electrovalvctrl.h"
+	"rfidboquilla.h"
+	"rfiduser.h"
+	"mainstate.h"
+	"IDList.h"
+	"MainCtrlSettings.h"
+	"CSocket.h"
+	"SCCLog.h"
+	"SCCAlive.h"
+	"SCCRemoteServer.h"
+	"SCCFlowmeter.h"
+	"SCCDeviceNames.h"
+	"SCCCreateMessage.h"
+	"SCCFuelTransaction.h"
+
+1563239649 source:/home/pi/Documents/source/main_control/main_fuel_manage.cpp
+	"main_fuel_manage.h"
+	"main_functions.h"
 

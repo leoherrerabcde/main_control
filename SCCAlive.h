@@ -38,6 +38,7 @@ class SCCAlive
         void stopTimer(int timerHdl);
         void resetTimer(int timerHdl);
         bool isTimerEvent(const int tmrHdl);
+        int getUpdate(const int tmrHdl);
 
         void throwDisable() {m_bThrowEnable = false;}
 

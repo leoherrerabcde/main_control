@@ -11,7 +11,7 @@
 1556588184 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1564027187 /home/pi/Documents/source/main_control/device.h
+1564079149 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
@@ -32,7 +32,7 @@
 	"SCCLog.h"
 	<vector>
 
-1562208046 /home/pi/Documents/source/main_control/CSocket.h
+1564070757 /home/pi/Documents/source/main_control/CSocket.h
 	<iostream>
 	<future>
 	<functional>
@@ -57,7 +57,7 @@
 	<string>
 	<ostream>
 
-1562216874 source:/home/pi/Documents/source/main_control/device.cpp
+1564079494 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"

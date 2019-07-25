@@ -67,7 +67,11 @@ class CSocket
         void setError(const int sockErrCode);
         void setError(const SocketError sockErrCode, const std::string& strErrMsg);*/
 
-        bool isConnected() {return m_bConnected;}
+        bool isConnected()
+        {
+        if (!m_bConnected)
+            std::cout << "It is disconnected" << std::endl;
+        return m_bConnected;}
         SocketState getSocketState() {return m_sckState;}
 
         void setLocalPort(const int port);

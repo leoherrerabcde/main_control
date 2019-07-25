@@ -60,6 +60,14 @@ int Device::launchService(std::list<int>& portList)
     return launchService();
 }
 
+void Device::disconnect()
+{
+    /*setDeviceName("")*/
+    m_bLaunchingService = true;
+    m_bServiceLaunched = false;
+    killService();
+    setServicePID(0);
+}
 
 int Device::launchService(const std::string& servicePathName, const std::string& args)
 {

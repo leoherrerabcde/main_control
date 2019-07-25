@@ -36,7 +36,12 @@ public:
 
     virtual bool processDataReceived(const std::string& msg = "");
 
-    virtual void setDeviceName(const std::string& strName) {m_DeviceName = strName;}
+    virtual void setDeviceName(const std::string& strName)
+    {
+    if (strName == "")
+        globalLog << "HERE" << std::endl;
+    m_DeviceName = strName;
+    }
     virtual std::string name() {return m_DeviceName;}
 
     virtual bool getBodyMessage (const std::string& msg, const std::string& valueName, std::string& value);
@@ -69,7 +74,7 @@ public:
     int getTimerHandler() {return m_TimerHnd;}
     void setTimerHandler(const int tmr) {m_TimerHnd=tmr;}
 
-    void disconnect() {setDeviceName("");setServicePID(0);}
+    void disconnect();
 
     bool isAliveMessage(const std::string& data);
     bool isFrameType(const std::string& header, const std::string& data);

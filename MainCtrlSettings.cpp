@@ -99,10 +99,11 @@ MainCtrlSettings::MainCtrlSettings()
     mainTimerInterval       = 15000;
     sckBufferSize           = 4096;
     requestTableTmrInterval = 60000;
-    tmrServerConnect        = 300000;//*/(8*3600*1000);
-    tmrServerRetry          = 60000;//(15*60*1000);
+    tmrServerConnect        = 45000; //300000;//*/(8*3600*1000);
+    tmrServerRetry          = 15000; //30000;//(15*60*1000);
     tmrDeviceTimeOut        = 30000;
     tmrLaunchService        = 5000;
+    nMaxServerRetry         = 3;
     m_strMyName             = "CamionSurtidor001";
     m_strIdDispensador      = "01";
 }

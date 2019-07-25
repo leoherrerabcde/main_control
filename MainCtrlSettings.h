@@ -24,6 +24,7 @@ class MainCtrlSettings
         int     tmrServerRetry;
         int     tmrDeviceTimeOut;
         int     tmrLaunchService;
+        int     nMaxServerRetry;
         std::string     m_strIdDispensador;
         size_t sckBufferSize;
         std::string m_strMyName;

@@ -118,8 +118,10 @@ int main(int argc, char* argv[])
     int mainTmr             = keepAlive.addTimer(mainSettings.mainTimerInterval);
     int rqtTblTmr           = keepAlive.addTimer(mainSettings.requestTableTmrInterval);
     int tmrConnectServer    = keepAlive.addTimer(mainSettings.tmrServerConnect);
+    int nRetryCounter       = 0;
     //int tmrWaitServerResponse   = 0;
     int tmrConnectRetry     = keepAlive.addTimer(mainSettings.tmrServerRetry);
+    keepAlive.stopTimer(tmrConnectRetry);
 
     bool bConnectToServer(false);
 
@@ -285,7 +287,15 @@ int main(int argc, char* argv[])
             globalLog << msg << "\n\n";
             if (restApi.getServicePID())
             {
+                if (restApi.isRetryError())
+                    globalLog << "Retry Error" << std::endl;
+                if (restApi.isWaitingResponse())
+                    globalLog << "Waiting for Response" << std::endl;
+                else
+                    globalLog << "Not waiting for Response" << std::endl;
                 globalLog << "Connection to Remote DB in " << keepAlive.millisecondsToMMSS(keepAlive.getUpdate(tmrConnectServer)) << " seconds" << std::endl;
+                globalLog << "Connection Retry Timer in " << keepAlive.millisecondsToMMSS(keepAlive.getUpdate(tmrConnectRetry)) << std::endl;
+                globalLog << "Times to Retry: " << nRetryCounter << std::endl;
                 globalLog << std::endl;
             }
             //globalLog << std::endl();
@@ -301,7 +311,7 @@ int main(int argc, char* argv[])
             bFirstTime          = true;
             bConnectToServer    = true;
             restApi.clearWaitingResponse();
-            keepAlive.resetTimer(tmrConnectRetry);
+            //keepAlive.resetTimer(tmrConnectRetry);
             fuelRegister.getRegisterList(restApi.getRegisterList());
             restApi.startConnection(fuelRegister.getMemberList());
         }
@@ -310,9 +320,11 @@ int main(int argc, char* argv[])
             if (!restApi.isWaitingResponse())
             {
                 keepAlive.resetTimer(tmrConnectRetry);
+                keepAlive.stopTimer(tmrConnectServer);
                 std::string strBody;
                 if (!restApi.isRegisterListEmpty())
                 {
+                    restApi.resetState();
                     restApi.getNextRegisterRequest(strBody);
                     SCCFileManager::writeFile(fuelRegister.getRegisterPath(), "registers.json", strBody);
                     auto itSck = socketMap.find(restApi.name());
@@ -326,7 +338,9 @@ int main(int argc, char* argv[])
                     std::string msg = sccPostMsg.makeMessage();
                     CSocket* pSck = itSck->second;
                     pSck->sendData(msg);
+                    globalLog << "Sending Registers to " << restApi.getUrlPostMethod() << std::endl;
                     restApi.setWaitingResponse();
+                    restApi.nextState();
                 }
                 else if (!restApi.isTableListEmpty())
                 {
@@ -336,13 +350,17 @@ int main(int argc, char* argv[])
                         break;
                     SCCCreateMessage sccPostMsg;
                     sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
-                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlGetMethod(restApi.getCurrentTableIndex()));
+                    int index = restApi.getCurrentTableIndex();
+                    std::string strUrlGet = restApi.getUrlGetMethod(index);
+                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, strUrlGet);
                     sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_GET);
                     sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
                     std::string msg = sccPostMsg.makeMessage();
                     CSocket* pSck = itSck->second;
                     pSck->sendData(msg);
+                    globalLog << "Asking Table" << index << " from " << strUrlGet << std::endl;
                     restApi.setWaitingResponse();
+                    restApi.nextState();
                 }
                 else
                 {
@@ -350,9 +368,17 @@ int main(int argc, char* argv[])
                     {
                         VehicleList.writeTable(restApi.getBodyFromTable(0));
                         UserList.writeTable(restApi.getBodyFromTable(1));
+                        globalLog << "Writing Tables" << std::endl;
+                        std::string strUrl = restApi.getUrlPostMethod();
+                        strUrl = "";
+                        restApi.setUrl(strUrl);
+                        restApi.nextState();
                     }
                     bConnectToServer = false;
                     keepAlive.stopTimer(tmrConnectRetry);
+                    keepAlive.resetTimer(tmrConnectServer);
+                    nRetryCounter = 0;
+                    restApi.clearRetryError();
                 }
             }
             /*else
@@ -361,6 +387,16 @@ int main(int argc, char* argv[])
             if (keepAlive.isTimerEvent(tmrConnectRetry))
             {
                 restApi.clearWaitingResponse();
+                //keepAlive.resetTimer(tmrConnectRetry);
+                ++nRetryCounter;
+                if (nRetryCounter >= mainSettings.nMaxServerRetry)
+                {
+                    keepAlive.stopTimer(tmrConnectRetry);
+                    keepAlive.resetTimer(tmrConnectServer);
+                    nRetryCounter = 0;
+                    bConnectToServer = 0;
+                    restApi.setRetryError();
+                }
             }
         }
 

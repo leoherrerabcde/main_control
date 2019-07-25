@@ -18,7 +18,7 @@ static std::list<std::string> st_TableList =
     //PARAM_TABLE_PROPIETARIOS,
 };
 
-SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData), m_bWaitResponse(false), m_TableIndex(0)
+SCCRemoteServer::SCCRemoteServer(const std::string& deviceName, bool bShowData) : Device(deviceName, bShowData), m_bWaitResponse(false), m_TableIndex(0), m_bRetryError(false)
 {
     //ctor
 }
@@ -178,11 +178,13 @@ bool SCCRemoteServer::processDataReceived(const std::string& msg)
                 {
                     removeRegisters();
                 }
+                globalLog << "Method Post Returned" << std::endl;
             }
             else if (strMethod == MSG_SERV_METHOD_GET)
             {
                 m_TableBody.push_back(strBody);
                 m_TableList.erase(m_TableList.begin());
+                globalLog << "Method Get Returned" << std::endl;
                 ++m_TableIndex;
             }
         }

@@ -32,6 +32,7 @@ class SCCRemoteServer : public Device
         virtual bool processDataReceived(const std::string& msg = "");
         std::string getUrlPostMethod();
         std::string getUrlGetMethod(int index);
+        void setUrl(std::string& strUrl) {m_urlApiRest = strUrl;}
         int getCurrentTableIndex() {return m_TableIndex;}
 
         bool isTableBody() {return !m_TableBody.empty();}
@@ -44,6 +45,10 @@ class SCCRemoteServer : public Device
 
         void setNumRegisterSent(int numRegs) {m_iNumRegisterSent = numRegs;}
         int getNumRegisterSent() {return m_iNumRegisterSent;}
+
+        bool isRetryError() {bool res(m_bRetryError); m_bRetryError = false; return res;}
+        void setRetryError() {m_bRetryError = true;}
+        void clearRetryError() {m_bRetryError = false;}
 
     protected:
 
@@ -67,6 +72,7 @@ class SCCRemoteServer : public Device
         std::string m_strIDDevice;
         std::vector<std::string> m_TableBody;
         std::string m_registerDestination;
+        bool m_bRetryError;
 };
 
 #endif // SCCREMOTESERVER_H

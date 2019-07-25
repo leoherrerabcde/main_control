@@ -11,14 +11,14 @@
 1556588184 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1562212693 /home/pi/Documents/source/main_control/device.h
+1564027187 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
 	"SCCLog.h"
 	"SCCDeviceNames.h"
 
-1562210372 /home/pi/Documents/source/main_control/MainCtrlSettings.h
+1564027076 /home/pi/Documents/source/main_control/MainCtrlSettings.h
 	<stdio.h>
 	<unordered_map>
 	"SCCDeviceNames.h"
@@ -27,7 +27,7 @@
 
 1557284937 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1562039886 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1564053996 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
@@ -109,7 +109,7 @@
 1556724624 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1563247503 source:/home/pi/Documents/source/main_control/main.cpp
+1564053605 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -146,7 +146,7 @@
 	<thread>
 	<vector>
 
-1562381860 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
+1564031362 source:/home/pi/Documents/source/main_control/MainCtrlSettings.cpp
 	"MainCtrlSettings.h"
 
 1556727617 source:/home/pi/Documents/source/main_control/mainstate.cpp
@@ -188,13 +188,13 @@
 
 1556854962 /home/pi/Documents/source/main_control/SCCDeviceParams.h
 
-1556741801 /home/pi/Documents/source/main_control/SCCRemoteServer.h
+1564031925 /home/pi/Documents/source/main_control/SCCRemoteServer.h
 	"device.h"
 	"SCCDeviceParams.h"
 	<list>
 	<vector>
 
-1556850308 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
+1564031799 source:/home/pi/Documents/source/main_control/SCCRemoteServer.cpp
 	"SCCRemoteServer.h"
 	"SCCLog.h"
 	"SCCDeviceParams.h"

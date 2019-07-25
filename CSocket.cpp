@@ -5,6 +5,7 @@
 
 
 //extern std::string globalMyDeviceName;
+extern SCCLog globalLog;
 
 
 static std::vector<std::string> stErrorDescriptList = {
@@ -426,6 +427,7 @@ bool CSocket::sendData(std::string msg)
                 //cerr << "Error sending IDs: " << errno << "  " << strerror(errno) << endl;
                 //throwError(__LINE__, SocketDisconected);
                 disconnect();
+                globalLog << "Socket " << m_strSckName << " Disconnected" << std::endl;
                 return false;
             }
             tries = 0;

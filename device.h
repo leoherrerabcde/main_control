@@ -85,6 +85,11 @@ public:
     bool searchPIDService(std::list<int>& pidList);
     bool isServiceRunning();
 
+    void setState(int nState) {m_iState = nState;}
+    int getState() {return m_iState;}
+    void nextState() {++m_iState;}
+    void resetState(int nState = 0) {m_iState = nState;}
+
 protected:
 
     virtual void pushData(const std::string& msg) {m_strBuffer += msg;}
@@ -111,6 +116,7 @@ protected:
     int         m_iBaudRate;
     int         m_iRemotePort;
     int         m_TimerHnd;
+    int         m_iState;
 };
 
 #endif // DEVICE_H

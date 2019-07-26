@@ -38,6 +38,8 @@ int Device::launchService()
     {
         m_bLaunchingService = false;
         m_bServiceLaunched = true;
+        m_strServiceCmd = m_strServicePathName; // + " " + m_strServiceArgs;
+
         return launchService(m_strServicePathName, m_strServiceArgs);
     }
     return 0;
@@ -341,10 +343,14 @@ void Device::removeComPort(std::list<int>& portList, int port)
 
 bool Device::isServiceRunning()
 {
-    std::string cmd(std::string("pidof ")+m_strServiceName);
+    std::string cmd(std::string("pidof ") + m_strServiceCmd /*m_strServiceName*/);
 	std::string strPid = popenQuickService(cmd);
 
-	return (strPid != "");
+	int iPid = atoi(strPid.c_str());
+	if (m_pidService)
+        return (iPid == m_pidService);
+    else
+        return (strPid != "");
 }
 
 bool Device::searchPIDService(std::list<int>& pidList)
@@ -385,7 +391,7 @@ bool Device::killService()
     std::list<int> pidList;
     searchPIDService(pidList);
 
-    if (m_pidService)
+    if (m_pidService && isServiceRunning())
         pidList.push_back(m_pidService);
     // Getting subprocess
     std::list<int> subPidList;

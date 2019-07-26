@@ -14,7 +14,7 @@ static std::list<std::string> st_DeviceOrder =
 bool proccesNewConnection(CSocket& sckServer, MainCtrlSettings& settings, std::list<CSocket*>& socketList)
 {
     //static bool bStartUp = true;
-    if (sckServer.getState() == sckHostResolved)
+    if (sckServer.getSocketState() == sckHostResolved)
     {
         CSocket* newClient = sckServer.getSocket();
         newClient->setBufferSize(settings.sckBufferSize);
@@ -210,7 +210,11 @@ void fuelTransactionTimeOut()
 {
 }
 
-bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::string,Device*> & dvcList, std::list<std::string>& deviceList, SCCAlive& keepAlive)
+bool verifyDeviceTimer(std::list<CSocket*>& socketList,
+                    std::unordered_map<std::string,Device*> & dvcList,
+                    std::list<std::string>& pendingDeviceList,
+                    SCCAlive& keepAlive,
+                    std::unordered_map<std::string,CSocket*>& socketMap)
 {
     for (auto it = socketList.begin(); it != socketList.end();)
     {
@@ -219,23 +223,33 @@ bool verifyDeviceTimer(std::list<CSocket*>& socketList, std::unordered_map<std::
         if (itDvc != dvcList.end())
         {
             Device* pDevice = itDvc->second;
-            if (!itSck->isConnected())
+            if (!itSck->isConnected() ||
+                itSck->getSocketState() != SocketState::sckConnected ||
+                !pDevice->isServiceRunning())
             {
                 pDevice->disconnect();
                 itSck->disconnect();
                 it = socketList.erase(it);
-                deviceList.push_back(pDevice->name());
+                delete itSck;
+                auto itSckMap = socketMap.find(pDevice->name());
+                if (itSckMap != socketMap.end())
+                    socketMap.erase(itSckMap);
+                pendingDeviceList.push_back(pDevice->name());
                 continue;
             }
             else
             {
-                int tmrDvc = pDevice->getTimerHandler();
+                //int tmrDvc = pDevice->getTimerHandler();
                 if (keepAlive.isTimerEvent(pDevice->getTimerHandler()))
                 {
                     pDevice->disconnect();
                     itSck->disconnect();
                     it = socketList.erase(it);
-                    deviceList.push_back(pDevice->name());
+                    delete itSck;
+                    auto itSckMap = socketMap.find(pDevice->name());
+                    if (itSckMap != socketMap.end())
+                        socketMap.erase(itSckMap);
+                    pendingDeviceList.push_back(pDevice->name());
                     continue;
                 }
             }

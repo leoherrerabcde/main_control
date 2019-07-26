@@ -147,7 +147,8 @@ void CSocket::throwError(const int line, const int sockErrCode)
         printError(sockErrCode);
         //SCCLog.print("");
         //throw(strerror(sockErrCode));
-        disconnect();
+        //disconnect();
+        socketClose();
     }
 }
 
@@ -324,16 +325,26 @@ bool CSocket::connecting()
 
 void CSocket::runRcvLoop()
 {
-    if (getState() == sckConnected)
+    if (getSocketState() == sckConnected)
         m_pReceivingThread = new std::thread(&CSocket::receivingLoop, this);
+}
+
+void CSocket::socketClose()
+{
+    if (m_sckState != sckClosed)
+    {
+        close(sockfd);
+        setState(sckClosed);
+    }
 }
 
 void CSocket::disconnect()
 {
     if (m_sckState != sckClosed)
     {
-        close(sockfd);
-        setState(sckClosed);
+        /*close(sockfd);
+        setState(sckClosed);*/
+        socketClose();
         if (m_pListeningThread != NULL && !m_bConnected)
         {
             m_pListeningThread->join();

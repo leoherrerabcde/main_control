@@ -11,7 +11,7 @@
 1556588184 /home/pi/Documents/source/main_control/commgsm.h
 	"device.h"
 
-1564079149 /home/pi/Documents/source/main_control/device.h
+1564115009 /home/pi/Documents/source/main_control/device.h
 	<string>
 	<list>
 	"MainCtrlSettings.h"
@@ -27,12 +27,12 @@
 
 1557284937 /home/pi/Documents/source/main_control/SCCDeviceNames.h
 
-1564053996 source:/home/pi/Documents/source/main_control/CSocket.cpp
+1564112616 source:/home/pi/Documents/source/main_control/CSocket.cpp
 	"CSocket.h"
 	"SCCLog.h"
 	<vector>
 
-1564070757 /home/pi/Documents/source/main_control/CSocket.h
+1564112547 /home/pi/Documents/source/main_control/CSocket.h
 	<iostream>
 	<future>
 	<functional>
@@ -53,11 +53,12 @@
 	<sys/signal.h>
 	<mutex>
 
-1556588188 /home/pi/Documents/source/main_control/SCCLog.h
+1564145783 /home/pi/Documents/source/main_control/SCCLog.h
 	<string>
 	<ostream>
+	"SCCFileManager.h"
 
-1564079494 source:/home/pi/Documents/source/main_control/device.cpp
+1564116557 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"
@@ -109,7 +110,7 @@
 1556724624 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1564053605 source:/home/pi/Documents/source/main_control/main.cpp
+1564144665 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"
@@ -176,13 +177,13 @@
 	"SCCDisplay.h"
 	<iostream>
 
-1563247448 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
+1564107693 source:/home/pi/Documents/source/main_control/SCCAlive.cpp
 	"SCCAlive.h"
 	"SCCLog.h"
 	<iostream>
 	<iomanip>
 
-1556588188 source:/home/pi/Documents/source/main_control/SCCLog.cpp
+1564145795 source:/home/pi/Documents/source/main_control/SCCLog.cpp
 	"SCCLog.h"
 	<iostream>
 
@@ -456,7 +457,7 @@
 
 1556588188 /home/pi/Documents/source/main_control/SCCGeneralDefines.h
 
-1562293195 /home/pi/Documents/source/main_control/main_functions.h
+1564144569 /home/pi/Documents/source/main_control/main_functions.h
 	<iostream>
 	<unistd.h>
 	<unordered_map>
@@ -478,7 +479,7 @@
 	"SCCCreateMessage.h"
 	"SCCFuelTransaction.h"
 
-1562295770 source:/home/pi/Documents/source/main_control/main_functions.cpp
+1564144630 source:/home/pi/Documents/source/main_control/main_functions.cpp
 	"main_functions.h"
 
 1556588188 /home/pi/Documents/source/main_control/SCCDisplay.h

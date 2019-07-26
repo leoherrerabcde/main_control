@@ -110,6 +110,7 @@ protected:
     std::string m_strServicePathName;
     std::string m_strServiceArgs;
     std::string m_strServiceName;
+    std::string m_strServiceCmd;
 
     int         m_iAliveCounter;
     bool        m_bServiceAlive;

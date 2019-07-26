@@ -89,7 +89,7 @@ class CSocket
         void setIDClient(const std::string& name = "") {m_strID = name;}
 
         void setState(SocketState newState, const std::string& msg = "");
-        SocketState getState() const {return m_sckState;}
+        //SocketState getState() const {return m_sckState;}
 
         void setConnected() { m_bConnected = true; }
         int getSocketHdl() const {return sockfd;};
@@ -104,6 +104,7 @@ class CSocket
         void connect();
         void connect(const std::string& remoteHost, const int& remotePort);
         void disconnect();
+        void socketClose();
 
         bool sendData(std::string msg);
         std::string getData();

@@ -8,7 +8,8 @@
 
 SCCLog::~SCCLog()
 {
-    //dtor
+    /*if (m_bLogEn && m_bLogOpened)
+        m_fmLogFile.close();*/
 }
 
 void SCCLog::print(const std::string& msg)

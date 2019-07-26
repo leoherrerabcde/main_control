@@ -149,11 +149,7 @@ int main(int argc, char* argv[])
     int tmrFuelTransaction = keepAlive.addTimer(30000);
     int tmrAuthorizedVehicle = keepAlive.addTimer(10000);
     keepAlive.stopTimer(tmrAuthorizedVehicle);
-    //int tmrServiceLaunched = 0;
 
-    /*SCCFileManager newRegPath(fuelRegister.getRegisterPath());
-    newRegPath << fuelRegister.getRegisterNewPath();
-    restApi.setRegisterPath(std::string(newRegPath.str()));*/
     restApi.setDestinationPath(fuelRegister.getRegHistoPath());
     if (strNumRegToSent != "")
         restApi.setNumRegisterSent(stoi(strNumRegToSent));
@@ -172,8 +168,7 @@ int main(int argc, char* argv[])
     globalLog << "Main Loop Started." << std::endl;
 
     socketServer.listen();
-    bool bFirstTime = true;
-    //bool bWaitingConnection = true;
+    bool bConnectImmediately = false;
 
     std::list<std::string> DeviceToLaunchList =
     {
@@ -222,8 +217,6 @@ int main(int argc, char* argv[])
         }
         if (processDataNewClients(socketNewClientList, socketClientList, deviceList, onTheFlyDeviceList, socketMap, portList))
         {
-            //bFirstTime = false;
-            //tmrLaunchService
             keepAlive.resetTimer(tmrLaunchService);
             strDeviceLaunched = verifyDeviceService(DeviceToLaunchList, deviceList, portList, bLaunchDisable);
             if (strDeviceLaunched == "")
@@ -276,10 +269,10 @@ int main(int argc, char* argv[])
             }
         }
         processDataClients(socketClientList, deviceList, keepAlive);
-        verifyDeviceTimer(socketClientList, deviceList, DeviceToLaunchList, keepAlive);
 
         if (keepAlive.isTimerEvent(mainTmr))
         {
+            verifyDeviceTimer(socketClientList, deviceList, DevicePendingToLaunchList, keepAlive, socketMap);
             //sendAliveMessage(socketClientList, deviceList);
             std::string msg;
             msg = aliveMsg(deviceList, socketMap);
@@ -304,100 +297,108 @@ int main(int argc, char* argv[])
         {
             sendRequestTable(socketClientList, deviceList);
         }
-        /*if (!restApi.getServicePID())
-            bFirstTime = false;*/
-        if (restApi.getServicePID() && (keepAlive.isTimerEvent(tmrConnectServer) || !bFirstTime))
+
+        if (restApi.getServicePID())
         {
-            bFirstTime          = true;
-            bConnectToServer    = true;
-            restApi.clearWaitingResponse();
-            //keepAlive.resetTimer(tmrConnectRetry);
-            fuelRegister.getRegisterList(restApi.getRegisterList());
-            restApi.startConnection(fuelRegister.getMemberList());
-        }
-        if (bConnectToServer)
-        {
-            if (!restApi.isWaitingResponse())
+            if (keepAlive.isTimerEvent(tmrConnectServer) || bConnectImmediately)
             {
-                keepAlive.resetTimer(tmrConnectRetry);
-                keepAlive.stopTimer(tmrConnectServer);
-                std::string strBody;
-                if (!restApi.isRegisterListEmpty())
-                {
-                    restApi.resetState();
-                    restApi.getNextRegisterRequest(strBody);
-                    SCCFileManager::writeFile(fuelRegister.getRegisterPath(), "registers.json", strBody);
-                    auto itSck = socketMap.find(restApi.name());
-                    if (itSck == socketMap.end())
-                        break;
-                    SCCCreateMessage sccPostMsg;
-                    sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
-                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlPostMethod());
-                    sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_POST);
-                    sccPostMsg.addBody(MSG_SERV_BODY_HEADER, strBody);
-                    std::string msg = sccPostMsg.makeMessage();
-                    CSocket* pSck = itSck->second;
-                    pSck->sendData(msg);
-                    globalLog << "Sending Registers to " << restApi.getUrlPostMethod() << std::endl;
-                    restApi.setWaitingResponse();
-                    restApi.nextState();
-                }
-                else if (!restApi.isTableListEmpty())
-                {
-                    restApi.getNextTableRequest(strBody);
-                    auto itSck = socketMap.find(restApi.name());
-                    if (itSck == socketMap.end())
-                        break;
-                    SCCCreateMessage sccPostMsg;
-                    sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
-                    int index = restApi.getCurrentTableIndex();
-                    std::string strUrlGet = restApi.getUrlGetMethod(index);
-                    sccPostMsg.addParam(MSG_SERV_URL_HEADER, strUrlGet);
-                    sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_GET);
-                    sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
-                    std::string msg = sccPostMsg.makeMessage();
-                    CSocket* pSck = itSck->second;
-                    pSck->sendData(msg);
-                    globalLog << "Asking Table" << index << " from " << strUrlGet << std::endl;
-                    restApi.setWaitingResponse();
-                    restApi.nextState();
-                }
-                else
-                {
-                    if (restApi.isTableBody())
-                    {
-                        VehicleList.writeTable(restApi.getBodyFromTable(0));
-                        UserList.writeTable(restApi.getBodyFromTable(1));
-                        globalLog << "Writing Tables" << std::endl;
-                        std::string strUrl = restApi.getUrlPostMethod();
-                        strUrl = "";
-                        restApi.setUrl(strUrl);
-                        restApi.nextState();
-                    }
-                    bConnectToServer = false;
-                    keepAlive.stopTimer(tmrConnectRetry);
-                    keepAlive.resetTimer(tmrConnectServer);
-                    nRetryCounter = 0;
-                    restApi.clearRetryError();
-                }
-            }
-            /*else
-            {
-            }*/
-            if (keepAlive.isTimerEvent(tmrConnectRetry))
-            {
+                bConnectImmediately = false;
+                bConnectToServer    = true;
                 restApi.clearWaitingResponse();
                 //keepAlive.resetTimer(tmrConnectRetry);
-                ++nRetryCounter;
-                if (nRetryCounter >= mainSettings.nMaxServerRetry)
+                fuelRegister.getRegisterList(restApi.getRegisterList());
+                restApi.startConnection(fuelRegister.getMemberList());
+            }
+            if (bConnectToServer)
+            {
+                if (!restApi.isWaitingResponse())
                 {
-                    keepAlive.stopTimer(tmrConnectRetry);
-                    keepAlive.resetTimer(tmrConnectServer);
-                    nRetryCounter = 0;
-                    bConnectToServer = 0;
-                    restApi.setRetryError();
+                    keepAlive.resetTimer(tmrConnectRetry);
+                    keepAlive.stopTimer(tmrConnectServer);
+                    std::string strBody;
+                    if (!restApi.isRegisterListEmpty())
+                    {
+                        restApi.resetState();
+                        restApi.getNextRegisterRequest(strBody);
+                        SCCFileManager::writeFile(fuelRegister.getRegisterPath(), "registers.json", strBody);
+                        auto itSck = socketMap.find(restApi.name());
+                        if (itSck == socketMap.end())
+                            break;
+                        SCCCreateMessage sccPostMsg;
+                        sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
+                        sccPostMsg.addParam(MSG_SERV_URL_HEADER, restApi.getUrlPostMethod());
+                        sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_POST);
+                        sccPostMsg.addBody(MSG_SERV_BODY_HEADER, strBody);
+                        std::string msg = sccPostMsg.makeMessage();
+                        CSocket* pSck = itSck->second;
+                        pSck->sendData(msg);
+                        globalLog << "Sending Registers to " << restApi.getUrlPostMethod() << std::endl;
+                        restApi.setWaitingResponse();
+                        restApi.nextState();
+                    }
+                    else if (!restApi.isTableListEmpty())
+                    {
+                        restApi.getNextTableRequest(strBody);
+                        auto itSck = socketMap.find(restApi.name());
+                        if (itSck == socketMap.end())
+                            break;
+                        SCCCreateMessage sccPostMsg;
+                        sccPostMsg.addParam(MSG_HEADER_TYPE, DEVICE_REST_SERVICE);
+                        int index = restApi.getCurrentTableIndex();
+                        std::string strUrlGet = restApi.getUrlGetMethod(index);
+                        sccPostMsg.addParam(MSG_SERV_URL_HEADER, strUrlGet);
+                        sccPostMsg.addParam(MSG_SERV_METHOD_HEADER, MSG_SERV_METHOD_GET);
+                        sccPostMsg.addParam(MSG_SERV_BODY_HEADER, strBody);
+                        std::string msg = sccPostMsg.makeMessage();
+                        CSocket* pSck = itSck->second;
+                        pSck->sendData(msg);
+                        globalLog << "Asking Table" << index << " from " << strUrlGet << std::endl;
+                        restApi.setWaitingResponse();
+                        restApi.nextState();
+                    }
+                    else
+                    {
+                        if (restApi.isTableBody())
+                        {
+                            VehicleList.writeTable(restApi.getBodyFromTable(0));
+                            UserList.writeTable(restApi.getBodyFromTable(1));
+                            globalLog << "Writing Tables" << std::endl;
+                            std::string strUrl = restApi.getUrlPostMethod();
+                            strUrl = "";
+                            restApi.setUrl(strUrl);
+                            restApi.nextState();
+                        }
+                        bConnectToServer = false;
+                        keepAlive.stopTimer(tmrConnectRetry);
+                        keepAlive.resetTimer(tmrConnectServer);
+                        nRetryCounter = 0;
+                        restApi.clearRetryError();
+                    }
+                }
+                /*else
+                {
+                }*/
+                if (keepAlive.isTimerEvent(tmrConnectRetry))
+                {
+                    restApi.clearWaitingResponse();
+                    //keepAlive.resetTimer(tmrConnectRetry);
+                    ++nRetryCounter;
+                    if (nRetryCounter >= mainSettings.nMaxServerRetry)
+                    {
+                        keepAlive.stopTimer(tmrConnectRetry);
+                        keepAlive.resetTimer(tmrConnectServer);
+                        nRetryCounter = 0;
+                        bConnectToServer = 0;
+                        restApi.setRetryError();
+                    }
                 }
             }
+        }
+        else
+        {
+            keepAlive.stopTimer(tmrConnectRetry);
+            keepAlive.stopTimer(tmrConnectServer);
+            bConnectImmediately = true;
         }
 
         if (bSleep == true)

@@ -58,7 +58,7 @@
 	<ostream>
 	"SCCFileManager.h"
 
-1564116557 source:/home/pi/Documents/source/main_control/device.cpp
+1564148160 source:/home/pi/Documents/source/main_control/device.cpp
 	"device.h"
 	"SCCLog.h"
 	"SCCFileManager.h"
@@ -110,7 +110,7 @@
 1556724624 /home/pi/Documents/source/main_control/mainstate.h
 	"SCCStateVar.h"
 
-1564144665 source:/home/pi/Documents/source/main_control/main.cpp
+1564185223 source:/home/pi/Documents/source/main_control/main.cpp
 	"commgsm.h"
 	"electrovalvctrl.h"
 	"rfidboquilla.h"

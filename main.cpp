@@ -363,9 +363,9 @@ int main(int argc, char* argv[])
                             VehicleList.writeTable(restApi.getBodyFromTable(0));
                             UserList.writeTable(restApi.getBodyFromTable(1));
                             globalLog << "Writing Tables" << std::endl;
-                            std::string strUrl = restApi.getUrlPostMethod();
+                            /*std::string strUrl = restApi.getUrlPostMethod();
                             strUrl = "";
-                            restApi.setUrl(strUrl);
+                            restApi.setUrl(strUrl);*/
                             restApi.nextState();
                         }
                         bConnectToServer = false;

@@ -131,6 +131,9 @@ class CSocket
         void printError(const SocketError& sockErrCode, const std::string& strErrorMsg = "");
         void printError(const int& sockErrCode, const std::string& strErrorMsg = "");
 
+        char* allocateBuffer(char* pBuf, size_t size);
+        void deallocateBuffer(char* pBuf);
+
     private:
 
         int enableKeepAlive(const int sock);

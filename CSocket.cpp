@@ -46,7 +46,8 @@ CSocket::CSocket(const std::string& hostName, const unsigned int port, const siz
     m_sckState(sckClosed)
 {
     //ctor
-    m_pRcvBuffer = new char[m_iBufferSize];
+    //m_pRcvBuffer = new char[m_iBufferSize];
+    m_pRcvBuffer = allocateBuffer(NULL, m_iBufferSize);
 }
 
 CSocket::CSocket(const int sock, const size_t bufferSize)
@@ -59,14 +60,16 @@ CSocket::CSocket(const int sock, const size_t bufferSize)
     m_sckState(sckConnected)
 {
     //ctor
-    if (m_iBufferSize)
-        m_pRcvBuffer = new char[m_iBufferSize];
+    //if (m_iBufferSize)
+        //m_pRcvBuffer = new char[m_iBufferSize];
+    m_pRcvBuffer = allocateBuffer(NULL, m_iBufferSize);
 }
 
 CSocket::CSocket()
 : m_pListeningThread(NULL),
     m_pReceivingThread(NULL),
     m_bConnected(false),
+    m_pRcvBuffer(NULL),
     m_iBufferSize(0),
     m_sckError(NoError) ,
     m_sckState(sckClosed)
@@ -88,6 +91,21 @@ void CSocket::clearBuffer()
         delete [] m_pRcvBuffer;
         m_iBufferSize = 0;
     }
+}
+
+char* CSocket::allocateBuffer(char* pBuf, size_t size)
+{
+    deallocateBuffer(pBuf);
+    if (size)
+        pBuf = new char[size];
+    else
+        pBuf = NULL;
+    return pBuf;
+}
+
+void CSocket::deallocateBuffer(char* pBuf)
+{
+    delete [] pBuf;
 }
 
 std::string CSocket::getStateDescript()
@@ -163,7 +181,8 @@ void CSocket::setBufferSize(const size_t iBufferSize)
 {
     clearBuffer();
     m_iBufferSize = iBufferSize;
-    m_pRcvBuffer = new char[m_iBufferSize];
+    //m_pRcvBuffer = new char[m_iBufferSize];
+    m_pRcvBuffer = allocateBuffer(m_pRcvBuffer, m_iBufferSize);
 }
 
 void CSocket::init()

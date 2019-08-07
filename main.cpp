@@ -19,7 +19,7 @@
 #include "SCCFuelTransaction.h"*/
 
 #include "main_functions.h"
-#include "SCCDisplay.h"
+//#include "SCCDisplay.h"
 #include "SCCDeviceParams.h"
 #include "../commPort/SCCRealTime.h"
 #include "main_fuel_manage.h"
@@ -32,7 +32,7 @@
 using namespace std;
 
 
-SCCDisplay glDisplay;
+//SCCDisplay glDisplay;
 SCCLog  globalLog(std::cout);
 bool    gl_bVerbose(true);
 

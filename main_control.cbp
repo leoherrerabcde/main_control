@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/main_control" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="../../bin/Debug/main_control" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -99,8 +99,6 @@
 		<Unit filename="SCCDeviceNames.h" />
 		<Unit filename="SCCDeviceParams.h" />
 		<Unit filename="SCCDeviceVars.h" />
-		<Unit filename="SCCDisplay.cpp" />
-		<Unit filename="SCCDisplay.h" />
 		<Unit filename="SCCFileManager.cpp" />
 		<Unit filename="SCCFileManager.h" />
 		<Unit filename="SCCFlowmeter.cpp" />
@@ -108,8 +106,6 @@
 		<Unit filename="SCCFuelTransaction.cpp" />
 		<Unit filename="SCCFuelTransaction.h" />
 		<Unit filename="SCCGeneralDefines.h" />
-		<Unit filename="SCCKeyboard.cpp" />
-		<Unit filename="SCCKeyboard.h" />
 		<Unit filename="SCCLog.cpp" />
 		<Unit filename="SCCLog.h" />
 		<Unit filename="SCCRemoteServer.cpp" />

@@ -1,11 +1,11 @@
 #include "rfiduser.h"
 #include "SCCLog.h"
 #include "SCCDeviceVars.h"
-#include "SCCDisplay.h"
+//#include "SCCDisplay.h"
 
 #include <iostream>
 
-extern SCCDisplay glDisplay;
+//extern SCCDisplay glDisplay;
 extern SCCLog globalLog;
 
 RFIDUser::RFIDUser(const std::string& deviceName, bool bShowdata) : Device(deviceName, bShowdata), m_bCardDetected(false)

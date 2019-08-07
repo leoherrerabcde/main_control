@@ -517,3 +517,485 @@
 	"main_fuel_manage.h"
 	"main_functions.h"
 
+1565061357 source:/home/pi/paltech/petrosure/petrobox/source/commPort/SCCArgumentParser.cpp
+	"SCCArgumentParser.h"
+
+1565061357 /home/pi/paltech/petrosure/petrobox/source/commPort/SCCArgumentParser.h
+	<unordered_map>
+
+1565061357 source:/home/pi/paltech/petrosure/petrobox/source/commPort/SCCRealTime.cpp
+	"SCCRealTime.h"
+	<ctime>
+	<sstream>
+	<iomanip>
+
+1565061357 /home/pi/paltech/petrosure/petrobox/source/commPort/SCCRealTime.h
+	<iostream>
+
+1565061461 source:/home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjsonTest.cpp
+	"JsonParser.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/JsonParser.h
+	"rapidjson/document.h"
+	"rapidjson/writer.h"
+	"rapidjson/stringbuffer.h"
+	"rapidjson/prettywriter.h"
+	<cstdio>
+	<iostream>
+	<iostream>
+	<unordered_map>
+	<set>
+	<list>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/document.h
+	"reader.h"
+	"internal/meta.h"
+	"internal/strfunc.h"
+	"memorystream.h"
+	"encodedstream.h"
+	<new>
+	<limits>
+	<iterator>
+	<utility>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/reader.h
+	"allocators.h"
+	"stream.h"
+	"encodedstream.h"
+	"internal/meta.h"
+	"internal/stack.h"
+	"internal/strtod.h"
+	<limits>
+	<intrin.h>
+	<nmmintrin.h>
+	<emmintrin.h>
+	<arm_neon.h>
+	<stdexcept>
+	"rapidjson/error/error.h"
+	"rapidjson/reader.h"
+	"error/error.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/allocators.h
+	"rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/rapidjson.h
+	<cstdlib>
+	<cstring>
+	"rapidjson/..."
+	<string>
+	"msinttypes/stdint.h"
+	"msinttypes/inttypes.h"
+	<stdint.h>
+	<inttypes.h>
+	<endian.h>
+	"rapidjson/..."
+	<cassert>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/msinttypes/stdint.h
+	<stdint.h>
+	<limits.h>
+	<wchar.h>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/msinttypes/inttypes.h
+	"stdint.h"
+	<inttypes.h>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/stream.h
+	"rapidjson.h"
+	"encodings.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/encodings.h
+	"rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/encodedstream.h
+	"stream.h"
+	"memorystream.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/memorystream.h
+	"stream.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/meta.h
+	"../rapidjson.h"
+	<type_traits>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/stack.h
+	"../allocators.h"
+	"swap.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/swap.h
+	"../rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/strtod.h
+	"ieee754.h"
+	"biginteger.h"
+	"diyfp.h"
+	"pow10.h"
+	<climits>
+	<limits>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/ieee754.h
+	"../rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/biginteger.h
+	"../rapidjson.h"
+	<intrin.h>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/diyfp.h
+	"../rapidjson.h"
+	<limits>
+	<intrin.h>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/pow10.h
+	"../rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/error/error.h
+	"../rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/strfunc.h
+	"../stream.h"
+	<cwchar>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/writer.h
+	"stream.h"
+	"internal/meta.h"
+	"internal/stack.h"
+	"internal/strfunc.h"
+	"internal/dtoa.h"
+	"internal/itoa.h"
+	"stringbuffer.h"
+	<new>
+	<intrin.h>
+	<nmmintrin.h>
+	<emmintrin.h>
+	<arm_neon.h>
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/dtoa.h
+	"itoa.h"
+	"diyfp.h"
+	"ieee754.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/internal/itoa.h
+	"../rapidjson.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/stringbuffer.h
+	"stream.h"
+	"internal/stack.h"
+	<utility>
+	"internal/stack.h"
+
+1565061461 /home/pi/paltech/petrosure/petrobox/source/jsonParser/rapidjson/prettywriter.h
+	"writer.h"
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/commgsm.cpp
+	"commgsm.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/commgsm.h
+	"device.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/device.h
+	<string>
+	<list>
+	"MainCtrlSettings.h"
+	"SCCLog.h"
+	"SCCDeviceNames.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/MainCtrlSettings.h
+	<stdio.h>
+	<unordered_map>
+	"SCCDeviceNames.h"
+	"SCCDeviceParams.h"
+	"../commPort/SCCArgumentParser.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCDeviceNames.h
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCDeviceParams.h
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCLog.h
+	<string>
+	<ostream>
+	"SCCFileManager.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCFileManager.h
+	<string>
+	<sstream>
+	<list>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/CSocket.cpp
+	"CSocket.h"
+	"SCCLog.h"
+	<vector>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/CSocket.h
+	<iostream>
+	<future>
+	<functional>
+	<queue>
+	<thread>
+	<pthread.h>
+	<errno.h>
+	<string.h>
+	<strings.h>
+	<sys/socket.h>
+	<netinet/in.h>
+	<netinet/tcp.h>
+	<arpa/inet.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<netdb.h>
+	<unistd.h>
+	<sys/signal.h>
+	<mutex>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/device.cpp
+	"device.h"
+	"SCCLog.h"
+	"SCCFileManager.h"
+	<stdlib.h>
+	<sstream>
+	<cstring>
+	<vector>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/electrovalvctrl.cpp
+	"electrovalvctrl.h"
+	"SCCLog.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/electrovalvctrl.h
+	"device.h"
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/IDList.cpp
+	"IDList.h"
+	"SCCFileManager.h"
+	"SCCLog.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/IDList.h
+	"MainCtrlSettings.h"
+	"../jsonParser/JsonParser.h"
+	<map>
+	<unordered_map>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/lucesestado.cpp
+	"lucesestado.h"
+	"SCCLog.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/lucesestado.h
+	"device.h"
+	"mainstate.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/mainstate.h
+	"SCCStateVar.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCStateVar.h
+
+1565062473 source:/home/pi/paltech/petrosure/petrobox/source/jsonParser/JsonParser.cpp
+	"JsonParser.h"
+	"../main_control/SCCFileManager.h"
+	"../main_control/device.h"
+	<fstream>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/main_fuel_manage.cpp
+	"main_fuel_manage.h"
+	"main_functions.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/main_fuel_manage.h
+	"electrovalvctrl.h"
+	"rfidboquilla.h"
+	"rfiduser.h"
+	"mainstate.h"
+	"IDList.h"
+	"MainCtrlSettings.h"
+	"CSocket.h"
+	"SCCLog.h"
+	"SCCAlive.h"
+	"SCCRemoteServer.h"
+	"SCCFlowmeter.h"
+	"SCCDeviceNames.h"
+	"SCCCreateMessage.h"
+	"SCCFuelTransaction.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/rfidboquilla.h
+	"device.h"
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/rfiduser.h
+	"device.h"
+	"../rfidUser/SCCRfidUserProtocol.h"
+
+1565061626 /home/pi/paltech/petrosure/petrobox/source/rfidUser/SCCRfidUserProtocol.h
+	<vector>
+	<list>
+	<unordered_map>
+	<queue>
+	<cstring>
+	<sstream>
+	<iomanip>
+	<locale>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCAlive.h
+	<chrono>
+	<thread>
+	<vector>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCRemoteServer.h
+	"device.h"
+	"SCCDeviceParams.h"
+	<list>
+	<vector>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCFlowmeter.h
+	"device.h"
+	"../flowmCom/SCCFlowProtocol.h"
+
+1565061412 /home/pi/paltech/petrosure/petrobox/source/flowmCom/SCCFlowProtocol.h
+	<vector>
+	<list>
+	<unordered_map>
+	<queue>
+	<cstring>
+	<sstream>
+	<iomanip>
+	<locale>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCCreateMessage.h
+	"../commPort/SCCArgumentParser.h"
+	<list>
+	<utility>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCFuelTransaction.h
+	"device.h"
+	"SCCFileManager.h"
+	"../commPort/SCCRealTime.h"
+	<chrono>
+	<list>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/main_functions.h
+	<iostream>
+	<unistd.h>
+	<unordered_map>
+	<list>
+	"lucesestado.h"
+	"commgsm.h"
+	"electrovalvctrl.h"
+	"rfidboquilla.h"
+	"rfiduser.h"
+	"mainstate.h"
+	"IDList.h"
+	"MainCtrlSettings.h"
+	"CSocket.h"
+	"SCCLog.h"
+	"SCCAlive.h"
+	"SCCRemoteServer.h"
+	"SCCFlowmeter.h"
+	"SCCDeviceNames.h"
+	"SCCCreateMessage.h"
+	"SCCFuelTransaction.h"
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/main_functions.cpp
+	"main_functions.h"
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/MainCtrlSettings.cpp
+	"MainCtrlSettings.h"
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/mainstate.cpp
+	"mainstate.h"
+	"SCCLog.h"
+	"../commPort/SCCRealTime.h"
+	<unordered_map>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/rfidboquilla.cpp
+	"rfidboquilla.h"
+	"SCCLog.h"
+	"../commPort/SCCWirelessRcvrProtocol.h"
+	<sstream>
+	<iostream>
+
+1565061357 /home/pi/paltech/petrosure/petrobox/source/commPort/SCCWirelessRcvrProtocol.h
+	<vector>
+	<list>
+	<unordered_map>
+	<queue>
+	<cstring>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCAlive.cpp
+	"SCCAlive.h"
+	"SCCLog.h"
+	<iostream>
+	<iomanip>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCCreateMessage.cpp
+	"SCCCreateMessage.h"
+	<sstream>
+
+1565062562 source:/home/pi/paltech/petrosure/petrobox/source/main_control/rfiduser.cpp
+	"rfiduser.h"
+	"SCCLog.h"
+	"SCCDeviceVars.h"
+	<iostream>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCDeviceVars.h
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCFileManager.cpp
+	"SCCFileManager.h"
+	"SCCLog.h"
+	<iostream>
+	<fstream>
+	<sys/stat.h>
+	<unistd.h>
+	<sys/types.h>
+	<dirent.h>
+	<cstring>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCFlowmeter.cpp
+	"SCCFlowmeter.h"
+	<sstream>
+	<iostream>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCFuelTransaction.cpp
+	"SCCFuelTransaction.h"
+	"SCCLog.h"
+	"../commPort/SCCRealTime.h"
+	"SCCDeviceVars.h"
+	"SCCGeneralDefines.h"
+	"../jsonParser/JsonParser.h"
+	<set>
+	<list>
+
+1565061482 /home/pi/paltech/petrosure/petrobox/source/main_control/SCCGeneralDefines.h
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCLog.cpp
+	"SCCLog.h"
+	<iostream>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCRemoteServer.cpp
+	"SCCRemoteServer.h"
+	"SCCLog.h"
+	"SCCDeviceParams.h"
+	"SCCFileManager.h"
+	"../jsonParser/JsonParser.h"
+	<sstream>
+
+1565061482 source:/home/pi/paltech/petrosure/petrobox/source/main_control/SCCStateVar.cpp
+	"SCCStateVar.h"
+
+1565062579 source:/home/pi/paltech/petrosure/petrobox/source/main_control/main.cpp
+	"commgsm.h"
+	"electrovalvctrl.h"
+	"rfidboquilla.h"
+	"rfiduser.h"
+	"mainstate.h"
+	"IDList.h"
+	"MainCtrlSettings.h"
+	"CSocket.h"
+	"SCCLog.h"
+	"SCCAlive.h"
+	"SCCRemoteServer.h"
+	"SCCFlowmeter.h"
+	"SCCDeviceNames.h"
+	"SCCCreateMessage.h"
+	"SCCFuelTransaction.h"
+	"main_functions.h"
+	"SCCDeviceParams.h"
+	"../commPort/SCCRealTime.h"
+	"main_fuel_manage.h"
+	<unistd.h>
+	<unordered_map>
+	<list>
+

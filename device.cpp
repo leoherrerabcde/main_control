@@ -327,6 +327,8 @@ void Device::getComPortList(std::list<int>& portList)
         else
             break;
     }
+    if (getenv("SIM_FLOWMETER") && !portList.size())
+        portList.push_back(0);
 }
 
 void Device::removeComPort(std::list<int>& portList, int port)

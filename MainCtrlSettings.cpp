@@ -13,7 +13,8 @@ std::unordered_map<std::string, ArgumentStruct> st_RFIDParam =
     {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "2"}},
     {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "115200"}},
     {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "commPort"}},
-    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/commPort/bin/Release"}}
+    //{PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/commPort/bin/Release"}}
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release"}}
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_RFIDUserParam =
@@ -21,7 +22,8 @@ std::unordered_map<std::string, ArgumentStruct> st_RFIDUserParam =
     {PARAM_COM_PORT,{PARAM_COM_PORT, Required, Integer, true, "0"}},
     {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "9600"}},
     {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "rfidUser"}},
-    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/rfidUser/bin/Release"}},
+    //{PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/rfidUser/bin/Release"}},
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release"}},
     {PARAM_TIME_OUT, {PARAM_TIME_OUT, Required, Integer, true, "120000"}}
 
 };
@@ -32,7 +34,8 @@ std::unordered_map<std::string, ArgumentStruct> st_FlowmeterParam =
     {PARAM_BAUD_RATE, {PARAM_BAUD_RATE, Required, Integer, true, "9600"}},
     {PARAM_SERVICE_NAME, {PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "ovalgearFlowm"}},
     //{PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/flowmCom/bin/Release"}}
-    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/ovalgearFlowm/bin/Release"}}
+    //{PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/Documents/source/ovalgearFlowm/bin/Release"}}
+    {PARAM_PATH_NAME, {PARAM_PATH_NAME, Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release"}}
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
@@ -44,26 +47,31 @@ std::unordered_map<std::string, ArgumentStruct> st_RestApiParam =
     {PARAM_POST_REGISTS,{PARAM_POST_REGISTS, Required, AlphaNumeric, true, "api/control"}},
     {PARAM_URL_API_REST,{PARAM_URL_API_REST, Required, AlphaNumeric, true, "http://157.230.225.248:3000"}},
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "remote_server.py"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}},
+    //{PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/python/remoteServer"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release/python/remoteServer"}},
     {PARAM_NUM_REGIST_SENT,{PARAM_NUM_REGIST_SENT, Required, Integer, true, "100"}},
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_TableUserParam =
 {
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "users.json"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
+    //{PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release/tables"}},
     {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "idpersonal"}},
     {PARAM_TBL_VALUE_KEY,{PARAM_TBL_VALUE_KEY  , Optional, AlphaNumeric, true, "tipousuario"}},
-    {PARAM_PATH_ERROR  ,{PARAM_PATH_ERROR  , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/errors"}},
+    //{PARAM_PATH_ERROR  ,{PARAM_PATH_ERROR  , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/errors"}},
+    {PARAM_PATH_ERROR  ,{PARAM_PATH_ERROR  , Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release/errors"}},
     //{PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "id_user"}},
 };
 
 std::unordered_map<std::string, ArgumentStruct> st_TableVehicleParam =
 {
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "vehicle.json"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
+    //{PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/tables"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release/tables"}},
     {PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "NRFID"}},
-    {PARAM_PATH_ERROR  ,{PARAM_PATH_ERROR  , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/errors"}},
+    //{PARAM_PATH_ERROR  ,{PARAM_PATH_ERROR  , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/errors"}},
+    {PARAM_PATH_ERROR  ,{PARAM_PATH_ERROR  , Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release/errors"}},
     //{PARAM_TBL_ID_KEY  ,{PARAM_TBL_ID_KEY  , Required, AlphaNumeric, true, "id_vehiculo"}},
 };
 
@@ -71,7 +79,8 @@ std::unordered_map<std::string, ArgumentStruct> st_FuelRegisterParam =
 {
     {PARAM_FILE_EXTENSION,{PARAM_FILE_EXTENSION, Required, AlphaNumeric, true, ".txt"}},
     {PARAM_SERVICE_NAME,{PARAM_SERVICE_NAME, Required, AlphaNumeric, true, "fuelRegister"}},
-    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/registers"}},
+    //{PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/Documents/source/main_control/registers"}},
+    {PARAM_PATH_NAME   ,{PARAM_PATH_NAME   , Required, AlphaNumeric, true, "/home/pi/paltech/petrosure/petrobox/bin/Release/registers"}},
     {PARAM_NEW_REGS_PATH,{PARAM_NEW_REGS_PATH, Required, AlphaNumeric, true, "new_registers"}},
     {PARAM_HISTO_REGS_PATH,{PARAM_HISTO_REGS_PATH, Required, AlphaNumeric, true, "histo_registers"}},
     {PARAM_UPPER_REG_NUM,{PARAM_UPPER_REG_NUM, Required, Integer, true, "999999"}},
